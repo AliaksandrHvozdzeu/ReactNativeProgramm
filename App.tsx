@@ -62,7 +62,7 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Task #1" />
+          <Section title="HW #1" />
         </View>
       </ScrollView>
     </SafeAreaView>
