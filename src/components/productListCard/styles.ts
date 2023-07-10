@@ -67,16 +67,6 @@ export const styles = StyleSheet.create({
     color: COLORS.neutral_1000,
     position: 'absolute',
   },
-  percent: {
-    left: 65,
-    top: 5,
-    color: COLORS.blue_300,
-    fontFamily: 'Roboto',
-    fontSize: 12,
-    fontStyle: 'normal',
-    fontWeight: '700',
-    position: 'absolute',
-  },
   available: {
     left: 10,
     width: 25,

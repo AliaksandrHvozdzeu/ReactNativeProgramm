@@ -9,7 +9,6 @@ type ItemProps = {
   src: string;
   price: string;
   currency: string;
-  percent: string;
   available: boolean;
 };
 
@@ -34,7 +33,13 @@ const inStockIcon = (inStock: boolean) => {
   return inStock ? 'shoppingcart' : 'close';
 };
 
-const ProductListCard = ({title, src, price, currency, percent, available}: ItemProps) => {
+const ProductListCard = ({
+  title,
+  src,
+  price,
+  currency,
+  available,
+}: ItemProps) => {
   return (
     <View style={[styles.item, cardStyles]}>
       <View>

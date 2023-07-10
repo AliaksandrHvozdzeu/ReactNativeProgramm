@@ -10,23 +10,6 @@ const ProductList = () => {
   const [data, setData] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  useEffect(() => {
-    fetch('https://demo.spreecommerce.org/api/v2/storefront/products')
-      .then(response => response.json())
-      .then(json => {
-        setData(json.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, []);
-
-  const onRefresh = () => {
-    setIsRefreshing(true);
-    getDataFromApi();
-    setIsRefreshing(false);
-  };
-
   const getDataFromApi = () => {
     fetch('https://demo.spreecommerce.org/api/v2/storefront/products')
       .then(response => response.json())
@@ -38,6 +21,16 @@ const ProductList = () => {
       .catch(error => {
         console.error(error);
       });
+  };
+
+  useEffect(() => {
+    getDataFromApi();
+  }, []);
+
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    getDataFromApi();
+    setIsRefreshing(false);
   };
 
   const searchFilterFunction = (text: string) => {
@@ -86,7 +79,6 @@ const ProductList = () => {
               src={getImageById(item.relationships.images.data[0].id)}
               price={item.attributes.display_price}
               currency={item.attributes.currency}
-              percent={item.percent}
               available={item.attributes.available}
             />
           )}
