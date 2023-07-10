@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   main: {
     backgroundColor: COLORS.neutral_100,
     width: 'auto',
-    height: 812,
+    height: 'auto',
   },
   cart: {
     width: 25,

@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexShrink: 0,
     backgroundColor: COLORS.neutral_100,
+    zIndex: 1,
   },
   inputBar: {
     display: 'flex',

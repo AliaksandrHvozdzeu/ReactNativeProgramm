@@ -10,7 +10,7 @@ const Bar = () => {
     <View style={styles.layout}>
       <View style={styles.bar}>
         <MenuButton />
-        <BarText />
+        <BarText text="Ecommerce Store" />
         <CartButton />
       </View>
     </View>
