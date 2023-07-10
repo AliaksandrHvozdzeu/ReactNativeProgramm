@@ -1,0 +1,15 @@
+export const COLORS = {
+  blue_500: '#008ACE',
+  blue_300: '#00A8F3',
+  blue_100: '#8ED8F8',
+  neutral_1000: '#1C1F27',
+  neutral_700: '#4A4A4A',
+  neutral_500: '#8F8F8F',
+  neutral_300: '#C3C3C3',
+  neutral_100: '#F7F7F7',
+  accent_orange_300: '#FEB96B',
+  accent_orange_500: '#F39649',
+  accent_red: '#DD6B55',
+  accent_green: '#A5DC86',
+  accent_green_dark: '#6AC238',
+};
