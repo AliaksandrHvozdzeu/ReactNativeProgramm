@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from "react";
 import {FlatList, View} from 'react-native';
 import {styles} from './styles';
 import ProductListCard from '../productListCard';
+import SearchBar from '../searchBar';
 
 const ProductList = () => {
   const DATA = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Xiaomi Mi A3',
+      title: 'Xiaomi Mi A1',
       price: '$222',
       discount: '$244',
       percent: '9% off',
@@ -16,7 +17,7 @@ const ProductList = () => {
     },
     {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Xiaomi Mi A3',
+      title: 'Xiaomi Mi A2',
       price: '$222',
       discount: '$244',
       percent: '9% off',
@@ -34,7 +35,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-1434e29d77',
-      title: 'Xiaomi Mi A3',
+      title: 'Xiaomi Mi A4',
       price: '$222',
       discount: '$244',
       percent: '9% off',
@@ -43,7 +44,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d73',
-      title: 'Xiaomi Mi A3',
+      title: 'Xiaomi Mi A5',
       price: '$222',
       discount: '$244',
       percent: '9% off',
@@ -52,7 +53,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d77',
-      title: 'Xiaomi Mi A3',
+      title: 'Xiaomi Mi A6',
       price: '$222',
       discount: '$244',
       percent: '25% off',
@@ -61,7 +62,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571essss7',
-      title: 'Xiaomi Mi A3',
+      title: 'Xiaomi Mi A7',
       price: '$222',
       discount: '$244',
       percent: '',
@@ -70,22 +71,29 @@ const ProductList = () => {
     },
   ];
 
+  const [search, setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState([{}]);
+
+
   return (
-    <View style={styles.layout}>
-      <FlatList
-        data={DATA}
-        numColumns={2}
-        renderItem={({item}) => (
-          <ProductListCard
-            title={item.title}
-            src={item.avatar}
-            price={item.price}
-            discount={item.discount}
-            percent={item.percent}
-          />
-        )}
-        keyExtractor={item => item.id}
-      />
+    <View>
+      <SearchBar data={DATA} newData={filteredDataSource} />
+      <View style={styles.layout}>
+        <FlatList
+          data={DATA}
+          numColumns={2}
+          renderItem={({item}) => (
+            <ProductListCard
+              title={item.title}
+              src={item.avatar}
+              price={item.price}
+              discount={item.discount}
+              percent={item.percent}
+            />
+          )}
+          keyExtractor={item => item.id}
+        />
+      </View>
     </View>
   );
 };
