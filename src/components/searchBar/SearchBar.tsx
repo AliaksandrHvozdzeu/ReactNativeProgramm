@@ -8,8 +8,6 @@ const SearchBar = () => {
     console.log('TEXT');
   };
 
-  const text = 'SEARCH TEXT SEARCH TEXT SEARCH TEXT';
-
   const searchBarStyles = Platform.select({
     ios: {
       shadowColor: '#8F8F8F',
@@ -39,7 +37,6 @@ const SearchBar = () => {
         <TextInput
           style={[styles.input, inputStyles]}
           onChangeText={onChangeText}
-          value={text}
         />
         <View style={styles.searchIcon}>
           <Icon
