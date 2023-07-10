@@ -1,23 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Platform, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 
-type searchData = {
-  data: {
-    id: string;
-    title: string;
-    price: string;
-    discount: string;
-    percent: string;
-    avatar: string;
-  }[];
+type inputType = {
+  searchFilterFunction: any;
+  search: string;
 };
 
-const SearchBar = ({data}: searchData, {newData}: searchData) => {
-  const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState([{}]);
-
+const SearchBar = ({searchFilterFunction, search}: inputType) => {
   const searchBarStyles = Platform.select({
     ios: {
       shadowColor: '#8F8F8F',
@@ -40,24 +31,6 @@ const SearchBar = ({data}: searchData, {newData}: searchData) => {
       top: -7,
     },
   });
-
-  const searchFilterFunction = (text: string) => {
-    console.log(text);
-    if (text) {
-      const newData = data.filter(function (item: {title: string}) {
-        const itemData = item.title
-          ? item.title.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredDataSource(newData);
-      setSearch(text);
-    } else {
-      setFilteredDataSource(data);
-      setSearch(text);
-    }
-  };
 
   return (
     <View style={[styles.layout, searchBarStyles]}>

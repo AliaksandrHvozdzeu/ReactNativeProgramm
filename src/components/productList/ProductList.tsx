@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {FlatList, View} from 'react-native';
 import {styles} from './styles';
 import ProductListCard from '../productListCard';
 import SearchBar from '../searchBar';
 
 const ProductList = () => {
+  const [search, setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+
   const DATA = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -17,7 +20,7 @@ const ProductList = () => {
     },
     {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Xiaomi Mi A2',
+      title: 'Xiaomi Mi B2',
       price: '$222',
       discount: '$244',
       percent: '9% off',
@@ -26,7 +29,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Xiaomi Mi A3',
+      title: 'Xiaomi Mi B3',
       price: '$222',
       discount: '$244',
       percent: '9% off',
@@ -35,7 +38,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-1434e29d77',
-      title: 'Xiaomi Mi A4',
+      title: 'Xiaomi Mi C4',
       price: '$222',
       discount: '$244',
       percent: '9% off',
@@ -44,7 +47,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d73',
-      title: 'Xiaomi Mi A5',
+      title: 'Xiaomi Mi C5',
       price: '$222',
       discount: '$244',
       percent: '9% off',
@@ -53,7 +56,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d77',
-      title: 'Xiaomi Mi A6',
+      title: 'Xiaomi Mi C6',
       price: '$222',
       discount: '$244',
       percent: '25% off',
@@ -62,7 +65,7 @@ const ProductList = () => {
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571essss7',
-      title: 'Xiaomi Mi A7',
+      title: 'Xiaomi Mi D7',
       price: '$222',
       discount: '$244',
       percent: '',
@@ -71,16 +74,32 @@ const ProductList = () => {
     },
   ];
 
-  const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState([{}]);
-
+  const searchFilterFunction = (text: string) => {
+    console.log(text);
+    if (text) {
+      const newData = DATA.filter(function (item: {title: string}) {
+        const itemData = item.title
+          ? item.title.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      // @ts-ignore
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // @ts-ignore
+      setFilteredDataSource(DATA);
+      setSearch(text);
+    }
+  };
 
   return (
     <View>
-      <SearchBar data={DATA} newData={filteredDataSource} />
+      <SearchBar searchFilterFunction={searchFilterFunction} search={search} />
       <View style={styles.layout}>
         <FlatList
-          data={DATA}
+          data={filteredDataSource.length === 0 ? DATA : filteredDataSource}
           numColumns={2}
           renderItem={({item}) => (
             <ProductListCard
