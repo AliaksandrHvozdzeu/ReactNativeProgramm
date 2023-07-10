@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {FlatList, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {styles} from './styles';
 import ProductListCard from '../productListCard';
 import SearchBar from '../searchBar';
@@ -7,79 +7,45 @@ import SearchBar from '../searchBar';
 const ProductList = () => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [data, setData] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Xiaomi Mi A1',
-      price: '$222',
-      discount: '$244',
-      percent: '9% off',
-      avatar:
-        'https://fastly.picsum.photos/id/238/200/300.jpg?hmac=WF3u-tnO4aoQvz_F9p7zS0Dr5LwGx74tPabQf7EjHkw',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Xiaomi Mi B2',
-      price: '$222',
-      discount: '$244',
-      percent: '9% off',
-      avatar:
-        'https://fastly.picsum.photos/id/238/200/300.jpg?hmac=WF3u-tnO4aoQvz_F9p7zS0Dr5LwGx74tPabQf7EjHkw',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Xiaomi Mi B3',
-      price: '$222',
-      discount: '$244',
-      percent: '9% off',
-      avatar:
-        'https://fastly.picsum.photos/id/238/200/300.jpg?hmac=WF3u-tnO4aoQvz_F9p7zS0Dr5LwGx74tPabQf7EjHkw',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-1434e29d77',
-      title: 'Xiaomi Mi C4',
-      price: '$222',
-      discount: '$244',
-      percent: '9% off',
-      avatar:
-        'https://fastly.picsum.photos/id/238/200/300.jpg?hmac=WF3u-tnO4aoQvz_F9p7zS0Dr5LwGx74tPabQf7EjHkw',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d73',
-      title: 'Xiaomi Mi C5',
-      price: '$222',
-      discount: '$244',
-      percent: '9% off',
-      avatar:
-        'https://fastly.picsum.photos/id/238/200/300.jpg?hmac=WF3u-tnO4aoQvz_F9p7zS0Dr5LwGx74tPabQf7EjHkw',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d77',
-      title: 'Xiaomi Mi C6',
-      price: '$222',
-      discount: '$244',
-      percent: '25% off',
-      avatar:
-        'https://fastly.picsum.photos/id/238/200/300.jpg?hmac=WF3u-tnO4aoQvz_F9p7zS0Dr5LwGx74tPabQf7EjHkw',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571essss7',
-      title: 'Xiaomi Mi D7',
-      price: '$222',
-      discount: '$244',
-      percent: '',
-      avatar:
-        'https://fastly.picsum.photos/id/238/200/300.jpg?hmac=WF3u-tnO4aoQvz_F9p7zS0Dr5LwGx74tPabQf7EjHkw',
-    },
-  ];
+  useEffect(() => {
+    fetch('https://demo.spreecommerce.org/api/v2/storefront/products')
+      .then(response => response.json())
+      .then(json => {
+        setData(json.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    getDataFromApi();
+    setIsRefreshing(false);
+  };
+
+  const getDataFromApi = () => {
+    fetch('https://demo.spreecommerce.org/api/v2/storefront/products')
+      .then(response => response.json())
+      .then(json => {
+        console.log('START REFRESH');
+        setData(json.data);
+        console.log('END REFRESH');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   const searchFilterFunction = (text: string) => {
     console.log(text);
     if (text) {
-      const newData = DATA.filter(function (item: {title: string}) {
-        const itemData = item.title
-          ? item.title.toUpperCase()
+      const newData = data.filter(function (item: {title: string}) {
+        const itemData = item.attributes.name
+          ? item.attributes.name.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
@@ -89,9 +55,17 @@ const ProductList = () => {
       setSearch(text);
     } else {
       // @ts-ignore
-      setFilteredDataSource(DATA);
+      setFilteredDataSource(data);
       setSearch(text);
     }
+  };
+
+  const getImageById = (imageId: string) => {
+    return `https://picsum.photos/id/${imageId}/3670/2462`;
+  };
+
+  const shortTitle = (title: string) => {
+    return title.length > 15 ? `${title.slice(0, 10)}...` : title;
   };
 
   return (
@@ -99,15 +73,21 @@ const ProductList = () => {
       <SearchBar searchFilterFunction={searchFilterFunction} search={search} />
       <View style={styles.layout}>
         <FlatList
-          data={filteredDataSource.length === 0 ? DATA : filteredDataSource}
+          data={filteredDataSource.length === 0 ? data : filteredDataSource}
           numColumns={2}
+          onRefresh={onRefresh}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
+          refreshing={isRefreshing}
           renderItem={({item}) => (
             <ProductListCard
-              title={item.title}
-              src={item.avatar}
-              price={item.price}
-              discount={item.discount}
+              title={shortTitle(item.attributes.name)}
+              src={getImageById(item.relationships.images.data[0].id)}
+              price={item.attributes.display_price}
+              currency={item.attributes.currency}
               percent={item.percent}
+              available={item.attributes.available}
             />
           )}
           keyExtractor={item => item.id}

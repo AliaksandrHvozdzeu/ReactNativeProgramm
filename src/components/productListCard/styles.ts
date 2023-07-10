@@ -24,7 +24,8 @@ export const styles = StyleSheet.create({
   productInfoBar: {
     display: 'flex',
     position: 'relative',
-    left: -10,
+    left: -15,
+    width: 'auto',
   },
   productName: {
     left: -15,
@@ -46,7 +47,7 @@ export const styles = StyleSheet.create({
   price: {
     left: -25,
     top: 5,
-    width: 40,
+    width: 50,
     textAlign: 'center',
     fontFamily: 'Roboto',
     fontSize: 12,
@@ -63,10 +64,7 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     fontStyle: 'normal',
     fontWeight: '700',
-    color: COLORS.neutral_500,
-    textDecorationLine: 'line-through',
-    textDecorationStyle: 'solid',
-    textDecorationColor: COLORS.neutral_500,
+    color: COLORS.neutral_1000,
     position: 'absolute',
   },
   percent: {
@@ -78,5 +76,12 @@ export const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '700',
     position: 'absolute',
+  },
+  available: {
+    left: 10,
+    width: 25,
+    height: 25,
+    flexShrink: 0,
+    color: COLORS.neutral_100,
   },
 });
