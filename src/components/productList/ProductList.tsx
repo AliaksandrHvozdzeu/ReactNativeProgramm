@@ -58,7 +58,7 @@ const ProductList = () => {
   };
 
   const shortTitle = (title: string) => {
-    return title.length > 15 ? `${title.slice(0, 10)}...` : title;
+    return title.length > 15 ? `${title.slice(0, 15)}...` : title;
   };
 
   return (
@@ -79,7 +79,6 @@ const ProductList = () => {
               src={getImageById(item.relationships.images.data[0].id)}
               price={item.attributes.display_price}
               currency={item.attributes.currency}
-              available={item.attributes.available}
             />
           )}
           keyExtractor={item => item.id}

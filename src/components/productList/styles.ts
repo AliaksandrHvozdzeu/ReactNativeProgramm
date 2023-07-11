@@ -1,11 +1,15 @@
-import {StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import {COLORS} from '../../utils/colors';
+
+const SCREEN_HEIGHT = Dimensions.get('screen').height - 150;
+
+// 20
 
 export const styles = StyleSheet.create({
   layout: {
     display: 'flex',
     width: 'auto',
-    height: '100%',
+    height: SCREEN_HEIGHT,
     flexDirection: 'column',
     alignItems: 'flex-start',
     paddingLeft: 15,
