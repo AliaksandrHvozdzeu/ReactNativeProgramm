@@ -6,7 +6,7 @@ import ProductList from '../productList';
 
 const Main = () => {
   return (
-    <View style={styles.main}>
+    <View style={styles.layout}>
       <TopBar />
       <ProductList />
     </View>

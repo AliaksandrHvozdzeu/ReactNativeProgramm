@@ -109,10 +109,15 @@ const ProductList = () => {
   return (
     <View>
       {search.length > 0 && (
-        <Bar text="Search" isSearch={true} isLike={false} />
+        <Bar text="Search" isSearch={true} isLike={false} style={null} />
       )}
       {search.length <= 0 && (
-        <Bar text="Ecommerce Store" isSearch={false} isLike={false} />
+        <Bar
+          text="Ecommerce Store"
+          isSearch={false}
+          isLike={false}
+          style={null}
+        />
       )}
       <SearchBar searchFilterFunction={searchFilterFunction} search={search} />
       <View style={styles.layout}>

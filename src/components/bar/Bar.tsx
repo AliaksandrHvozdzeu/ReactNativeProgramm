@@ -11,11 +11,12 @@ type barTextProps = {
   text: string;
   isSearch: boolean;
   isLike: boolean;
+  style: any;
 };
 
-const Bar = ({text, isSearch, isLike}: barTextProps) => {
+const Bar = ({text, isSearch, isLike, style}: barTextProps) => {
   return (
-    <View style={styles.layout}>
+    <View style={[styles.layout, style]}>
       <View style={styles.bar}>
         {isSearch && <BackButton />}
         {!isSearch && <MenuButton />}
