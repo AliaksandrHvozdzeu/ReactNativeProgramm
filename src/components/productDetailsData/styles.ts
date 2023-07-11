@@ -153,7 +153,7 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
   },
   dotNotActive: {
-    color: COLORS.accent_red,
+    color: COLORS.neutral_500,
   },
   dotActive: {
     color: COLORS.blue_500,

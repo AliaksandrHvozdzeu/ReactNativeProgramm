@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Image, Platform, ScrollView, Text, View, ViewStyle } from "react-native";
+import {Image, Platform, ScrollView, Text, View} from 'react-native';
 import {styles} from './styles';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
@@ -82,10 +82,6 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
     }
   };
 
-  const onClickDot = () => {
-    console.log('DOT');
-  };
-
   return (
     <View style={styles.productDetailsDataLayout}>
       <Bar text="" isSearch={true} isLike={true} style={[barStyles]} />
@@ -116,12 +112,10 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
             <View style={styles.dotBar}>
               {carousel.map(() => (
                 <Icon
-                  style={styles.dotNotActive}
                   size={40}
                   type="entypo"
                   name="dot-single"
-                  color={styles.dotActive.color}
-                  onPress={onClickDot}
+                  color={COLORS.blue_500}
                 />
               ))}
             </View>
