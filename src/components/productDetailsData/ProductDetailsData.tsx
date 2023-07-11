@@ -1,15 +1,9 @@
-import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, Platform, ScrollView, Text, View} from 'react-native';
 import {styles} from './styles';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
-import { Button, Icon } from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 import AddToCartButton from '../addToCartButton';
 
 type productDetailsDataProps = {
@@ -44,34 +38,52 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
       textAlign: 'center',
     },
   });
+  const [imageSrc, setImageSrc] = useState('');
+  const [total, setTotal] = useState(1);
+
   const carousel = [
     {
-      title: 'Aenean leo',
-      body: 'Ut tincidunt tincidunt erat. Sed cursus turpis vitae tortor. Quisque malesuada placerat nisl. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.',
-      imgUrl: 'https://picsum.photos/id/11/200/300',
+      imageId: 55,
+      imgUrl: 'https://picsum.photos/id/55/200/300',
     },
     {
-      title: 'In turpis',
-      body: 'Aenean ut eros et nisl sagittis vestibulum. Donec posuere vulputate arcu. Proin faucibus arcu quis ante. Curabitur at lacus ac velit ornare lobortis. ',
-      imgUrl: 'https://picsum.photos/id/10/200/300',
+      imageId: 54,
+      imgUrl: 'https://picsum.photos/id/23/200/300',
     },
     {
-      title: 'Lorem Ipsum',
-      body: 'Phasellus ullamcorper ipsum rutrum nunc. Nullam quis ante. Etiam ultricies nisi vel augue. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.',
-      imgUrl: 'https://picsum.photos/id/12/200/300',
+      imageId: 27,
+      imgUrl: 'https://picsum.photos/id/98/200/300',
+    },
+    {
+      imageId: 56,
+      imgUrl: 'https://picsum.photos/id/98/200/300',
     },
   ];
 
+  useEffect(() => {
+    setImageSrc(
+      'https://picsum.photos/id/' + carousel[total].imageId + '/200/300',
+    );
+  }, [total, carousel, carousel.length]);
+
   const onPressRightButton = () => {
-    console.log("RIGHT");
+    if (total !== carousel.length - 1) {
+      setTotal(total + 1);
+    } else {
+      console.log(total);
+    }
   };
 
   const onPressLeftButton = () => {
-    console.log("LEFT");
+    if (total === 0) {
+      console.log(total);
+    } else {
+      setTotal(total - 1);
+    }
   };
 
   const onClickDot = () => {
-    console.log("DOT");
+    console.log('DOT');
   };
 
   return (
@@ -79,9 +91,6 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
       <Bar text="" isSearch={true} isLike={true} style={[barStyles]} />
       <ScrollView>
         <View style={styles.layout}>
-
-
-
           <View style={styles.carouselImage}>
             <View style={styles.carouselLeftButton}>
               <Icon
@@ -93,10 +102,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 onPress={onPressRightButton}
               />
             </View>
-            <Image
-              source={{uri: 'https://picsum.photos/id/12/200/300'}}
-              style={styles.image}
-            />
+            <Image source={{uri: imageSrc}} style={styles.image} />
             <View style={styles.carouselRightButton}>
               <Icon
                 style={styles.carouselRightButtonIcon}
@@ -107,6 +113,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 onPress={onPressLeftButton}
               />
             </View>
+
             <View style={styles.dotBar}>
               <Icon
                 style={styles.dotActive}
@@ -134,8 +141,6 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
               />
             </View>
           </View>
-
-
 
           <View style={styles.productInfoBar}>
             <View style={styles.productSection}>
