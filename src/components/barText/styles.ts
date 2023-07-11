@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     color: COLORS.neutral_100,
     textAlign: 'center',
     fontFamily: 'Roboto',
-    fontSize: 20,
+    fontSize: 15,
     fontStyle: 'normal',
     fontWeight: '500',
     lineHeight: 24,

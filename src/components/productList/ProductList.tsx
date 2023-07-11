@@ -108,8 +108,12 @@ const ProductList = () => {
 
   return (
     <View>
-      {search.length > 0 && <Bar text="Search" isSearch={true} />}
-      {search.length <= 0 && <Bar text="Ecommerce Store" isSearch={false} />}
+      {search.length > 0 && (
+        <Bar text="Search" isSearch={true} isLike={false} />
+      )}
+      {search.length <= 0 && (
+        <Bar text="Ecommerce Store" isSearch={false} isLike={false} />
+      )}
       <SearchBar searchFilterFunction={searchFilterFunction} search={search} />
       <View style={styles.layout}>
         {search.length > 0 && searchResultFlatList()}
