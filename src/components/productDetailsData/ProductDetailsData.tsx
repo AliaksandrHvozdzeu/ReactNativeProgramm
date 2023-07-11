@@ -9,7 +9,7 @@ import {
 import {styles} from './styles';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
-import { Button, Icon } from "react-native-elements";
+import { Button, Icon } from 'react-native-elements';
 import AddToCartButton from '../addToCartButton';
 
 type productDetailsDataProps = {
