@@ -2,6 +2,7 @@ import React from 'react';
 import {Platform, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
+import {COLORS} from '../../utils/colors';
 
 type inputType = {
   searchFilterFunction: any;
@@ -11,13 +12,13 @@ type inputType = {
 const SearchBar = ({searchFilterFunction, search}: inputType) => {
   const searchBarStyles = Platform.select({
     ios: {
-      shadowColor: '#8F8F8F',
+      shadowColor: COLORS.neutral_500,
       shadowOffset: {width: 0, height: 2},
       shadowOpacity: 2,
       shadowRadius: 4,
     },
     android: {
-      shadowColor: '#8F8F8F',
+      shadowColor: COLORS.neutral_500,
       shadowRadius: 4,
       elevation: 10,
     },

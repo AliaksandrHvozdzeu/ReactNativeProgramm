@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {COLORS} from '../../utils/colors';
 
 const SCREEN_HEIGHT = Dimensions.get('screen').height - 150;
@@ -79,5 +79,9 @@ export const styles = StyleSheet.create({
     height: 25,
     flexShrink: 0,
     color: COLORS.neutral_500,
+  },
+  flatStyle: {
+    width: '100%',
+    paddingRight: 10,
   },
 });
