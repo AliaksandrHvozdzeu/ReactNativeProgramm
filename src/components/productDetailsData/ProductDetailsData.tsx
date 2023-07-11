@@ -43,18 +43,22 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
 
   const carousel = [
     {
+      id: 0,
       imageId: 55,
       imgUrl: 'https://picsum.photos/id/55/200/300',
     },
     {
+      id: 1,
       imageId: 54,
       imgUrl: 'https://picsum.photos/id/23/200/300',
     },
     {
+      id: 2,
       imageId: 27,
       imgUrl: 'https://picsum.photos/id/98/200/300',
     },
     {
+      id: 3,
       imageId: 56,
       imgUrl: 'https://picsum.photos/id/98/200/300',
     },
@@ -80,6 +84,10 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
     } else {
       setTotal(total - 1);
     }
+  };
+
+  const setDotStyle = (key: number) => {
+    return key === 0 ? COLORS.blue_500 : COLORS.neutral_500;
   };
 
   return (
@@ -110,12 +118,13 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
               />
             </View>
             <View style={styles.dotBar}>
-              {carousel.map(() => (
+              {carousel.map(item => (
                 <Icon
+                  key={item.id}
                   size={40}
                   type="entypo"
                   name="dot-single"
-                  color={COLORS.blue_500}
+                  color={setDotStyle(item.id)}
                 />
               ))}
             </View>
