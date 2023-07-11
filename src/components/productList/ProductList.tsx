@@ -5,6 +5,7 @@ import ProductListCard from '../productListCard';
 import SearchBar from '../searchBar';
 import ProductSearchListCard from '../productSearchListCard';
 import STRING_UTILS from '../../utils/StringUtils';
+import Bar from '../bar';
 
 const ProductList = () => {
   const [search, setSearch] = useState('');
@@ -107,6 +108,8 @@ const ProductList = () => {
 
   return (
     <View>
+      {search.length > 0 && <Bar text="Search" isSearch={true} />}
+      {search.length <= 0 && <Bar text="Ecommerce Store" isSearch={false} />}
       <SearchBar searchFilterFunction={searchFilterFunction} search={search} />
       <View style={styles.layout}>
         {search.length > 0 && searchResultFlatList()}
