@@ -62,6 +62,18 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
     },
   ];
 
+  const onPressRightButton = () => {
+    console.log("RIGHT");
+  };
+
+  const onPressLeftButton = () => {
+    console.log("LEFT");
+  };
+
+  const onClickDot = () => {
+    console.log("DOT");
+  };
+
   return (
     <View style={styles.productDetailsDataLayout}>
       <Bar text="" isSearch={true} isLike={true} style={[barStyles]} />
@@ -78,6 +90,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 name="right"
                 size={20}
                 color={styles.carouselLeftButtonIcon.color}
+                onPress={onPressRightButton}
               />
             </View>
             <Image
@@ -91,6 +104,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 name="left"
                 size={20}
                 color={styles.carouselRightButtonIcon.color}
+                onPress={onPressLeftButton}
               />
             </View>
             <View style={styles.dotBar}>
@@ -100,6 +114,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 type="entypo"
                 name="dot-single"
                 color={styles.dotActive.color}
+                onPress={onClickDot}
               />
               <Icon
                 style={styles.dotNotActive}
@@ -107,6 +122,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 type="entypo"
                 name="dot-single"
                 color={styles.dotNotActive.color}
+                onPress={onClickDot}
               />
               <Icon
                 style={styles.dotNotActive}
@@ -114,6 +130,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 type="entypo"
                 name="dot-single"
                 color={styles.dotNotActive.color}
+                onPress={onClickDot}
               />
             </View>
           </View>
