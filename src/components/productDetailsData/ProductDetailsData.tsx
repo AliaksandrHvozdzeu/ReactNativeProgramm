@@ -9,7 +9,7 @@ import {
 import {styles} from './styles';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
-import {Button} from 'react-native-elements';
+import { Button, Icon } from "react-native-elements";
 import AddToCartButton from '../addToCartButton';
 
 type productDetailsDataProps = {
@@ -67,12 +67,59 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
       <Bar text="" isSearch={true} isLike={true} style={[barStyles]} />
       <ScrollView>
         <View style={styles.layout}>
+
+
+
           <View style={styles.carouselImage}>
+            <View style={styles.carouselLeftButton}>
+              <Icon
+                style={styles.carouselLeftButtonIcon}
+                type="antdesign"
+                name="right"
+                size={20}
+                color={styles.carouselLeftButtonIcon.color}
+              />
+            </View>
             <Image
               source={{uri: 'https://picsum.photos/id/12/200/300'}}
               style={styles.image}
             />
+            <View style={styles.carouselRightButton}>
+              <Icon
+                style={styles.carouselRightButtonIcon}
+                type="antdesign"
+                name="left"
+                size={20}
+                color={styles.carouselRightButtonIcon.color}
+              />
+            </View>
+            <View style={styles.dotBar}>
+              <Icon
+                style={styles.dotActive}
+                size={40}
+                type="entypo"
+                name="dot-single"
+                color={styles.dotActive.color}
+              />
+              <Icon
+                style={styles.dotNotActive}
+                size={40}
+                type="entypo"
+                name="dot-single"
+                color={styles.dotNotActive.color}
+              />
+              <Icon
+                style={styles.dotNotActive}
+                size={40}
+                type="entypo"
+                name="dot-single"
+                color={styles.dotNotActive.color}
+              />
+            </View>
           </View>
+
+
+
           <View style={styles.productInfoBar}>
             <View style={styles.productSection}>
               <Text style={styles.productName}>{data.attributes.name}</Text>

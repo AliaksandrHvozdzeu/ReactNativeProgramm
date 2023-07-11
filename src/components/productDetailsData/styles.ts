@@ -13,6 +13,22 @@ export const styles = StyleSheet.create({
     width: 250,
     height: 250,
   },
+  carouselLeftButton: {
+    position: 'absolute',
+    right: 25,
+    top: 100,
+  },
+  carouselLeftButtonIcon: {
+    color: COLORS.neutral_500,
+  },
+  carouselRightButton: {
+    position: 'absolute',
+    left: 25,
+    top: 100,
+  },
+  carouselRightButtonIcon: {
+    color: COLORS.neutral_500,
+  },
   selectColorButton: {
     display: 'flex',
     flex: 1,
@@ -126,4 +142,20 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   colorSelect: {},
+  dotBar: {
+    position: 'absolute',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    bottom: -10,
+    marginLeft: 10,
+    marginRight: 30,
+    fontWeight: '700',
+  },
+  dotNotActive: {
+    color: COLORS.neutral_500,
+  },
+  dotActive: {
+    color: COLORS.blue_500,
+  },
 });
