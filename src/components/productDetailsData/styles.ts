@@ -153,9 +153,16 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
   },
   dotNotActive: {
-    color: COLORS.neutral_500,
+    color: COLORS.accent_red,
   },
   dotActive: {
     color: COLORS.blue_500,
+  },
+  buttonStyle: {
+    backgroundColor: COLORS.neutral_100,
+    borderRadius: 0,
+    flex: 1,
+    height: 30,
+    width: 60,
   },
 });

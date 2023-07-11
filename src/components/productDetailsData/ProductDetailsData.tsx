@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Platform, ScrollView, Text, View} from 'react-native';
+import { Image, Platform, ScrollView, Text, View, ViewStyle } from "react-native";
 import {styles} from './styles';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
@@ -113,32 +113,17 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 onPress={onPressLeftButton}
               />
             </View>
-
             <View style={styles.dotBar}>
-              <Icon
-                style={styles.dotActive}
-                size={40}
-                type="entypo"
-                name="dot-single"
-                color={styles.dotActive.color}
-                onPress={onClickDot}
-              />
-              <Icon
-                style={styles.dotNotActive}
-                size={40}
-                type="entypo"
-                name="dot-single"
-                color={styles.dotNotActive.color}
-                onPress={onClickDot}
-              />
-              <Icon
-                style={styles.dotNotActive}
-                size={40}
-                type="entypo"
-                name="dot-single"
-                color={styles.dotNotActive.color}
-                onPress={onClickDot}
-              />
+              {carousel.map(() => (
+                <Icon
+                  style={styles.dotNotActive}
+                  size={40}
+                  type="entypo"
+                  name="dot-single"
+                  color={styles.dotActive.color}
+                  onPress={onClickDot}
+                />
+              ))}
             </View>
           </View>
 
@@ -158,13 +143,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
                 <Button
                   title="Blue"
                   style={styles.selectColorButton}
-                  buttonStyle={{
-                    backgroundColor: '#F7F7F7',
-                    borderRadius: 0,
-                    flex: 1,
-                    height: 30,
-                    width: 60,
-                  }}
+                  buttonStyle={styles.buttonStyle}
                   titleStyle={buttonFontStyle}
                 />
               </View>
