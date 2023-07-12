@@ -1,17 +1,16 @@
 import React from 'react';
 import {Platform, ScrollView, Text, View} from 'react-native';
 import {styles} from './styles';
-import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
 import {Button} from 'react-native-elements';
 import AddToCartButton from '../addToCartButton';
 import Carousel from '../carousel';
 
 type productDetailsDataProps = {
-  data: any;
+  product: {};
 };
 
-const ProductDetailsData = ({data}: productDetailsDataProps) => {
+const ProductDetailsData = ({product}: productDetailsDataProps) => {
   const carouselData = [
     {
       id: 0,
@@ -35,21 +34,6 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
     },
   ];
 
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-    },
-  });
   const buttonFontStyle = Platform.select({
     ios: {
       color: COLORS.neutral_700,
@@ -67,7 +51,6 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
 
   return (
     <View style={styles.productDetailsDataLayout}>
-      <Bar text="" isSearch={true} isLike={true} style={shadowStyles} />
       <ScrollView>
         <View style={styles.layout}>
           <Carousel
@@ -80,10 +63,11 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
           />
           <View style={styles.productInfoBar}>
             <View style={styles.productSection}>
-              <Text style={styles.productName}>{data.attributes.name}</Text>
+              <Text style={styles.productName}>{product.attributes.name}</Text>
               <View style={styles.coastBar}>
                 <Text style={styles.price}>
-                  {data.attributes.display_price} {data.attributes.currency}
+                  {product.attributes.display_price}{' '}
+                  {product.attributes.currency}
                 </Text>
               </View>
             </View>
@@ -103,7 +87,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
             <View>
               <Text style={styles.descriptionSection}>Description</Text>
               <Text style={styles.description}>
-                {data.attributes.description}
+                {product.attributes.description}
               </Text>
             </View>
           </View>

@@ -5,6 +5,7 @@ import ProductListCard from '../productListCard';
 import SearchBar from '../searchBar';
 import ProductSearchListCard from '../productSearchListCard';
 import STRING_UTILS from '../../utils/StringUtils';
+import {getProductList} from '../../api/ProductsApi';
 import Bar from '../bar';
 
 const ProductList = () => {
@@ -18,14 +19,9 @@ const ProductList = () => {
   }, []);
 
   const getDataFromApi = () => {
-    fetch('https://demo.spreecommerce.org/api/v2/storefront/products')
-      .then(response => response.json())
-      .then(json => {
-        setData(json.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    getProductList().then(json => {
+      setData(json.data);
+    });
   };
 
   const getImageById = (imageId: string) => {

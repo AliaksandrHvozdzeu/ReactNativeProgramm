@@ -5,9 +5,12 @@ import {COLORS} from '../../utils/colors';
 import {styles} from './styles';
 
 const AddToCartButton = () => {
-  const ADD_TO_CART_BUTTON_POSITION_IOS = Dimensions.get('screen').height - 510;
+  const ADD_TO_CART_BUTTON_POSITION_IOS =
+    Dimensions.get('screen').height -
+    Math.floor(Dimensions.get('screen').height / 100) * 85;
   const ADD_TO_CART_BUTTON_POSITION_ANDROID =
-    Dimensions.get('screen').height - 650;
+    Dimensions.get('screen').height -
+    Math.floor(Dimensions.get('screen').height / 100) * 80;
 
   const addToCarButtonStyle = Platform.select({
     ios: {
