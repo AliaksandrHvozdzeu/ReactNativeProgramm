@@ -2,13 +2,6 @@ import {StyleSheet} from 'react-native';
 import {COLORS} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
-  carouselImage: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 25,
-    marginBottom: 30,
-  },
   dotBar: {
     position: 'absolute',
     flex: 1,
@@ -23,9 +16,14 @@ export const styles = StyleSheet.create({
   dotActive: {
     color: COLORS.blue_500,
   },
+  image: {
+    width: 250,
+    height: 250,
+  },
   carouselLeftButton: {
     position: 'absolute',
     right: 25,
+    top: 100,
   },
   carouselLeftButtonIcon: {
     color: COLORS.neutral_500,
@@ -33,6 +31,7 @@ export const styles = StyleSheet.create({
   carouselRightButton: {
     position: 'absolute',
     left: 25,
+    top: 100,
   },
   carouselRightButtonIcon: {
     color: COLORS.neutral_500,
@@ -40,5 +39,13 @@ export const styles = StyleSheet.create({
   dotStyles: {
     marginRight: -13,
     marginLeft: -13,
+  },
+  carouselImage: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 25,
+    marginTop: 30,
+    marginBottom: 30,
   },
 });

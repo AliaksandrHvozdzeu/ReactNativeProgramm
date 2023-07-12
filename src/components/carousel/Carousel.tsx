@@ -1,14 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {Image, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 
 type carouselData = {
   data: any;
+  imageWidth: number;
+  imageHeight: number;
+  imageTopPosition: number;
+  leftButtonTopPosition: number;
+  rightButtonTopPosition: number;
 };
 
-const Carousel = ({data}: carouselData) => {
+const Carousel = ({
+  data,
+  imageWidth,
+  imageHeight,
+  imageTopPosition,
+  leftButtonTopPosition,
+  rightButtonTopPosition,
+}: carouselData) => {
   const [total, setTotal] = useState(1);
   const [imageSrc, setImageSrc] = useState(
     'https://picsum.photos/id/' + data[total].imageId + '/200/300',
@@ -62,9 +74,25 @@ const Carousel = ({data}: carouselData) => {
     return index === total ? COLORS.blue_500 : COLORS.neutral_500;
   };
 
+  const carouselImageStyle = StyleSheet.create({
+    image: {
+      width: imageWidth,
+      height: imageHeight,
+    },
+    carouselImage: {
+      marginTop: imageTopPosition,
+    },
+    leftButtonTopPosition: {
+      top: leftButtonTopPosition,
+    },
+    rightButtonTopPosition: {
+      top: rightButtonTopPosition,
+    },
+  });
+
   return (
-    <View style={styles.carouselImage}>
-      <View style={styles.carouselLeftButton}>
+    <View style={[styles.carouselImage, carouselImageStyle.carouselImage]}>
+      <View style={[styles.carouselLeftButton, carouselImageStyle.leftButtonTopPosition]}>
         <Icon
           style={styles.carouselLeftButtonIcon}
           type="antdesign"
@@ -74,8 +102,8 @@ const Carousel = ({data}: carouselData) => {
           onPress={onPressRightButton}
         />
       </View>
-      <Image source={{uri: imageSrc}} style={styles.image} />
-      <View style={styles.carouselRightButton}>
+      <Image source={{uri: imageSrc}} style={carouselImageStyle.image} />
+      <View style={[styles.carouselRightButton, carouselImageStyle.rightButtonTopPosition]}>
         <Icon
           style={styles.carouselRightButtonIcon}
           type="antdesign"

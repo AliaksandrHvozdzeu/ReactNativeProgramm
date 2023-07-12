@@ -70,7 +70,14 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
       <Bar text="" isSearch={true} isLike={true} style={shadowStyles} />
       <ScrollView>
         <View style={styles.layout}>
-          <Carousel data={carouselData} />
+          <Carousel
+            data={carouselData}
+            imageHeight={250}
+            imageWidth={250}
+            imageTopPosition={30}
+            leftButtonTopPosition={100}
+            rightButtonTopPosition={100}
+          />
           <View style={styles.productInfoBar}>
             <View style={styles.productSection}>
               <Text style={styles.productName}>{data.attributes.name}</Text>

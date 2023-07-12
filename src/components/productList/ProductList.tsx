@@ -98,7 +98,9 @@ const ProductList = () => {
             src={getImageById(item.relationships.images.data[0].id)}
             price={item.attributes.display_price}
             currency={item.attributes.currency}
-            description={STRING_UTILS.shortDescription(item.attributes.description)}
+            description={STRING_UTILS.shortDescription(
+              item.attributes.description,
+            )}
           />
         )}
         keyExtractor={item => item.id}
@@ -109,7 +111,13 @@ const ProductList = () => {
   return (
     <View>
       {search.length > 0 && (
-        <Bar text="Search" isSearch={true} isLike={false} style={null} />
+        <Bar
+          text="Search"
+          isSearch={true}
+          isLike={false}
+          style={null}
+          isCard={true}
+        />
       )}
       {search.length <= 0 && (
         <Bar
@@ -117,6 +125,7 @@ const ProductList = () => {
           isSearch={false}
           isLike={false}
           style={null}
+          isCard={true}
         />
       )}
       <SearchBar searchFilterFunction={searchFilterFunction} search={search} />
