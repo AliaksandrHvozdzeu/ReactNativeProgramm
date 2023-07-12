@@ -13,29 +13,53 @@ const Carousel = ({data}: carouselData) => {
   const [imageSrc, setImageSrc] = useState(
     'https://picsum.photos/id/' + data[total].imageId + '/200/300',
   );
+  const initialDotsArrayValue: any[] | (() => any[]) = [
+    {
+      imageId: 0,
+      dotStyle: COLORS.blue_500,
+    },
+  ];
+  const [dotsArray, setDotsArray] = useState(initialDotsArrayValue);
 
   useEffect(() => {
     setImageSrc('https://picsum.photos/id/' + data[total].imageId + '/200/300');
+    createDots();
   }, [total, data, data.length]);
+
+  const createDots = () => {
+    let dotData: {imageId: any; dotStyle: string};
+    const array = [];
+    for (let i = 0; i < data.length; i++) {
+      dotData =
+        i === 0
+          ? {
+              imageId: i,
+              dotStyle: COLORS.blue_500,
+            }
+          : {
+              imageId: i,
+              dotStyle: COLORS.neutral_500,
+            };
+      array.push(dotData);
+    }
+    setDotsArray([]);
+    setDotsArray(array);
+  };
 
   const onPressRightButton = () => {
     if (total !== data.length - 1) {
       setTotal(total + 1);
-    } else {
-      console.log(total);
     }
   };
 
   const onPressLeftButton = () => {
-    if (total === 0) {
-      console.log(total);
-    } else {
+    if (total !== 0) {
       setTotal(total - 1);
     }
   };
 
-  const setDotStyle = (key: number) => {
-    return key === 0 ? COLORS.blue_500 : COLORS.neutral_500;
+  const selectDotStyle = (index: number) => {
+    return index === total ? COLORS.blue_500 : COLORS.neutral_500;
   };
 
   return (
@@ -62,13 +86,14 @@ const Carousel = ({data}: carouselData) => {
         />
       </View>
       <View style={styles.dotBar}>
-        {data.map(item => (
+        {dotsArray.map((item: any, index: number) => (
           <Icon
-            key={item.id}
+            style={styles.dotStyles}
+            key={index}
             size={40}
             type="entypo"
             name="dot-single"
-            color={setDotStyle(item.id)}
+            color={selectDotStyle(index)}
           />
         ))}
       </View>

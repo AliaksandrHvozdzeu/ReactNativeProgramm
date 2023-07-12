@@ -8,8 +8,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     bottom: -10,
-    marginLeft: 10,
-    marginRight: 30,
     fontWeight: '700',
   },
   dotNotActive: {
@@ -37,6 +35,10 @@ export const styles = StyleSheet.create({
   },
   carouselRightButtonIcon: {
     color: COLORS.neutral_500,
+  },
+  dotStyles: {
+    marginRight: -13,
+    marginLeft: -13,
   },
   carouselImage: {
     display: 'flex',
