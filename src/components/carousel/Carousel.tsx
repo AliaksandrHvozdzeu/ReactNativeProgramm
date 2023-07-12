@@ -92,7 +92,11 @@ const Carousel = ({
 
   return (
     <View style={[styles.carouselImage, carouselImageStyle.carouselImage]}>
-      <View style={[styles.carouselLeftButton, carouselImageStyle.leftButtonTopPosition]}>
+      <View
+        style={[
+          styles.carouselLeftButton,
+          carouselImageStyle.leftButtonTopPosition,
+        ]}>
         <Icon
           style={styles.carouselLeftButtonIcon}
           type="antdesign"
@@ -103,7 +107,11 @@ const Carousel = ({
         />
       </View>
       <Image source={{uri: imageSrc}} style={carouselImageStyle.image} />
-      <View style={[styles.carouselRightButton, carouselImageStyle.rightButtonTopPosition]}>
+      <View
+        style={[
+          styles.carouselRightButton,
+          carouselImageStyle.rightButtonTopPosition,
+        ]}>
         <Icon
           style={styles.carouselRightButtonIcon}
           type="antdesign"

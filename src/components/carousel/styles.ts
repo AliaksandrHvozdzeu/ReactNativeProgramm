@@ -41,4 +41,7 @@ export const styles = StyleSheet.create({
     marginRight: -13,
     marginLeft: -13,
   },
+  fadingContainer: {
+
+  },
 });
