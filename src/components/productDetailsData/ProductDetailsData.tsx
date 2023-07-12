@@ -11,36 +11,6 @@ type productDetailsDataProps = {
 };
 
 const ProductDetailsData = ({data}: productDetailsDataProps) => {
-  const barStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_500,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-    },
-    android: {
-      shadowColor: COLORS.neutral_500,
-      shadowRadius: 4,
-      elevation: 10,
-    },
-  });
-  const buttonFontStyle = Platform.select({
-    ios: {
-      color: COLORS.neutral_700,
-      fontSize: 13,
-      fontWeight: '400',
-      textAlign: 'center',
-    },
-    android: {
-      color: COLORS.neutral_700,
-      fontSize: 12,
-      fontWeight: '400',
-      textAlign: 'center',
-    },
-  });
-  const [imageSrc, setImageSrc] = useState('');
-  const [total, setTotal] = useState(1);
-
   const carousel = [
     {
       id: 0,
@@ -63,6 +33,40 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
       imgUrl: 'https://picsum.photos/id/98/200/300',
     },
   ];
+
+  const shadowStyles = Platform.select({
+    ios: {
+      shadowColor: COLORS.neutral_700,
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 2,
+      shadowRadius: 4,
+      backgroundColor: COLORS.blue_500,
+    },
+    android: {
+      shadowColor: COLORS.neutral_700,
+      shadowRadius: 4,
+      elevation: 10,
+      backgroundColor: COLORS.blue_500,
+    },
+  });
+  const buttonFontStyle = Platform.select({
+    ios: {
+      color: COLORS.neutral_700,
+      fontSize: 13,
+      fontWeight: '400',
+      textAlign: 'center',
+    },
+    android: {
+      color: COLORS.neutral_700,
+      fontSize: 12,
+      fontWeight: '400',
+      textAlign: 'center',
+    },
+  });
+  const [total, setTotal] = useState(1);
+  const [imageSrc, setImageSrc] = useState(
+    'https://picsum.photos/id/' + carousel[total].imageId + '/200/300',
+  );
 
   useEffect(() => {
     setImageSrc(
@@ -92,7 +96,7 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
 
   return (
     <View style={styles.productDetailsDataLayout}>
-      <Bar text="" isSearch={true} isLike={true} style={[barStyles]} />
+      <Bar text="" isSearch={true} isLike={true} style={shadowStyles} />
       <ScrollView>
         <View style={styles.layout}>
           <View style={styles.carouselImage}>

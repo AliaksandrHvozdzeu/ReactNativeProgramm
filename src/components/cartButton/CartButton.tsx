@@ -12,8 +12,8 @@ const CartButton = ({count}: cartButtonProps) => {
     <View style={styles.icon}>
       <Icon
         style={styles.cart}
-        type="antdesign"
-        name="shoppingcart"
+        type="material-community"
+        name="cart"
         color={styles.cart.color}
       />
       <View style={styles.budgetView}>
