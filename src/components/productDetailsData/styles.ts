@@ -9,26 +9,6 @@ export const styles = StyleSheet.create({
     height: 1000,
     width: 'auto',
   },
-  image: {
-    width: 250,
-    height: 250,
-  },
-  carouselLeftButton: {
-    position: 'absolute',
-    right: 25,
-    top: 100,
-  },
-  carouselLeftButtonIcon: {
-    color: COLORS.neutral_500,
-  },
-  carouselRightButton: {
-    position: 'absolute',
-    left: 25,
-    top: 100,
-  },
-  carouselRightButtonIcon: {
-    color: COLORS.neutral_500,
-  },
   selectColorButton: {
     display: 'flex',
     flex: 1,
@@ -36,6 +16,13 @@ export const styles = StyleSheet.create({
     height: 30,
     fontSize: 10,
     marginRight: 5,
+  },
+  buttonStyle: {
+    backgroundColor: COLORS.neutral_100,
+    borderRadius: 0,
+    flex: 1,
+    height: 30,
+    width: 60,
   },
   buttonGroups: {
     flex: 1,
@@ -48,14 +35,6 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 20,
     textAlign: 'justify',
-  },
-  carouselImage: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 25,
-    marginTop: 30,
-    marginBottom: 30,
   },
   dotStyle: {
     width: 10,
@@ -142,27 +121,4 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   colorSelect: {},
-  dotBar: {
-    position: 'absolute',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    bottom: -10,
-    marginLeft: 10,
-    marginRight: 30,
-    fontWeight: '700',
-  },
-  dotNotActive: {
-    color: COLORS.neutral_500,
-  },
-  dotActive: {
-    color: COLORS.blue_500,
-  },
-  buttonStyle: {
-    backgroundColor: COLORS.neutral_100,
-    borderRadius: 0,
-    flex: 1,
-    height: 30,
-    width: 60,
-  },
 });

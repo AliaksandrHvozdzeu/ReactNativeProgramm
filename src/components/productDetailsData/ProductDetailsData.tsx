@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Image, Platform, ScrollView, Text, View} from 'react-native';
+import React from 'react';
+import {Platform, ScrollView, Text, View} from 'react-native';
 import {styles} from './styles';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
-import {Button, Icon} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import AddToCartButton from '../addToCartButton';
+import Carousel from '../carousel';
 
 type productDetailsDataProps = {
-  data: {};
+  data: any;
 };
 
 const ProductDetailsData = ({data}: productDetailsDataProps) => {
-  const carousel = [
+  const carouselData = [
     {
       id: 0,
       imageId: 55,
@@ -63,77 +64,13 @@ const ProductDetailsData = ({data}: productDetailsDataProps) => {
       textAlign: 'center',
     },
   });
-  const [total, setTotal] = useState(1);
-  const [imageSrc, setImageSrc] = useState(
-    'https://picsum.photos/id/' + carousel[total].imageId + '/200/300',
-  );
-
-  useEffect(() => {
-    setImageSrc(
-      'https://picsum.photos/id/' + carousel[total].imageId + '/200/300',
-    );
-  }, [total, carousel, carousel.length]);
-
-  const onPressRightButton = () => {
-    if (total !== carousel.length - 1) {
-      setTotal(total + 1);
-    } else {
-      console.log(total);
-    }
-  };
-
-  const onPressLeftButton = () => {
-    if (total === 0) {
-      console.log(total);
-    } else {
-      setTotal(total - 1);
-    }
-  };
-
-  const setDotStyle = (key: number) => {
-    return key === 0 ? COLORS.blue_500 : COLORS.neutral_500;
-  };
 
   return (
     <View style={styles.productDetailsDataLayout}>
       <Bar text="" isSearch={true} isLike={true} style={shadowStyles} />
       <ScrollView>
         <View style={styles.layout}>
-          <View style={styles.carouselImage}>
-            <View style={styles.carouselLeftButton}>
-              <Icon
-                style={styles.carouselLeftButtonIcon}
-                type="antdesign"
-                name="right"
-                size={20}
-                color={styles.carouselLeftButtonIcon.color}
-                onPress={onPressRightButton}
-              />
-            </View>
-            <Image source={{uri: imageSrc}} style={styles.image} />
-            <View style={styles.carouselRightButton}>
-              <Icon
-                style={styles.carouselRightButtonIcon}
-                type="antdesign"
-                name="left"
-                size={20}
-                color={styles.carouselRightButtonIcon.color}
-                onPress={onPressLeftButton}
-              />
-            </View>
-            <View style={styles.dotBar}>
-              {carousel.map(item => (
-                <Icon
-                  key={item.id}
-                  size={40}
-                  type="entypo"
-                  name="dot-single"
-                  color={setDotStyle(item.id)}
-                />
-              ))}
-            </View>
-          </View>
-
+          <Carousel data={carouselData} />
           <View style={styles.productInfoBar}>
             <View style={styles.productSection}>
               <Text style={styles.productName}>{data.attributes.name}</Text>
