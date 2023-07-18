@@ -9,17 +9,18 @@
 
 # HW #2
 
-1. Prepared "Main screen" according designs without Navigation;
-2. Added functional for searching product in search field with updating product card style;
-3. Prepared "Product detail screen" with "Product Image screen";
-4. Integrated with API:
+1. Prepared brunch task_2;
+2. Prepared "Main screen" according designs without Navigation;
+3. Added functional for searching product in search field with updating product card style;
+4. Prepared "Product detail screen" with "Product Image screen";
+5. Integrated with API:
     * Used API for getting list of products;
     * Used API for getting product by "product_slug" value;
     * Images showed by using API "https://picsum.photos/" and product ID;
-5. Pull-to-refresh implemented on list of products;
-6. Added simple animation on like button (add to favorite) on "Product detail screen";
-7. Added custom Carousel component in "Product detail screen";
+6. Pull-to-refresh implemented on list of products;
+7. Added simple animation on like button (add to favorite) on "Product detail screen";
+8. Added custom Carousel component in "Product detail screen";
    This component based on updating source in image but maybe would be better use FlatList with styles;
-8. Tested on iPhone and Android emulators;
+9. Tested on iPhone and Android emulators;
 
 NOTE: need work more on styles in RN
