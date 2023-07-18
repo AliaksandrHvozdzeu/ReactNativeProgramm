@@ -4,8 +4,8 @@ import ProductDetails from './src/components/productDetails';
 import CarouselItemView from './src/components/carouselItemView';
 
 function App(): JSX.Element {
-  //return <Main />;
-  return <ProductDetails productSlug={'tank-top'} />;
+  return <Main />;
+  //return <ProductDetails productSlug={'tank-top'} />;
   //return <CarouselItemView />;
 }
 
