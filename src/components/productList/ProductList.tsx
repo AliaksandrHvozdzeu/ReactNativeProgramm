@@ -8,7 +8,11 @@ import STRING_UTILS from '../../utils/StringUtils';
 import {getProductList} from '../../api/ProductsApi';
 import Bar from '../bar';
 
-const ProductList = () => {
+type productListProps = {
+  navigation: any;
+};
+
+const ProductList = ({navigation}: productListProps) => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [data, setData] = useState([]);
@@ -70,6 +74,7 @@ const ProductList = () => {
             src={getImageById(item.relationships.images.data[0].id)}
             price={item.attributes.display_price}
             currency={item.attributes.currency}
+            navigation={navigation}
           />
         )}
         keyExtractor={item => item.id}
@@ -97,6 +102,7 @@ const ProductList = () => {
             description={STRING_UTILS.shortDescription(
               item.attributes.description,
             )}
+            navigation={navigation}
           />
         )}
         keyExtractor={item => item.id}
@@ -113,6 +119,7 @@ const ProductList = () => {
           isLike={false}
           style={null}
           isCard={true}
+          navigation={navigation}
         />
       )}
       {search.length <= 0 && (
@@ -122,6 +129,7 @@ const ProductList = () => {
           isLike={false}
           style={null}
           isCard={true}
+          navigation={navigation}
         />
       )}
       <SearchBar searchFilterFunction={searchFilterFunction} search={search} />

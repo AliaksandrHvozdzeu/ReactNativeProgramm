@@ -9,6 +9,7 @@ type ItemProps = {
   price: string;
   currency: string;
   description: string;
+  navigation: any;
 };
 
 const cardStyles = Platform.select({
@@ -40,6 +41,7 @@ const ProductSearchListCard = ({
   price,
   currency,
   description,
+  navigation,
 }: ItemProps) => {
   return (
     <View style={[styles.item, cardStyles]}>
@@ -55,7 +57,9 @@ const ProductSearchListCard = ({
         <Text style={styles.productName}>{title}</Text>
         <Text style={styles.productDescription}>{description}</Text>
         <View style={styles.coastBar}>
-          <Text style={styles.price}>
+          <Text
+            style={styles.price}
+            onPress={() => navigation.navigate('ProductDetails')}>
             {price} {currency}
           </Text>
         </View>

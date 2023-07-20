@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, TouchableHighlight, View} from 'react-native';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
+import { useNavigation } from "@react-navigation/native";
 
 type carouselData = {
   data: any;
@@ -90,6 +91,8 @@ const Carousel = ({
     },
   });
 
+  const navigation = useNavigation();
+
   return (
     <View style={[styles.carouselImage, carouselImageStyle.carouselImage]}>
       <View
@@ -106,7 +109,10 @@ const Carousel = ({
           onPress={onPressRightButton}
         />
       </View>
-      <Image source={{uri: imageSrc}} style={carouselImageStyle.image} />
+      <TouchableHighlight
+        onPress={() => navigation.navigate('CarouselItemView')}>
+        <Image source={{uri: imageSrc}} style={carouselImageStyle.image} />
+      </TouchableHighlight>
       <View
         style={[
           styles.carouselRightButton,
