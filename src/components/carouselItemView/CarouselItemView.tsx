@@ -47,8 +47,7 @@ const CarouselItemView = () => {
 
   return (
     <View>
-      <TopBar />
-      <Bar
+       <Bar
         text=""
         isSearch={true}
         isLike={false}

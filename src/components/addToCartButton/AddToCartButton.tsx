@@ -3,6 +3,7 @@ import {Dimensions, Platform, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 import {styles} from './styles';
+import { useNavigation } from "@react-navigation/native";
 
 const AddToCartButton = () => {
   const ADD_TO_CART_BUTTON_POSITION_IOS =
@@ -41,6 +42,8 @@ const AddToCartButton = () => {
     },
   });
 
+  const navigation = useNavigation();
+
   return (
     <View style={[styles.buttonViewStyle, addToCarButtonStyle]}>
       <Button
@@ -62,6 +65,7 @@ const AddToCartButton = () => {
           textTransform: 'uppercase',
           textAlign: 'center',
         }}
+        onPress={() => navigation.navigate('AddProductModal')}
       />
     </View>
   );

@@ -1,5 +1,12 @@
 import React from 'react';
-import {Image, Platform, Text, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 
@@ -35,21 +42,23 @@ const ProductListCard = ({
   navigation,
 }: ItemProps) => {
   return (
-    <View style={[styles.item, cardStyles]}>
-      <View>
-        <Image style={styles.image} source={{uri: src}} />
-      </View>
-      <View style={styles.productInfoBar}>
-        <Text style={styles.productName}>{title}</Text>
-        <View style={styles.coastBar}>
-          <Text
-            style={styles.price}
-            onPress={() => navigation.navigate('ProductDetails')}>
-            {price} {currency}
-          </Text>
+    <TouchableOpacity onPress={() => navigation.navigate('ProductDetails')}>
+      <View style={[styles.item, cardStyles]}>
+        <View>
+          <Image style={styles.image} source={{uri: src}} />
+        </View>
+        <View style={styles.productInfoBar}>
+          <Text style={styles.productName}>{title}</Text>
+          <View style={styles.coastBar}>
+            <Text
+              style={styles.price}
+              onPress={() => navigation.navigate('ProductDetails')}>
+              {price} {currency}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

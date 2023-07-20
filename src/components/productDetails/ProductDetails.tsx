@@ -172,7 +172,6 @@ const ProductDetails = ({productSlug}: productDetailsProps) => {
 
   return (
     <View style={styles.layout}>
-      <TopBar />
       <Bar
         text=""
         isSearch={true}

@@ -11,7 +11,6 @@ type mainProps = {
 const Main = ({navigation}: mainProps) => {
   return (
     <View style={styles.layout}>
-      <TopBar />
       <ProductList navigation={navigation} />
     </View>
   );

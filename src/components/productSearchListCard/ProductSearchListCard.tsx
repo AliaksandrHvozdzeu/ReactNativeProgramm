@@ -1,5 +1,11 @@
 import React from 'react';
-import {Image, Platform, Text, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 
@@ -44,27 +50,27 @@ const ProductSearchListCard = ({
   navigation,
 }: ItemProps) => {
   return (
-    <View style={[styles.item, cardStyles]}>
-      <View>
-        <Image
-          style={styles.image}
-          source={{
-            uri: src,
-          }}
-        />
-      </View>
-      <View style={[styles.productInfoBar, productDetailsStyles]}>
-        <Text style={styles.productName}>{title}</Text>
-        <Text style={styles.productDescription}>{description}</Text>
-        <View style={styles.coastBar}>
-          <Text
-            style={styles.price}
-            onPress={() => navigation.navigate('ProductDetails')}>
-            {price} {currency}
-          </Text>
+    <TouchableOpacity onPress={() => navigation.navigate('ProductDetails')}>
+      <View style={[styles.item, cardStyles]}>
+        <View>
+          <Image
+            style={styles.image}
+            source={{
+              uri: src,
+            }}
+          />
+        </View>
+        <View style={[styles.productInfoBar, productDetailsStyles]}>
+          <Text style={styles.productName}>{title}</Text>
+          <Text style={styles.productDescription}>{description}</Text>
+          <View style={styles.coastBar}>
+            <Text style={styles.price}>
+              {price} {currency}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
