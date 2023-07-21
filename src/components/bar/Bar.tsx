@@ -30,7 +30,7 @@ const Bar = ({
         {isSearch && <BackButton navigation={navigation} />}
         {!isSearch && <MenuButton navigation={navigation} />}
         <BarText text={text} />
-        {isLike && <LikeButton />}
+        {isLike && <LikeButton navigation={navigation} />}
         {isCard && <CartButton count={10} />}
       </View>
     </View>
