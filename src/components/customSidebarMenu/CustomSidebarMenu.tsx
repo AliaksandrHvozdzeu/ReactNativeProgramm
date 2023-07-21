@@ -26,7 +26,7 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => Linking.openURL('https://aboutreact.com/')}
+          onPress={() => navigation.navigate('MyProfile')}
         />
         <DrawerItem
           label="My Wish List"

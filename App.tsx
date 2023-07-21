@@ -4,7 +4,6 @@ import AddProductModal from './src/components/addProductModal';
 import ProductDetails from './src/components/productDetails';
 import CarouselItemView from './src/components/carouselItemView';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {StatusBar} from 'react-native';
 import ChooseColorModal from './src/components/chooseColorModal';
 import LoginToContinueModal from './src/components/loginToContinueModal';
@@ -16,6 +15,8 @@ import 'react-native-gesture-handler';
 import CustomSidebarMenu from './src/components/customSidebarMenu';
 import WishList from './src/components/wishList';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import MyProfile from "./src/components/myProfile";
+import LogoutModal from "./src/components/logoutModal";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -33,6 +34,7 @@ const App = () => {
           headerShown: false,
         }}>
         <Drawer.Screen name="Main" component={Main} />
+        <Drawer.Screen name="MyProfile" component={MyProfile} />
       </Drawer.Navigator>
     );
   };
@@ -56,6 +58,7 @@ const App = () => {
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="AddProductModal" component={AddProductModal} />
           <Stack.Screen name="ChooseColorModal" component={ChooseColorModal} />
+          <Stack.Screen name="LogoutModal" component={LogoutModal} />
           <Stack.Screen
             name="LoginToContinueModal"
             component={LoginToContinueModal}
