@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     height: 55,
     position: 'relative',
     width: 'auto',
+    zIndex: 0,
   },
   layout: {
     height: 55,

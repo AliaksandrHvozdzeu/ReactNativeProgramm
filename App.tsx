@@ -11,8 +11,12 @@ import LoginToContinueModal from './src/components/loginToContinueModal';
 import SignUp from './src/components/signUp';
 import ForgotPassword from './src/components/forgotPassword';
 import LogIn from './src/components/logIn';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import 'react-native-gesture-handler';
+import CustomSidebarMenu from './src/components/customSidebarMenu';
 
 const RootStack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   useEffect(() => {
@@ -21,42 +25,44 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator
+      <Drawer.Navigator
+        drawerContent={() => <CustomSidebarMenu />}
+        initialRouteName="Main"
         screenOptions={{
           headerShown: false,
         }}>
-        <RootStack.Group>
-          <RootStack.Screen
+        <Drawer.Group>
+          <Drawer.Screen
             name="Main"
             component={Main}
             options={{title: 'Main'}}
           />
-          <RootStack.Screen
+          <Drawer.Screen
             name="ProductDetails"
             component={ProductDetails}
             options={{title: 'ProductDetails'}}
           />
-          <RootStack.Screen
+          <Drawer.Screen
             name="CarouselItemView"
             component={CarouselItemView}
             options={{title: 'CarouselItemView'}}
           />
-          <RootStack.Screen
+          <Drawer.Screen
             name="SignUp"
             component={SignUp}
             options={{title: 'SignUp'}}
           />
-          <RootStack.Screen
+          <Drawer.Screen
             name="LogIn"
             component={LogIn}
             options={{title: 'LogIn'}}
           />
-          <RootStack.Screen
+          <Drawer.Screen
             name="ForgotPassword"
             component={ForgotPassword}
             options={{title: 'ForgotPassword'}}
           />
-        </RootStack.Group>
+        </Drawer.Group>
         <RootStack.Group screenOptions={{presentation: 'modal'}}>
           <RootStack.Screen
             name="AddProductModal"
@@ -71,11 +77,9 @@ const App = () => {
             component={LoginToContinueModal}
           />
         </RootStack.Group>
-      </RootStack.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
-  //return <ProductDetails productSlug={'tank-top'} />;
-  //return <CarouselItemView />;
 };
 
 export default App;

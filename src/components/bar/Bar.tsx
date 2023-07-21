@@ -28,7 +28,7 @@ const Bar = ({
     <View style={[styles.layout, style]}>
       <View style={styles.bar}>
         {isSearch && <BackButton navigation={navigation} />}
-        {!isSearch && <MenuButton />}
+        {!isSearch && <MenuButton navigation={navigation} />}
         <BarText text={text} />
         {isLike && <LikeButton />}
         {isCard && <CartButton count={10} />}
