@@ -14,9 +14,10 @@ import LogIn from './src/components/logIn';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import 'react-native-gesture-handler';
 import CustomSidebarMenu from './src/components/customSidebarMenu';
-import WishList from "./src/components/wishList";
+import WishList from './src/components/wishList';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const RootStack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const App = () => {
@@ -24,66 +25,43 @@ const App = () => {
     StatusBar.setHidden(true);
   }, []);
 
-  return (
-    <NavigationContainer>
+  const DrawerManu = () => {
+    return (
       <Drawer.Navigator
         drawerContent={() => <CustomSidebarMenu />}
-        initialRouteName="Main"
         screenOptions={{
           headerShown: false,
         }}>
-        <Drawer.Group>
-          <Drawer.Screen
-            name="Main"
-            component={Main}
-            options={{title: 'Main'}}
-          />
-          <Drawer.Screen
-            name="ProductDetails"
-            component={ProductDetails}
-            options={{title: 'ProductDetails'}}
-          />
-          <Drawer.Screen
-            name="CarouselItemView"
-            component={CarouselItemView}
-            options={{title: 'CarouselItemView'}}
-          />
-          <Drawer.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{title: 'SignUp'}}
-          />
-          <Drawer.Screen
-            name="LogIn"
-            component={LogIn}
-            options={{title: 'LogIn'}}
-          />
-          <Drawer.Screen
-            name="ForgotPassword"
-            component={ForgotPassword}
-            options={{title: 'ForgotPassword'}}
-          />
-          <Drawer.Screen
-            name="WishList"
-            component={WishList}
-            options={{title: 'WishList'}}
-          />
-        </Drawer.Group>
-        <RootStack.Group screenOptions={{presentation: 'modal'}}>
-          <RootStack.Screen
-            name="AddProductModal"
-            component={AddProductModal}
-          />
-          <RootStack.Screen
-            name="ChooseColorModal"
-            component={ChooseColorModal}
-          />
-          <RootStack.Screen
+        <Drawer.Screen name="Main" component={Main} />
+      </Drawer.Navigator>
+    );
+  };
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Group>
+          <Stack.Screen name="DrawerManu" component={DrawerManu} />
+          <Stack.Screen name="Main" component={Main} />
+          <Stack.Screen name="ProductDetails" component={ProductDetails} />
+          <Stack.Screen name="CarouselItemView" component={CarouselItemView} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="LogIn" component={LogIn} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="WishList" component={WishList} />
+        </Stack.Group>
+        <Stack.Group screenOptions={{presentation: 'modal'}}>
+          <Stack.Screen name="AddProductModal" component={AddProductModal} />
+          <Stack.Screen name="ChooseColorModal" component={ChooseColorModal} />
+          <Stack.Screen
             name="LoginToContinueModal"
             component={LoginToContinueModal}
           />
-        </RootStack.Group>
-      </Drawer.Navigator>
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

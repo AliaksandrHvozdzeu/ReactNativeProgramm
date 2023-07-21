@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 

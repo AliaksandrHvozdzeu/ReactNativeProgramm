@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Platform, View} from 'react-native';
 import {styles} from './styles';
-import TopBar from '../topBar';
 import {getProductListByTag} from '../../api/ProductsApi';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
@@ -9,9 +8,10 @@ import ProductDetailsData from '../productDetailsData/ProductDetailsData';
 
 type productDetailsProps = {
   productSlug: string;
+  navigation: any;
 };
 
-const ProductDetails = ({productSlug}: productDetailsProps) => {
+const ProductDetails = ({productSlug, navigation}: productDetailsProps) => {
   const temporaryData = {
     data: {
       id: '18',
@@ -178,8 +178,11 @@ const ProductDetails = ({productSlug}: productDetailsProps) => {
         isLike={true}
         style={shadowStyles}
         isCard={true}
+        navigation={navigation}
       />
-      {product && <ProductDetailsData product={product.data} />}
+      {product && (
+        <ProductDetailsData product={product.data} navigation={navigation} />
+      )}
     </View>
   );
 };

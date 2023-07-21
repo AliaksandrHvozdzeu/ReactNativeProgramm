@@ -3,7 +3,7 @@ import {Image, StyleSheet, TouchableHighlight, View} from 'react-native';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
-import { useNavigation } from "@react-navigation/native";
+import Animated, { SharedTransition, withSpring } from "react-native-reanimated";
 
 type carouselData = {
   data: any;
@@ -12,8 +12,8 @@ type carouselData = {
   imageTopPosition: number;
   leftButtonTopPosition: number;
   rightButtonTopPosition: number;
+  navigation: any;
 };
-
 const Carousel = ({
   data,
   imageWidth,
@@ -21,6 +21,7 @@ const Carousel = ({
   imageTopPosition,
   leftButtonTopPosition,
   rightButtonTopPosition,
+  navigation,
 }: carouselData) => {
   const [total, setTotal] = useState(1);
   const [imageSrc, setImageSrc] = useState(
@@ -91,7 +92,15 @@ const Carousel = ({
     },
   });
 
-  const navigation = useNavigation();
+  const customTransition = SharedTransition.custom((values) => {
+    'worklet';
+    return {
+      height: withSpring(values.targetHeight),
+      width: withSpring(values.targetWidth),
+      originX: withSpring(values.targetOriginX),
+      originY: withSpring(values.targetOriginY),
+    };
+  });
 
   return (
     <View style={[styles.carouselImage, carouselImageStyle.carouselImage]}>
@@ -111,7 +120,12 @@ const Carousel = ({
       </View>
       <TouchableHighlight
         onPress={() => navigation.navigate('CarouselItemView')}>
-        <Image source={{uri: imageSrc}} style={carouselImageStyle.image} />
+        <Animated.Image
+          source={{uri: imageSrc}}
+          style={carouselImageStyle.image}
+          sharedTransitionTag="tag"
+          sharedTransitionStyle={customTransition}
+        />
       </TouchableHighlight>
       <View
         style={[

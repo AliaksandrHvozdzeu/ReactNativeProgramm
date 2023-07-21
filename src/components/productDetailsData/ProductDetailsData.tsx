@@ -8,9 +8,10 @@ import Carousel from '../carousel';
 
 type productDetailsDataProps = {
   product: {};
+  navigation: any;
 };
 
-const ProductDetailsData = ({product}: productDetailsDataProps) => {
+const ProductDetailsData = ({product, navigation}: productDetailsDataProps) => {
   const carouselData = [
     {
       id: 0,
@@ -60,6 +61,7 @@ const ProductDetailsData = ({product}: productDetailsDataProps) => {
             imageTopPosition={30}
             leftButtonTopPosition={100}
             rightButtonTopPosition={100}
+            navigation={navigation}
           />
           <View style={styles.productInfoBar}>
             <View style={styles.productSection}>
@@ -93,7 +95,7 @@ const ProductDetailsData = ({product}: productDetailsDataProps) => {
           </View>
         </View>
       </ScrollView>
-      <AddToCartButton />
+      <AddToCartButton navigation={navigation} />
     </View>
   );
 };

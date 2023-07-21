@@ -3,9 +3,12 @@ import {Platform, View} from 'react-native';
 import Carousel from '../carousel';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
-import TopBar from '../topBar';
 
-const CarouselItemView = () => {
+type carouselItemViewProps = {
+  navigation: any;
+};
+
+const CarouselItemView = ({navigation}: carouselItemViewProps) => {
   const shadowStyles = Platform.select({
     ios: {
       shadowColor: COLORS.neutral_700,
@@ -47,12 +50,13 @@ const CarouselItemView = () => {
 
   return (
     <View>
-       <Bar
+      <Bar
         text=""
         isSearch={true}
         isLike={false}
         style={shadowStyles}
         isCard={false}
+        navigation={navigation}
       />
       <Carousel
         data={carouselData}
@@ -61,6 +65,7 @@ const CarouselItemView = () => {
         imageTopPosition={100}
         rightButtonTopPosition={150}
         leftButtonTopPosition={150}
+        navigation={navigation}
       />
     </View>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
-import {TouchableHighlight, View} from 'react-native';
+import {View} from 'react-native';
 import {styles} from './styles';
-import {Button, Icon} from 'react-native-elements';
-import { COLORS } from "../../utils/colors";
+import {Button} from 'react-native-elements';
+import {COLORS} from '../../utils/colors';
 
 type menuButtonProps = {
   navigation: any;
@@ -33,7 +33,6 @@ const MenuButton = ({navigation}: menuButtonProps) => {
         }}
         onPress={() => navigation.openDrawer()}
       />
-      {/*<Button onPress={() => navigation.openDrawer()} />*/}
     </View>
   );
 };

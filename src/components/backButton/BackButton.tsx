@@ -2,11 +2,12 @@ import React from 'react';
 import {View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
 import {COLORS} from '../../utils/colors';
 
-const BackButton = () => {
-  const navigation = useNavigation();
+type backButtonProps = {
+  navigation: any;
+};
+const BackButton = ({navigation}: backButtonProps) => {
   return (
     <View style={styles.iconLeft}>
       <Button

@@ -116,7 +116,7 @@ const ProductList = ({navigation}: productListProps) => {
       {search.length > 0 && (
         <Bar
           text="Search"
-          isSearch={true}
+          isSearch={false}
           isLike={false}
           style={null}
           isCard={true}

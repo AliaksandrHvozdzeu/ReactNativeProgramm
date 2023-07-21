@@ -3,9 +3,12 @@ import {Dimensions, Platform, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 import {styles} from './styles';
-import { useNavigation } from "@react-navigation/native";
 
-const AddToCartButton = () => {
+type addProductProps = {
+  navigation: any;
+};
+
+const AddToCartButton = ({navigation}: addProductProps) => {
   const ADD_TO_CART_BUTTON_POSITION_IOS =
     Dimensions.get('screen').height -
     Math.floor(Dimensions.get('screen').height / 100) * 85;
@@ -41,8 +44,6 @@ const AddToCartButton = () => {
       zIndex: 1,
     },
   });
-
-  const navigation = useNavigation();
 
   return (
     <View style={[styles.buttonViewStyle, addToCarButtonStyle]}>
