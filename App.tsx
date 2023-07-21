@@ -18,6 +18,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MyProfile from "./src/components/myProfile";
 import LogoutModal from "./src/components/logoutModal";
 import AddProductWishModal from "./src/components/addProductWishModal";
+import MyCartLogin from "./src/components/myCartLogin";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -36,6 +37,7 @@ const App = () => {
         }}>
         <Drawer.Screen name="Main" component={Main} />
         <Drawer.Screen name="MyProfile" component={MyProfile} />
+        <Drawer.Screen name="MyCartLogin" component={MyCartLogin} />
       </Drawer.Navigator>
     );
   };
@@ -55,6 +57,7 @@ const App = () => {
           <Stack.Screen name="LogIn" component={LogIn} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="WishList" component={WishList} />
+          <Stack.Screen name="MyCartLogin" component={MyCartLogin} />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="AddProductModal" component={AddProductModal} />

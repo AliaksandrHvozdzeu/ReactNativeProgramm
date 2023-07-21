@@ -56,7 +56,7 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => Linking.openURL('https://aboutreact.com/')}
+          onPress={() => navigation.navigate('MyCartLogin')}
         />
         <DrawerItem
           label="My Orders"
