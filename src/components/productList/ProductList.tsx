@@ -103,6 +103,7 @@ const ProductList = ({navigation}: productListProps) => {
               item.attributes.description,
             )}
             navigation={navigation}
+            isWishList={false}
           />
         )}
         keyExtractor={item => item.id}

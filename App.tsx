@@ -14,6 +14,7 @@ import LogIn from './src/components/logIn';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import 'react-native-gesture-handler';
 import CustomSidebarMenu from './src/components/customSidebarMenu';
+import WishList from "./src/components/wishList";
 
 const RootStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -61,6 +62,11 @@ const App = () => {
             name="ForgotPassword"
             component={ForgotPassword}
             options={{title: 'ForgotPassword'}}
+          />
+          <Drawer.Screen
+            name="WishList"
+            component={WishList}
+            options={{title: 'WishList'}}
           />
         </Drawer.Group>
         <RootStack.Group screenOptions={{presentation: 'modal'}}>

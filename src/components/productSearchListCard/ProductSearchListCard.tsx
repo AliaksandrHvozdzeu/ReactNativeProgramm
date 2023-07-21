@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
+import {Icon} from 'react-native-elements';
 
 type ItemProps = {
   title: string;
@@ -16,6 +11,7 @@ type ItemProps = {
   currency: string;
   description: string;
   navigation: any;
+  isWishList: boolean;
 };
 
 const cardStyles = Platform.select({
@@ -48,7 +44,12 @@ const ProductSearchListCard = ({
   currency,
   description,
   navigation,
+  isWishList,
 }: ItemProps) => {
+  const deleteItem = () => {
+    console.log('DELETE ITEM');
+  };
+
   return (
     <TouchableOpacity onPress={() => navigation.navigate('ProductDetails')}>
       <View style={[styles.item, cardStyles]}>
@@ -68,6 +69,18 @@ const ProductSearchListCard = ({
               {price} {currency}
             </Text>
           </View>
+          {isWishList && (
+            <View style={styles.icon}>
+              <Icon
+                style={styles.delete}
+                type="antdesign"
+                name="delete"
+                size={15}
+                color={styles.delete.color}
+                onPress={deleteItem}
+              />
+            </View>
+          )}
         </View>
       </View>
     </TouchableOpacity>

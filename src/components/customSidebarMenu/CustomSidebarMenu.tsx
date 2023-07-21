@@ -3,8 +3,11 @@ import {SafeAreaView, Text, Linking, View} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
 
 const CustomSidebarMenu = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Text style={styles.menuLabel}>Ecommerce Store</Text>
@@ -38,7 +41,7 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => Linking.openURL('https://aboutreact.com/')}
+          onPress={() => navigation.navigate('WishList')}
         />
         <DrawerItem
           label="My Cart"
