@@ -19,6 +19,9 @@ import MyProfile from "./src/components/myProfile";
 import LogoutModal from "./src/components/logoutModal";
 import AddProductWishModal from "./src/components/addProductWishModal";
 import MyCartLogin from "./src/components/myCartLogin";
+import MyCartEmpty from "./src/components/myCartEmpty";
+import OrderConfirmation from "./src/components/orderConfirmation";
+import MyCartFill from "./src/components/myCartFill";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -58,6 +61,12 @@ const App = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="WishList" component={WishList} />
           <Stack.Screen name="MyCartLogin" component={MyCartLogin} />
+          <Stack.Screen name="MyCartEmpty" component={MyCartEmpty} />
+          <Stack.Screen name="MyCartFill" component={MyCartFill} />
+          <Stack.Screen
+            name="OrderConfirmation"
+            component={OrderConfirmation}
+          />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="AddProductModal" component={AddProductModal} />

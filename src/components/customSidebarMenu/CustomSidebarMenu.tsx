@@ -4,6 +4,7 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
+import MyCartFill from "../myCartFill";
 
 const CustomSidebarMenu = () => {
   const navigation = useNavigation();
@@ -56,7 +57,9 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => navigation.navigate('MyCartLogin')}
+          // onPress={() => navigation.navigate('MyCartLogin')}
+          // onPress={() => navigation.navigate('MyCartEmpty')}
+          onPress={() => navigation.navigate('MyCartFill')}
         />
         <DrawerItem
           label="My Orders"
