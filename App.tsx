@@ -22,6 +22,9 @@ import MyCartLogin from "./src/components/myCartLogin";
 import MyCartEmpty from "./src/components/myCartEmpty";
 import OrderConfirmation from "./src/components/orderConfirmation";
 import MyCartFill from "./src/components/myCartFill";
+import myOrder from "./src/components/myOrderLogin";
+import MyOrderLogin from "./src/components/myOrderLogin";
+import MyOrders from "./src/components/myOrders";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -63,6 +66,8 @@ const App = () => {
           <Stack.Screen name="MyCartLogin" component={MyCartLogin} />
           <Stack.Screen name="MyCartEmpty" component={MyCartEmpty} />
           <Stack.Screen name="MyCartFill" component={MyCartFill} />
+          <Stack.Screen name="MyOrderLogin" component={MyOrderLogin} />
+          <Stack.Screen name="MyOrders" component={MyOrders} />
           <Stack.Screen
             name="OrderConfirmation"
             component={OrderConfirmation}

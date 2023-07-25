@@ -5,6 +5,7 @@ import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import MyCartFill from "../myCartFill";
+import MyOrders from "../myOrders";
 
 const CustomSidebarMenu = () => {
   const navigation = useNavigation();
@@ -74,7 +75,8 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => Linking.openURL('https://aboutreact.com/')}
+          // onPress={() => navigation.navigate('MyOrderLogin')}
+          onPress={() => navigation.navigate('MyOrders')}
         />
         <View style={styles.menuLine} />
         <Text style={styles.menuGroupText}>Support</Text>
