@@ -1,8 +1,14 @@
-import React from 'react';
-import {Image, Platform, ScrollView, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Image,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
-import {Button} from 'react-native-elements';
 import Bar from '../bar';
 
 type myCartFillProps = {
@@ -10,6 +16,8 @@ type myCartFillProps = {
 };
 
 const MyCartFill = ({navigation}: myCartFillProps) => {
+  const [count, setCount] = useState(1);
+
   const shadowStyles = Platform.select({
     ios: {
       shadowColor: COLORS.neutral_700,
@@ -44,6 +52,29 @@ const MyCartFill = ({navigation}: myCartFillProps) => {
     },
   });
 
+  const productDetailsStyles = Platform.select({
+    ios: {
+      left: 110,
+    },
+    android: {
+      left: 120,
+    },
+  });
+
+  const onDelete = () => {
+    console.log('DELETE ITEM');
+  };
+
+  const onPlus = () => {
+    setCount(count + 1);
+  };
+
+  const onMinus = () => {
+    if (count !== 0) {
+      setCount(count - 1);
+    }
+  };
+
   return (
     <View style={styles.centeredView}>
       <Bar
@@ -57,7 +88,40 @@ const MyCartFill = ({navigation}: myCartFillProps) => {
       <View style={styles.centeredView}>
         <ScrollView>
           <View style={[styles.productCard, cardStyles]}>
-            <Text>sdfsdf</Text>
+            <View>
+              <Image
+                style={styles.image}
+                source={require('../../assets/test.png')}
+              />
+            </View>
+            <View style={[styles.productInfoBar, productDetailsStyles]}>
+              <Text style={styles.productName}>Xiaomi Mi A3</Text>
+              <Text style={styles.productDescription}>Color: Blue</Text>
+              <View style={styles.coastBar}>
+                <Text style={styles.price}>$222 $0</Text>
+              </View>
+            </View>
+            <View style={styles.buttons}>
+              <TouchableOpacity onPress={onPlus}>
+                <Image
+                  style={styles.plusButton}
+                  source={require('../../assets/plus.png')}
+                />
+              </TouchableOpacity>
+              <Text style={styles.count}>{count}</Text>
+              <TouchableOpacity onPress={onMinus}>
+                <Image
+                  style={styles.minusButton}
+                  source={require('../../assets/minus.png')}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onDelete}>
+                <Image
+                  style={styles.delete}
+                  source={require('../../assets/delete.png')}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={[styles.productCardSum, cardStyles]}>
             <Text style={styles.priceDetails}>Price details</Text>
