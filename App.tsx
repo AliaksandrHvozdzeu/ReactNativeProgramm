@@ -25,6 +25,8 @@ import MyCartFill from "./src/components/myCartFill";
 import myOrder from "./src/components/myOrderLogin";
 import MyOrderLogin from "./src/components/myOrderLogin";
 import MyOrders from "./src/components/myOrders";
+import MyOrderDetails from "./src/components/myOrderDetails";
+import MyOrderMap from "./src/components/myOrderMap";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -68,6 +70,8 @@ const App = () => {
           <Stack.Screen name="MyCartFill" component={MyCartFill} />
           <Stack.Screen name="MyOrderLogin" component={MyOrderLogin} />
           <Stack.Screen name="MyOrders" component={MyOrders} />
+          <Stack.Screen name="MyOrderDetails" component={MyOrderDetails} />
+          <Stack.Screen name="MyOrderMap" component={MyOrderMap} />
           <Stack.Screen
             name="OrderConfirmation"
             component={OrderConfirmation}

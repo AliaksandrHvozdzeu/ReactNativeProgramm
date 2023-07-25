@@ -50,7 +50,7 @@ const MyOrders = ({navigation}: myOrdersProps) => {
         isSearch={true}
         isLike={false}
         style={shadowStyles}
-        isCard={false}
+        isCard={true}
         navigation={navigation}
       />
       <View style={styles.centeredView}>
@@ -82,7 +82,11 @@ const MyOrders = ({navigation}: myOrdersProps) => {
             </View>
             <View style={styles.splitLine} />
             <View>
-              <Text style={styles.orderDetailLink}>View Order Details</Text>
+              <Text
+                style={styles.orderDetailLink}
+                onPress={() => navigation.navigate('MyOrderDetails')}>
+                View Order Details
+              </Text>
             </View>
           </View>
         </ScrollView>
