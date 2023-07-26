@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import {Icon} from 'react-native-elements';
+import {getProductListByTag} from '../../api/ProductsApi';
 
 type ItemProps = {
   title: string;
@@ -12,6 +13,9 @@ type ItemProps = {
   description: string;
   navigation: any;
   isWishList: boolean;
+  slug: string;
+  images: {};
+  included: {};
 };
 
 const cardStyles = Platform.select({
@@ -45,13 +49,32 @@ const ProductSearchListCard = ({
   description,
   navigation,
   isWishList,
+  slug,
+  images,
+  included,
 }: ItemProps) => {
+  const [productBySlagData, setProductBySlagData] = useState({});
+  useEffect(() => {
+    getProductListByTag(slug).then(json => {
+      setProductBySlagData(json.data);
+    });
+  }, []);
+
   const deleteItem = () => {
     console.log('DELETE ITEM');
   };
 
+  console.log(slug);
+
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('ProductDetails')}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('ProductDetails', {
+          slug: productBySlagData,
+          images: images,
+          included: included,
+        })
+      }>
       <View style={[styles.item, cardStyles]}>
         <View>
           <Image

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
+import {getProductListByTag} from '../../api/ProductsApi';
 
 type ItemProps = {
   title: string;
@@ -9,6 +10,9 @@ type ItemProps = {
   price: string;
   currency: string;
   navigation: any;
+  slug: string;
+  images: {};
+  included: {};
 };
 
 const cardStyles = Platform.select({
@@ -33,9 +37,25 @@ const ProductListCard = ({
   price,
   currency,
   navigation,
+  slug,
+  images,
+  included,
 }: ItemProps) => {
+  const [productBySlagData, setProductBySlagData] = useState({});
+  useEffect(() => {
+    getProductListByTag(slug).then(json => {
+      setProductBySlagData(json.data);
+    });
+  }, []);
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('ProductDetails')}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('ProductDetails', {
+          slug: productBySlagData,
+          images: images,
+          included: included,
+        })
+      }>
       <View style={[styles.item, cardStyles]}>
         <View>
           <Image style={styles.image} source={{uri: src}} />
@@ -43,9 +63,7 @@ const ProductListCard = ({
         <View style={styles.productInfoBar}>
           <Text style={styles.productName}>{title}</Text>
           <View style={styles.coastBar}>
-            <Text
-              style={styles.price}
-              onPress={() => navigation.navigate('ProductDetails')}>
+            <Text style={styles.price}>
               {price} {currency}
             </Text>
           </View>

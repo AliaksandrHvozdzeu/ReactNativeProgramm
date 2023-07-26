@@ -7,6 +7,7 @@ import ProductSearchListCard from '../productSearchListCard';
 import STRING_UTILS from '../../utils/StringUtils';
 import {getProductList} from '../../api/ProductsApi';
 import Bar from '../bar';
+import {getIncludedImageById} from '../../api/ImageApi';
 
 type productListProps = {
   navigation: any;
@@ -16,6 +17,7 @@ const ProductList = ({navigation}: productListProps) => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [data, setData] = useState([]);
+  const [included, setIncluded] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
@@ -24,12 +26,10 @@ const ProductList = ({navigation}: productListProps) => {
 
   const getDataFromApi = () => {
     getProductList().then(json => {
+      setIncluded(json.included);
       setData(json.data);
     });
-  };
-
-  const getImageById = (imageId: string) => {
-    return `https://picsum.photos/id/${imageId}/3670/2462`;
+    console.log(included);
   };
 
   const onRefresh = () => {
@@ -71,10 +71,16 @@ const ProductList = ({navigation}: productListProps) => {
         renderItem={({item}) => (
           <ProductListCard
             title={STRING_UTILS.shortTitle(item.attributes.name)}
-            src={getImageById(item.relationships.images.data[0].id)}
+            src={getIncludedImageById(
+              item.relationships.images.data[0].id,
+              included,
+            )}
             price={item.attributes.display_price}
             currency={item.attributes.currency}
             navigation={navigation}
+            slug={item.attributes.slug}
+            images={item.relationships.images.data}
+            included={included}
           />
         )}
         keyExtractor={item => item.id}
@@ -96,7 +102,10 @@ const ProductList = ({navigation}: productListProps) => {
         renderItem={({item}) => (
           <ProductSearchListCard
             title={STRING_UTILS.shortTitle(item.attributes.name)}
-            src={getImageById(item.relationships.images.data[0].id)}
+            src={getIncludedImageById(
+              item.relationships.images.data[0].id,
+              included,
+            )}
             price={item.attributes.display_price}
             currency={item.attributes.currency}
             description={STRING_UTILS.shortDescription(
@@ -104,6 +113,9 @@ const ProductList = ({navigation}: productListProps) => {
             )}
             navigation={navigation}
             isWishList={false}
+            slug={item.attributes.slug}
+            images={item.relationships.images.data}
+            included={included}
           />
         )}
         keyExtractor={item => item.id}

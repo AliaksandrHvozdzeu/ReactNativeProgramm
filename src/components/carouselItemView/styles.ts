@@ -2,50 +2,45 @@ import {StyleSheet} from 'react-native';
 import {COLORS} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
-  dotBar: {
+  bgImageWrapper: {
     position: 'absolute',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    bottom: -10,
-    fontWeight: '700',
-  },
-  dotNotActive: {
-    color: COLORS.neutral_500,
-  },
-  dotActive: {
-    color: COLORS.blue_500,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   image: {
-    width: 250,
-    height: 250,
+    flex: 1,
+    height: 300,
   },
-  carouselLeftButton: {
-    position: 'absolute',
-    right: 25,
-    top: 100,
+  carouselItem: {
+    width: 250,
+    height: 500,
+    alignItems: 'center',
+  },
+  itemsElements: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   carouselLeftButtonIcon: {
     color: COLORS.neutral_500,
   },
   carouselRightButton: {
-    position: 'absolute',
-    left: 25,
-    top: 100,
+    width: 50,
+    marginLeft: 5,
+  },
+  carouselLeftButton: {
+    width: 50,
+    marginRight: 5,
   },
   carouselRightButtonIcon: {
     color: COLORS.neutral_500,
   },
-  dotStyles: {
-    marginRight: -13,
-    marginLeft: -13,
-  },
-  carouselImage: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 25,
-    marginTop: 30,
-    marginBottom: 30,
+  imageContainer: {
+    borderRadius: 5,
   },
 });
