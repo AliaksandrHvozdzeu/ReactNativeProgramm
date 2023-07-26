@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, Platform, Text, View} from 'react-native';
+import {Image, Platform, View} from 'react-native';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
 import CarouselView, {Pagination} from 'react-native-snap-carousel';
@@ -59,7 +59,7 @@ const CarouselItemView = ({route, navigation}: carouselItemViewProps) => {
   return (
     <View>
       <Bar
-        text=""
+        text="Product images"
         isSearch={true}
         isLike={false}
         style={shadowStyles}
