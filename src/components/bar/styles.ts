@@ -12,5 +12,6 @@ export const styles = StyleSheet.create({
   layout: {
     height: 55,
     alignSelf: 'stretch',
+    zIndex: 1000,
   },
 });

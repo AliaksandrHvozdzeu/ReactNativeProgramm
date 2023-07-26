@@ -11,6 +11,11 @@ class StringUtils extends Component {
       stringValue.length > 20 ? `${stringValue.slice(0, 20)}...` : stringValue;
     return value.replace(/<\/?[^>]+(>|$)/g, '');
   }
+
+  static replaceTags(stringValue: string) {
+    return stringValue.replace(/<\/?[^>]+(>|$)/g, '');
+  }
+
 }
 
 export default StringUtils;

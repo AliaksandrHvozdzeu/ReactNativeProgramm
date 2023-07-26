@@ -4,7 +4,7 @@ import {styles} from './styles';
 import {Button} from 'react-native-elements';
 import AddToCartButton from '../addToCartButton';
 import Carousel from '../carousel';
-import { buildImageArray, getImageById } from "../../api/ImageApi";
+import {getImageById} from '../../api/ImageApi';
 
 type productDetailsDataProps = {
   id: string;
@@ -27,7 +27,6 @@ const ProductDetailsData = ({
   included,
   images,
 }: productDetailsDataProps) => {
-
   return (
     <View style={styles.productDetailsDataLayout}>
       <ScrollView>

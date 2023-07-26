@@ -3,6 +3,7 @@ import {Platform, View} from 'react-native';
 import {styles} from './styles';
 import Bar from '../bar';
 import {COLORS} from '../../utils/colors';
+import STRING_UTILS from '../../utils/StringUtils';
 import ProductDetailsData from '../productDetailsData/ProductDetailsData';
 
 type productDetailsProps = {
@@ -48,7 +49,7 @@ const ProductDetails = ({route, navigation}: productDetailsProps) => {
           name={slug.attributes.name}
           currency={slug.attributes.currency}
           display_price={slug.attributes.display_price}
-          description={slug.attributes.description}
+          description={STRING_UTILS.replaceTags(slug.attributes.description)}
           included={included}
           images={images}
         />

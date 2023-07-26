@@ -4,6 +4,7 @@ import CarouselView, {Pagination} from 'react-native-snap-carousel';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {buildImageArray} from '../../api/ImageApi';
+import { COLORS } from "../../utils/colors";
 
 type carouselData = {
   id: string;
@@ -112,7 +113,7 @@ const Carousel = ({
             height: 10,
             borderRadius: 5,
             marginHorizontal: 0,
-            backgroundColor: 'red',
+            backgroundColor: COLORS.neutral_700,
           }}
           inactiveDotOpacity={0.4}
           inactiveDotScale={0.6}
