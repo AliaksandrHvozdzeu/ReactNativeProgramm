@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
+import {DrawerActions} from '@react-navigation/native';
 
 type menuButtonProps = {
   navigation: any;
@@ -31,7 +32,7 @@ const MenuButton = ({navigation}: menuButtonProps) => {
           marginHorizontal: 50,
           marginVertical: 10,
         }}
-        onPress={() => navigation.openDrawer()}
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       />
     </View>
   );

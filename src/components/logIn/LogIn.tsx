@@ -5,10 +5,21 @@ import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 
 type logInProps = {
+  route: any;
   navigation: any;
 };
 
-const LogIn = ({navigation}: logInProps) => {
+const LogIn = ({route, navigation}: logInProps) => {
+  const [username, setUsername] = React.useState('aliaksandr.hvozdzeu@gmail.com');
+  const [password, setPassword] = React.useState('250486al');
+
+  const {authContext} = route.params;
+
+  const setAuthData = () => {
+    authContext.signIn({username, password});
+    navigation.navigate('Main');
+  };
+
   const shadowStyles = Platform.select({
     ios: {
       shadowColor: COLORS.neutral_700,
@@ -53,11 +64,20 @@ const LogIn = ({navigation}: logInProps) => {
       <View>
         <View>
           <Text style={styles.inputName}>Email Address</Text>
-          <TextInput style={styles.input} />
+          <TextInput
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
+          />
         </View>
         <View>
           <Text style={styles.inputName}>Password</Text>
-          <TextInput style={styles.input} secureTextEntry={true} />
+          <TextInput
+            style={styles.input}
+            secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
+          />
         </View>
         <View>
           <Text
@@ -74,7 +94,7 @@ const LogIn = ({navigation}: logInProps) => {
             marginTop: 10,
             width: 300,
           }}
-          onPress={() => navigation.goBack()}
+          onPress={() => setAuthData()}
           title="SIGN IN"
         />
       </View>

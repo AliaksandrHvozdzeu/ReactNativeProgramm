@@ -7,12 +7,7 @@ import STRING_UTILS from '../../utils/StringUtils';
 import {getProductList} from '../../api/ProductsApi';
 
 type wishListProps = {
-  title: string;
-  src: string;
-  price: string;
-  currency: string;
   description: string;
-  navigation: any;
 };
 const WishList = ({navigation}: wishListProps) => {
   const [data, setData] = useState([]);

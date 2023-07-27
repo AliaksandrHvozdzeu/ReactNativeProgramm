@@ -61,7 +61,7 @@ const MyCartEmpty = ({navigation}: myCartEmptyProps) => {
               marginTop: 10,
               width: 300,
             }}
-            onPress={() => navigation.navigate('LogIn')}
+            onPress={() => navigation.navigate('Main')}
             title="SHOP NOW"
           />
         </View>

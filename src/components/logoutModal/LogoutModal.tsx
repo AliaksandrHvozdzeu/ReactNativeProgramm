@@ -28,7 +28,7 @@ const LogoutModal = ({navigation}: logoutModalProps) => {
   });
 
   const onLogOut = () => {
-    console.log('LOGOUT');
+
   };
 
   return (

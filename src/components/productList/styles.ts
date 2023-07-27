@@ -1,7 +1,7 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import {COLORS} from '../../utils/colors';
 
-const SCREEN_HEIGHT = Dimensions.get('screen').height - 150;
+const SCREEN_HEIGHT = Dimensions.get('screen').height - 100;
 
 // 20
 

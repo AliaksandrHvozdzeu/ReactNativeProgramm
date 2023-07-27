@@ -31,7 +31,7 @@ const Bar = ({
         {!isSearch && <MenuButton navigation={navigation} />}
         <BarText text={text} />
         {isLike && <LikeButton navigation={navigation} />}
-        {isCard && <CartButton count={10} />}
+        {isCard && <CartButton navigation={navigation} count={1} />}
       </View>
     </View>
   );

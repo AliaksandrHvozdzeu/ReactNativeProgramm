@@ -93,7 +93,7 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => Linking.openURL('https://aboutreact.com/')}
+          onPress={() => Linking.openURL('')}
         />
         <DrawerItem
           label="Call"
@@ -108,7 +108,7 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => Linking.openURL('https://aboutreact.com/')}
+          onPress={() => Linking.openURL('')}
         />
         <View style={styles.menuLine} />
         <View style={styles.share}>
@@ -125,7 +125,7 @@ const CustomSidebarMenu = () => {
             )}
             labelStyle={styles.menuItem}
             style={styles.drawItem}
-            onPress={() => Linking.openURL('https://aboutreact.com/')}
+            onPress={() => Linking.openURL('')}
           />
         </View>
       </DrawerContentScrollView>

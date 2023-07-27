@@ -30,7 +30,7 @@ const ForgotPassword = ({navigation}: forgotPasswordProps) => {
   });
 
   const onSubmit = () => {
-    console.log('SUBMIT');
+
   };
 
   return (

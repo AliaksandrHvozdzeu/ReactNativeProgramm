@@ -6,10 +6,14 @@ import {Button} from 'react-native-elements';
 import Bar from '../bar';
 
 type myProfileProps = {
+  route: any;
   navigation: any;
 };
 
-const MyProfile = ({navigation}: myProfileProps) => {
+const MyProfile = ({route, navigation}: myProfileProps) => {
+
+  const {authContext} = route.params;
+
   const shadowStyles = Platform.select({
     ios: {
       shadowColor: COLORS.neutral_700,
@@ -31,7 +35,7 @@ const MyProfile = ({navigation}: myProfileProps) => {
   });
 
   const onUpdate = () => {
-    console.log('UPDATE');
+
   };
 
   return (
@@ -41,7 +45,7 @@ const MyProfile = ({navigation}: myProfileProps) => {
         isSearch={true}
         isLike={false}
         style={shadowStyles}
-        isCard={true}
+        isCard={false}
         navigation={navigation}
       />
       <View style={styles.centeredView}>
@@ -91,7 +95,7 @@ const MyProfile = ({navigation}: myProfileProps) => {
               marginTop: 10,
               width: 300,
             }}
-            onPress={() => navigation.navigate('LogoutModal')}
+            onPress={() => authContext.signOut()}
             title="LOGOUT"
           />
         </View>

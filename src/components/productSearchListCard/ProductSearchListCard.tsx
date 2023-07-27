@@ -61,10 +61,8 @@ const ProductSearchListCard = ({
   }, []);
 
   const deleteItem = () => {
-    console.log('DELETE ITEM');
-  };
 
-  console.log(slug);
+  };
 
   return (
     <TouchableOpacity

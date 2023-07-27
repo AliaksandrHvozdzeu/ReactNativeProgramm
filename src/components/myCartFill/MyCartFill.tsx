@@ -62,7 +62,7 @@ const MyCartFill = ({navigation}: myCartFillProps) => {
   });
 
   const onDelete = () => {
-    console.log('DELETE ITEM');
+
   };
 
   const onPlus = () => {

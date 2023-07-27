@@ -29,7 +29,6 @@ const ProductList = ({navigation}: productListProps) => {
       setIncluded(json.included);
       setData(json.data);
     });
-    console.log(included);
   };
 
   const onRefresh = () => {
@@ -39,7 +38,6 @@ const ProductList = ({navigation}: productListProps) => {
   };
 
   const searchFilterFunction = (text: string) => {
-    console.log(text);
     if (text) {
       const newData = data.filter(function (item: {title: string}) {
         const itemData = item.attributes.name
