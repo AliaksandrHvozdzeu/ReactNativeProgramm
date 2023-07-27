@@ -5,10 +5,13 @@ import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 
 type logoutModalProps = {
+  route: any;
   navigation: any;
 };
 
-const LogoutModal = ({navigation}: logoutModalProps) => {
+const LogoutModal = ({route, navigation}: logoutModalProps) => {
+  const {authContext} = route.params;
+
   const shadowStyles = Platform.select({
     ios: {
       shadowOffset: {width: 0, height: 2},
@@ -26,10 +29,6 @@ const LogoutModal = ({navigation}: logoutModalProps) => {
       zIndex: 1,
     },
   });
-
-  const onLogOut = () => {
-
-  };
 
   return (
     <View style={styles.centeredView}>
@@ -62,7 +61,7 @@ const LogoutModal = ({navigation}: logoutModalProps) => {
               marginTop: 10,
               width: 120,
             }}
-            onPress={onLogOut}
+            onPress={() => authContext.signOut()}
             title="LOGOUT"
           />
         </View>

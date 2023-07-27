@@ -17,7 +17,7 @@ const LogIn = ({route, navigation}: logInProps) => {
 
   const setAuthData = () => {
     authContext.signIn({username, password});
-    navigation.navigate('Main');
+    navigation.navigate('Root');
   };
 
   const shadowStyles = Platform.select({
@@ -128,7 +128,7 @@ const LogIn = ({route, navigation}: logInProps) => {
             marginVertical: 10,
           }}
           titleStyle={{marginHorizontal: 20, color: COLORS.neutral_100}}
-          onPress={() => navigation.navigate('Main')}
+          onPress={() => navigation.navigate('Root')}
         />
       </View>
     </View>

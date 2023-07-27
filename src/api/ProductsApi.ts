@@ -12,6 +12,19 @@ export const getProductListByTag = (productSlug: string) =>
     response.json(),
   );
 
+export const getUserData = (token: string, login: string) =>
+  fetch(
+    `https://demo.spreecommerce.org/api/v2/storefront/account?user=${login}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    },
+  ).then(response => response.json());
+
 export const onSignIn = (data: {username: string; password: string}) => {
   fetch('https://demo.spreecommerce.org/spree_oauth/token', {
     method: 'POST',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Platform, Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
@@ -11,8 +11,8 @@ type myProfileProps = {
 };
 
 const MyProfile = ({route, navigation}: myProfileProps) => {
-
-  const {authContext} = route.params;
+  const [userData, setUserData] = useState();
+  const {authContext, userName, token} = route.params;
 
   const shadowStyles = Platform.select({
     ios: {
@@ -34,9 +34,25 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
     },
   });
 
-  const onUpdate = () => {
+  console.log(token);
 
-  };
+  useEffect(() => {
+    const getUserData = async () => {
+      const response = await fetch(
+        `https://demo.spreecommerce.org/api/v2/storefront/account?user=${userName}&include=default_billing_address,default_shipping_address`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        },
+      );
+      const content = await response.json();
+      setUserData(content.included);
+    };
+    getUserData();
+  }, []);
+
+  const onUpdate = () => {};
 
   return (
     <View style={styles.centeredView}>
@@ -49,36 +65,53 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
         navigation={navigation}
       />
       <View style={styles.centeredView}>
-        <View>
-          <View style={styles.firstBlock}>
-            <Text style={styles.inputName}>Full Name</Text>
-            <TextInput style={styles.input} />
-          </View>
-          <View style={styles.imageProfile}>
-            <View style={styles.imageView}>
-              <Image
-                source={require('../../assets/photo.png')}
-                style={styles.image}
+        {userData && (
+          <View>
+            <View style={styles.firstBlock}>
+              <Text style={styles.inputName}>Full Name</Text>
+              <TextInput
+                style={styles.input}
+                value={`${userData[0].attributes?.firstname} ${userData[0].attributes?.lastname}`}
+              />
+            </View>
+            <View style={styles.imageProfile}>
+              <View style={styles.imageView}>
+                <Image
+                  source={require('../../assets/photo.png')}
+                  style={styles.image}
+                />
+              </View>
+            </View>
+            <View>
+              <Text style={styles.inputName}>Mobile Number</Text>
+              <TextInput
+                style={styles.input}
+                value={userData[0].attributes?.phone}
+              />
+            </View>
+            <View>
+              <Text style={styles.inputName}>City</Text>
+              <TextInput
+                style={styles.input}
+                value={userData[0].attributes?.city}
+              />
+            </View>
+            <View>
+              <Text style={styles.inputName}>Location, area or street</Text>
+              <TextInput
+                style={styles.input}
+                value={userData[0].attributes?.address1}
+              />
+            </View>
+            <View>
+              <Text style={styles.inputName}>Flat no., Building name</Text>
+              <TextInput
+                style={styles.input}
+                value={userData[0].attributes?.address2}
               />
             </View>
           </View>
-          <View>
-            <Text style={styles.inputName}>Mobile Number</Text>
-            <TextInput style={styles.input} />
-          </View>
-          <View>
-            <Text style={styles.inputName}>City</Text>
-            <TextInput style={styles.input} secureTextEntry={true} />
-          </View>
-          <View>
-            <Text style={styles.inputName}>Location, area or street</Text>
-            <TextInput style={styles.input} secureTextEntry={true} />
-          </View>
-          <View>
-            <Text style={styles.inputName}>Flat no., Building name</Text>
-            <TextInput style={styles.input} secureTextEntry={true} />
-          </View>
-        </View>
+        )}
         <View>
           <Button
             buttonStyle={shadowStyles}
@@ -95,7 +128,11 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
               marginTop: 10,
               width: 300,
             }}
-            onPress={() => authContext.signOut()}
+            onPress={() =>
+              navigation.navigate('LogoutModal', {
+                authContext: authContext,
+              })
+            }
             title="LOGOUT"
           />
         </View>

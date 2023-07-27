@@ -1,4 +1,4 @@
-import React, {useEffect, createContext} from 'react';
+import React, {useEffect, createContext, useState} from 'react';
 import Main from './src/components/main';
 import AddProductModal from './src/components/addProductModal';
 import ProductDetails from './src/components/productDetails';
@@ -31,6 +31,7 @@ import * as SecureStore from 'expo-secure-store';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const Drawer = createDrawerNavigator();
+  const [userName, setUserName] = useState('');
   const [state, dispatch] = React.useReducer(
     (prevState: any, action: {type: string; token: any}) => {
       switch (action.type) {
@@ -101,8 +102,8 @@ const App = () => {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async (data) => {
-        console.log(data);
+      signIn: async (data: {username: string; password: string}) => {
+        setUserName(data.username);
         const response = await fetch(
           'https://demo.spreecommerce.org/spree_oauth/token',
           {
@@ -165,7 +166,17 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Drawer.Screen name="Main" component={Main} />
+        <Drawer.Screen
+          name="Main"
+          component={Main}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="LogIn"
+          component={LogIn}
+          initialParams={{authContext: authContext}}
+          options={{headerShown: false}}
+        />
       </Drawer.Navigator>
     );
   };
@@ -181,38 +192,146 @@ const App = () => {
           />
           {state.userToken == null ? (
             <Stack.Group>
-              <Stack.Screen name="Main" component={Main} options={{headerShown: false}} />
-              <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}} />
-              <Stack.Screen name="LogIn" component={LogIn} initialParams={{authContext: authContext}} options={{headerShown: false}} />
-              <Stack.Screen name="MyCartLogin" component={MyCartLogin} options={{headerShown: false}} />
-              <Stack.Screen name="MyOrderLogin" component={MyOrderLogin} options={{headerShown: false}} />
-              <Stack.Screen name="ProductDetails" component={ProductDetails} options={{headerShown: false}} />
-              <Stack.Screen name="CarouselItemView" component={CarouselItemView} options={{headerShown: false}} />
+              <Stack.Screen
+                name="Main"
+                component={Main}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="SignUp"
+                component={SignUp}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="LogIn"
+                component={LogIn}
+                initialParams={{authContext: authContext}}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="MyCartLogin"
+                component={MyCartLogin}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="MyOrderLogin"
+                component={MyOrderLogin}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ProductDetails"
+                component={ProductDetails}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="CarouselItemView"
+                component={CarouselItemView}
+                options={{headerShown: false}}
+              />
             </Stack.Group>
           ) : (
             <>
               <Stack.Group>
-                <Stack.Screen name="Main" component={Main} />
-                <Stack.Screen name="LogIn" component={LogIn} initialParams={{authContext: authContext}} />
-                <Stack.Screen name="MyCartLogin" component={MyCartLogin} options={{headerShown: false}} />
-                <Drawer.Screen name="MyProfile" component={MyProfile} initialParams={{authContext: authContext}} options={{headerShown: false}} />
-                <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}} />
-                <Stack.Screen name="ProductDetails" component={ProductDetails} options={{headerShown: false}} />
-                <Stack.Screen name="CarouselItemView" component={CarouselItemView} options={{headerShown: false}} />
-                <Stack.Screen name="WishList" component={WishList} options={{headerShown: false}} />
-                <Stack.Screen name="MyCartEmpty" component={MyCartEmpty} options={{headerShown: false}} />
-                <Stack.Screen name="MyCartFill" component={MyCartFill} options={{headerShown: false}} />
-                <Stack.Screen name="MyOrders" component={MyOrders} options={{headerShown: false}} />
-                <Stack.Screen name="MyOrderDetails" component={MyOrderDetails} options={{headerShown: false}} />
-                <Stack.Screen name="MyOrderMap" component={MyOrderMap} options={{headerShown: false}} />
-                <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} options={{headerShown: false}} />
+                <Stack.Screen
+                  name="Main"
+                  component={Main}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="LogIn"
+                  component={LogIn}
+                  initialParams={{authContext: authContext}}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyCartLogin"
+                  component={MyCartLogin}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyProfile"
+                  component={MyProfile}
+                  initialParams={{
+                    authContext: authContext,
+                    userName: userName,
+                    token: state.userToken,
+                  }}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="ForgotPassword"
+                  component={ForgotPassword}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="ProductDetails"
+                  component={ProductDetails}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="CarouselItemView"
+                  component={CarouselItemView}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="WishList"
+                  component={WishList}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyCartEmpty"
+                  component={MyCartEmpty}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyCartFill"
+                  component={MyCartFill}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyOrders"
+                  component={MyOrders}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyOrderDetails"
+                  component={MyOrderDetails}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyOrderMap"
+                  component={MyOrderMap}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyOrderLogin"
+                  component={MyOrderLogin}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="OrderConfirmation"
+                  component={OrderConfirmation}
+                  options={{headerShown: false}}
+                />
               </Stack.Group>
               <Stack.Group screenOptions={{presentation: 'modal'}}>
-                <Stack.Screen name="AddProductModal" component={AddProductModal} />
-                <Stack.Screen name="ChooseColorModal" component={ChooseColorModal} />
+                <Stack.Screen
+                  name="AddProductModal"
+                  component={AddProductModal}
+                />
+                <Stack.Screen
+                  name="ChooseColorModal"
+                  component={ChooseColorModal}
+                />
                 <Stack.Screen name="LogoutModal" component={LogoutModal} />
-                <Stack.Screen name="AddProductWishModal" component={AddProductWishModal} />
-                <Stack.Screen name="LoginToContinueModal" component={LoginToContinueModal} />
+                <Stack.Screen
+                  name="AddProductWishModal"
+                  component={AddProductWishModal}
+                />
+                <Stack.Screen
+                  name="LoginToContinueModal"
+                  component={LoginToContinueModal}
+                />
               </Stack.Group>
             </>
           )}

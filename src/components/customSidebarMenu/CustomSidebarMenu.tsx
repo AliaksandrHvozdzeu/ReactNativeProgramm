@@ -4,8 +4,7 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
-import MyCartFill from "../myCartFill";
-import MyOrders from "../myOrders";
+import * as SecureStore from 'expo-secure-store';
 
 const CustomSidebarMenu = () => {
   const navigation = useNavigation();
@@ -28,7 +27,14 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => navigation.navigate('MyProfile')}
+          onPress={async () => {
+            const token = await SecureStore.getItemAsync('secure_token');
+            if (token) {
+              navigation.navigate('MyProfile');
+            } else {
+              navigation.navigate('LogIn');
+            }
+          }}
         />
         <DrawerItem
           label="My Wish List"
@@ -43,7 +49,14 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          onPress={() => navigation.navigate('WishList')}
+          onPress={async () => {
+            const token = await SecureStore.getItemAsync('secure_token');
+            if (token) {
+              navigation.navigate('WishList');
+            } else {
+              navigation.navigate('LogIn');
+            }
+          }}
         />
         <DrawerItem
           label="My Cart"
@@ -58,9 +71,14 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          // onPress={() => navigation.navigate('MyCartLogin')}
-          // onPress={() => navigation.navigate('MyCartEmpty')}
-          onPress={() => navigation.navigate('MyCartFill')}
+          onPress={async () => {
+            const token = await SecureStore.getItemAsync('secure_token');
+            if (token) {
+              navigation.navigate('MyCartEmpty');
+            } else {
+              navigation.navigate('LogIn');
+            }
+          }}
         />
         <DrawerItem
           label="My Orders"
@@ -75,8 +93,14 @@ const CustomSidebarMenu = () => {
           )}
           labelStyle={styles.menuItem}
           style={styles.drawItem}
-          // onPress={() => navigation.navigate('MyOrderLogin')}
-          onPress={() => navigation.navigate('MyOrders')}
+          onPress={async () => {
+            const token = await SecureStore.getItemAsync('secure_token');
+            if (token) {
+              navigation.navigate('MyOrderLogin');
+            } else {
+              navigation.navigate('LogIn');
+            }
+          }}
         />
         <View style={styles.menuLine} />
         <Text style={styles.menuGroupText}>Support</Text>
