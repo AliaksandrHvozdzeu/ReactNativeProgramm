@@ -63,6 +63,9 @@ const App = () => {
   );
 
   useEffect(() => {
+    LogBox.ignoreLogs([
+      'Non-serializable values were found in the navigation state',
+    ]);
     StatusBar.setHidden(true);
     const bootstrapAsync = async () => {
       let userToken;
@@ -95,10 +98,6 @@ const App = () => {
     };
     bootstrapAsync();
   }, []);
-
-  LogBox.ignoreLogs([
-    'Non-serializable values were found in the navigation state',
-  ]);
 
   const authContext = React.useMemo(
     () => ({
@@ -292,6 +291,9 @@ const App = () => {
                   name="MyOrders"
                   component={MyOrders}
                   options={{headerShown: false}}
+                  initialParams={{
+                    token: state.userToken,
+                  }}
                 />
                 <Stack.Screen
                   name="MyOrderDetails"

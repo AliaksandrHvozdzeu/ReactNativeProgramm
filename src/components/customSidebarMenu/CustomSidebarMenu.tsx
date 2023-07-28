@@ -95,10 +95,11 @@ const CustomSidebarMenu = () => {
           style={styles.drawItem}
           onPress={async () => {
             const token = await SecureStore.getItemAsync('secure_token');
-            if (token) {
+            console.log(token);
+            if (!token) {
               navigation.navigate('MyOrderLogin');
             } else {
-              navigation.navigate('LogIn');
+              navigation.navigate('MyOrders');
             }
           }}
         />

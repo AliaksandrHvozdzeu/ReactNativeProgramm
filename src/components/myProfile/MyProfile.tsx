@@ -34,8 +34,6 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
     },
   });
 
-  console.log(token);
-
   useEffect(() => {
     const getUserData = async () => {
       const response = await fetch(

@@ -211,4 +211,26 @@ export const styles = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
   },
+  loadingData: {
+    display: 'flex',
+    marginLeft: 10,
+    fontFamily: 'Roboto',
+    fontSize: 15,
+    left: 5,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    borderColor: COLORS.neutral_500,
+  },
+  onLoadDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 600,
+    verticalAlign: 'middle',
+  },
+  onLoadDataHorizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
 });
