@@ -4,6 +4,7 @@ import {styles} from './styles';
 import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 import * as SecureStore from 'expo-secure-store';
+import MyCart from "../myCart";
 
 type cartButtonProps = {
   count: number;
@@ -39,7 +40,7 @@ const CartButton = ({navigation, count}: cartButtonProps) => {
             navigation.navigate('MyCartLogin');
           } else {
             count > 0
-              ? navigation.navigate('MyCartFill')
+              ? navigation.navigate('MyCart')
               : navigation.navigate('MyCartEmpty');
           }
         }}

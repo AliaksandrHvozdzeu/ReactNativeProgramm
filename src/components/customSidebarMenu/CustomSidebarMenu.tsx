@@ -74,9 +74,9 @@ const CustomSidebarMenu = () => {
           onPress={async () => {
             const token = await SecureStore.getItemAsync('secure_token');
             if (token) {
-              navigation.navigate('MyCartEmpty');
+              navigation.navigate('MyCart');
             } else {
-              navigation.navigate('LogIn');
+              navigation.navigate('MyCartLogin');
             }
           }}
         />

@@ -10,7 +10,7 @@ import {
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
-import Moment from "moment/moment";
+import Moment from 'moment/moment';
 
 type myOrdersProps = {
   route: any;

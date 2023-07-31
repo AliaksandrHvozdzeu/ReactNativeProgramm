@@ -20,13 +20,13 @@ import AddProductWishModal from './src/components/addProductWishModal';
 import MyCartLogin from './src/components/myCartLogin';
 import MyCartEmpty from './src/components/myCartEmpty';
 import OrderConfirmation from './src/components/orderConfirmation';
-import MyCartFill from './src/components/myCartFill';
 import MyOrderLogin from './src/components/myOrderLogin';
 import MyOrders from './src/components/myOrders';
 import MyOrderDetails from './src/components/myOrderDetails';
 import MyOrderMap from './src/components/myOrderMap';
 import {LogBox, StatusBar} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import MyCart from './src/components/myCart';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -283,9 +283,12 @@ const App = () => {
                   options={{headerShown: false}}
                 />
                 <Stack.Screen
-                  name="MyCartFill"
-                  component={MyCartFill}
+                  name="MyCart"
+                  component={MyCart}
                   options={{headerShown: false}}
+                  initialParams={{
+                    token: state.userToken,
+                  }}
                 />
                 <Stack.Screen
                   name="MyOrders"

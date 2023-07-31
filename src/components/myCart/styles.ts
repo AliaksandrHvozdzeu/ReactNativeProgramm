@@ -10,6 +10,10 @@ export const styles = StyleSheet.create({
   firstBlock: {
     marginTop: 0,
   },
+  cartProductsScroll: {
+    height: 'auto',
+    backgroundColor: COLORS.neutral_100,
+  },
   text: {
     color: COLORS.blue_300,
     textAlign: 'center',
@@ -90,7 +94,7 @@ export const styles = StyleSheet.create({
   },
   productCard: {
     flex: 1,
-    backgroundColor: COLORS.neutral_100,
+    backgroundColor: COLORS.neutral_0,
     marginTop: 30,
     borderRadius: 5,
     marginLeft: 5,
@@ -253,7 +257,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: '100%',
-    marginTop: 20,
+    marginTop: 10,
     bottom: 0,
     height: 30,
     justifyContent: 'center',
@@ -267,12 +271,12 @@ export const styles = StyleSheet.create({
     right: -90,
   },
   plusButton: {
-    width: 30,
+    width: 20,
     alignItems: 'center',
     borderRadius: 25,
     borderColor: COLORS.neutral_300,
     borderWidth: 1,
-    height: 30,
+    height: 20,
     justifyContent: 'center',
   },
   count: {
@@ -287,12 +291,12 @@ export const styles = StyleSheet.create({
     lineHeight: 20,
   },
   minusButton: {
-    width: 30,
+    width: 20,
     alignItems: 'center',
     borderRadius: 20,
     borderColor: COLORS.neutral_300,
     borderWidth: 1,
-    height: 30,
+    height: 20,
     justifyContent: 'center',
   },
 });
