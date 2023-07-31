@@ -1,21 +1,18 @@
-import React, {useState} from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {Image, LogBox, Platform, ScrollView, Text, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
+import Moment from 'moment';
 
 type myOrderDetailsProps = {
+  route: any;
   navigation: any;
 };
 
-const MyOrderDetails = ({navigation}: myOrderDetailsProps) => {
+const MyOrderDetails = ({route, navigation}: myOrderDetailsProps) => {
+  const {orderIncluded, orderNumber, orderDate, orders} = route.params;
+
   const shadowStyles = Platform.select({
     ios: {
       shadowColor: COLORS.neutral_700,
@@ -50,14 +47,70 @@ const MyOrderDetails = ({navigation}: myOrderDetailsProps) => {
     },
   });
 
+  useEffect(() => {
+    LogBox.ignoreLogs(['Excessive number of pending callbacks: 501.']);
+    LogBox.ignoreLogs(['Each child in a list should have a unique "key" prop.']);
+  });
+
   const scrollStyle = Platform.select({
     ios: {
-      height: 130,
+      height: 120,
     },
     android: {
       height: 250,
     },
   });
+
+  type orderType = {
+    name: string;
+    orderNumber: string;
+    imagePath: string;
+    total: string;
+    currency: string;
+    itemCount: string;
+  };
+
+  const getFormatDate = (date: string) => {
+    Moment.locale('en');
+    return Moment(date).format('DD/MM/YY hh:mm');
+  };
+
+  const getBillingAddress = () => {
+    const zipcode = orderIncluded[4].attributes.zipcode;
+    const countryIso3 = orderIncluded[4].attributes.country_iso3;
+    const stateName = orderIncluded[4].attributes.state_name;
+    const city = orderIncluded[4].attributes.city;
+    const address1 = orderIncluded[4].attributes.address1;
+    const address2 = orderIncluded[4].attributes.address2;
+    const full: string = `${zipcode}, ${countryIso3}, ${stateName}, ${city}, ${address1}, ${address2}`;
+    return full;
+  };
+
+  const Item = ({
+    name,
+    orderNumber,
+    imagePath,
+    total,
+    currency,
+    itemCount,
+  }: orderType) => (
+    <View>
+      <View style={[styles.productCard, cardStyles]}>
+        <View style={[styles.productInfoBar]}>
+          <Text style={styles.productName}>{name}</Text>
+          <Text style={styles.productDescription}>Color: Blue</Text>
+          <Text style={styles.productDescription}>Qty: {itemCount}</Text>
+          <Text style={styles.productDescription}>{total}</Text>
+        </View>
+        <View>
+          <Image
+            style={styles.image}
+            source={{uri: `https://demo.spreecommerce.org${imagePath}`}}
+          />
+        </View>
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.centeredView}>
@@ -73,78 +126,80 @@ const MyOrderDetails = ({navigation}: myOrderDetailsProps) => {
         <View style={[styles.productCardSum]}>
           <View style={styles.priceItemsElements}>
             <Text style={styles.priceDetailsItem}>Order ID</Text>
-            <Text style={styles.priceDetailsNumber}>OD3489488519356</Text>
+            <Text style={styles.priceDetailsNumber}>{orderNumber}</Text>
           </View>
           <View style={styles.priceItemsElements}>
             <Text style={styles.priceDetailsItem}>Order Date</Text>
-            <Text style={styles.priceDetailsNumber}>30/11/2019 10:34</Text>
+            <Text style={styles.priceDetailsNumber}>
+              {getFormatDate(orderDate)}
+            </Text>
           </View>
           <View style={styles.priceItemsElements}>
-            <Text style={styles.priceDetailsItem}>Total Ammount</Text>
-            <Text style={styles.priceDetailsNumber}>$380.44</Text>
+            <Text style={styles.priceDetailsItem}>Total Amount</Text>
+            <Text style={styles.priceDetailsNumber}>
+              {orderIncluded[0].attributes.display_total}
+            </Text>
           </View>
+
+          <View style={styles.priceItemsElements}>
+            <Text style={styles.priceDetailsItem}>Promotion</Text>
+            <Text style={styles.priceDetailsNumberPromotion}>
+              {orderIncluded[8].attributes.display_amount}
+            </Text>
+          </View>
+
           <View style={styles.priceItemsElements}>
             <Text style={styles.priceDetailsItem}>Payment Mode</Text>
-            <Text style={styles.priceDetailsNumber}>COD</Text>
+            <Text style={styles.priceDetailsNumber}>
+              {orderIncluded[6].attributes.payment_method_name}
+            </Text>
           </View>
           <View style={styles.priceItemsElements}>
             <Text style={styles.priceDetailsItem}>Shipping Address</Text>
             <Text
               style={styles.priceDetailsNumber}
               onPress={() => navigation.navigate('MyOrderMap')}>
-              TestTestTestTestTestTestTestTestTestTestTestTestTestTestTest
+              {getBillingAddress()}
             </Text>
           </View>
           <View style={styles.priceItemsElements}>
             <Text style={styles.priceDetailsItem}>Status</Text>
-            <Text style={styles.inProgressStatus}>In-Proccesing</Text>
+            <Text style={styles.inProgressStatus}>
+              {orderIncluded[6].attributes.state}
+            </Text>
           </View>
           <Text style={styles.orderedProducts}>Ordered Products</Text>
         </View>
-
         <ScrollView style={scrollStyle}>
-          <View style={[styles.productCard, cardStyles]}>
-            <View style={[styles.productInfoBar]}>
-              <Text style={styles.productName}>Xiaomi Mi A3</Text>
-              <Text style={styles.productDescription}>Color: Blue</Text>
-              <Text style={styles.productDescription}>Qty: 1</Text>
-              <Text style={styles.orderItemSum}>$222</Text>
-            </View>
-            <View>
-              <Image
-                style={styles.image}
-                source={require('../../assets/test.png')}
-              />
-            </View>
-          </View>
-          <View style={[styles.productCard, cardStyles]}>
-            <View style={[styles.productInfoBar]}>
-              <Text style={styles.productName}>Xiaomi Mi A3</Text>
-              <Text style={styles.productDescription}>Color: Blue</Text>
-              <Text style={styles.productDescription}>Qty: 1</Text>
-              <Text style={styles.productDescription}>$222</Text>
-            </View>
-            <View>
-              <Image
-                style={styles.image}
-                source={require('../../assets/test.png')}
-              />
-            </View>
-          </View>
-          <View style={[styles.productCard, cardStyles]}>
-            <View style={[styles.productInfoBar]}>
-              <Text style={styles.productName}>Xiaomi Mi A3</Text>
-              <Text style={styles.productDescription}>Color: Blue</Text>
-              <Text style={styles.productDescription}>Qty: 1</Text>
-              <Text style={styles.productDescription}>$222</Text>
-            </View>
-            <View>
-              <Image
-                style={styles.image}
-                source={require('../../assets/test.png')}
-              />
-            </View>
-          </View>
+          {orders &&
+            orders.data.map((product, index) => (
+              <View>
+                <View style={[styles.productCard, cardStyles]}>
+                  <View style={[styles.productInfoBar]}>
+                    <Text style={styles.productName}>
+                      {orderIncluded[0].attributes.name}
+                    </Text>
+                    <Text style={styles.productDescription}>
+                      {orderIncluded[0].attributes.options_text}
+                    </Text>
+                    <Text style={styles.productDescription}>
+                      Qty: {orderIncluded[0].attributes.quantity}
+                    </Text>
+                    <Text style={styles.productTotal}>
+                      {orderIncluded[0].attributes.display_total}
+                    </Text>
+                  </View>
+                  <View>
+                    <Image
+                      style={styles.image}
+                      source={{
+                        uri: `https://demo.spreecommerce.org${orderIncluded[2].attributes.original_url}`,
+                      }}
+                    />
+                  </View>
+                </View>
+              </View>
+            ))}
         </ScrollView>
       </View>
     </View>

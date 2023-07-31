@@ -10,7 +10,9 @@ type logInProps = {
 };
 
 const LogIn = ({route, navigation}: logInProps) => {
-  const [username, setUsername] = React.useState('aliaksandr.hvozdzeu@gmail.com');
+  const [username, setUsername] = React.useState(
+    'hvozdzeu.aliaksandr@gmail.com',
+  );
   const [password, setPassword] = React.useState('250486al');
 
   const {authContext} = route.params;

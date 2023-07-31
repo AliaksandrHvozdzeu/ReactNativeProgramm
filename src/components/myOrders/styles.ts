@@ -4,9 +4,14 @@ import {COLORS} from '../../utils/colors';
 export const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    height: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  centeredViewScroll: {
+    flex: 1,
+    marginTop: 20,
+    alignItems: 'center',
+    height: 'auto',
   },
   orderItem: {
     marginBottom: 5,
@@ -37,7 +42,27 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   oderItemTitle: {
-
+    fontFamily: 'Roboto',
+    fontSize: 12,
+    fontStyle: 'normal',
+    fontWeight: '400',
+  },
+  oderDateItemTitle: {
+    fontFamily: 'Roboto',
+    fontSize: 12,
+    color: COLORS.neutral_500,
+    fontStyle: 'normal',
+    fontWeight: '400',
+  },
+  oderDateItem: {
+    position: 'absolute',
+    fontFamily: 'Roboto',
+    fontSize: 12,
+    color: COLORS.neutral_500,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    left: 5,
+    top: 5,
   },
   orderDetailLink: {
     color: COLORS.blue_500,
@@ -158,7 +183,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: 300,
-    marginTop: 20,
   },
   splitLine: {
     borderBottomColor: COLORS.neutral_300,
@@ -182,9 +206,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   orderCard: {
-    flex: 1,
     backgroundColor: COLORS.neutral_100,
-    marginTop: 15,
+    marginTop: 10,
     marginLeft: 5,
     marginRight: 5,
     borderRadius: 5,

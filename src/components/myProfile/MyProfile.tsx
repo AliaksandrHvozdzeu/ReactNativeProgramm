@@ -111,15 +111,17 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
           </View>
         )}
         <View>
-          <Button
-            buttonStyle={shadowStyles}
-            containerStyle={{
-              marginTop: 10,
-              width: 300,
-            }}
-            onPress={onUpdate}
-            title="UPDATE"
-          />
+          {userData && (
+            <Button
+              buttonStyle={shadowStyles}
+              containerStyle={{
+                marginTop: 10,
+                width: 300,
+              }}
+              onPress={onUpdate}
+              title="UPDATE"
+            />
+          )}
           <Button
             buttonStyle={shadowStyles}
             containerStyle={{
