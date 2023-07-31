@@ -7,6 +7,13 @@ export const styles = StyleSheet.create({
     height: 'auto',
     alignItems: 'center',
   },
+  emptyCenteredView: {
+    flex: 1,
+    marginTop: -60,
+    height: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   firstBlock: {
     marginTop: 0,
   },
@@ -126,9 +133,7 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     width: 20,
   },
-  secureBlock: {
-
-  },
+  secureBlock: {},
   secureText: {
     color: COLORS.accent_green,
     width: '70%',

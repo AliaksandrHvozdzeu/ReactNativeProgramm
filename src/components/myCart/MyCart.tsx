@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   Image,
   Platform,
+  RefreshControl,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -10,6 +11,8 @@ import {
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
+import {Button} from 'react-native-elements';
+import ProcessToPaymentButton from '../processToPaymentButton';
 
 type myCartProps = {
   route: any;
@@ -19,10 +22,11 @@ type myCartProps = {
 const MyCart = ({route, navigation}: myCartProps) => {
   const [count, setCount] = useState(0);
   const [cart, setCart] = useState('');
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const {token} = route.params;
 
-  useEffect(() => {
+  const loadCarts = () => {
     fetch(
       'https://demo.spreecommerce.org/api/v2/storefront/cart?include=line_items,variants,variants.images,billing_address,shipping_address,user,payments,shipments,promotions',
       {
@@ -37,6 +41,16 @@ const MyCart = ({route, navigation}: myCartProps) => {
       .then(data => {
         setCart(data);
       });
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    loadCarts();
+    setRefreshing(false);
+  }, []);
+
+  useEffect(() => {
+    loadCarts();
   }, []);
 
   const shadowStyles = Platform.select({
@@ -82,7 +96,25 @@ const MyCart = ({route, navigation}: myCartProps) => {
     },
   });
 
-  const onDelete = () => {};
+  const onDelete = (lineItem: number) => {
+    fetch(
+      `https://demo.spreecommerce.org/api/v2/storefront/cart/remove_line_item/${lineItem}?token=` +
+        token,
+      {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/vnd.api+json',
+          Authorization: 'Bearer ' + token,
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (!data.error) {
+          loadCarts();
+        }
+      });
+  };
 
   const onPlus = () => {
     setCount(count + 1);
@@ -117,6 +149,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
   }: cartType) => {
     if (title && color && imagePath && total && discount && currency) {
       let imageUri;
+      let lineItem;
       for (let i = 0; i < cart.included.length; i++) {
         if (
           title &&
@@ -140,6 +173,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
                   cart.included[k].type === 'image'
                 ) {
                   imageUri = cart.included[k].attributes.original_url;
+                  lineItem = cart.data.relationships.line_items.data[i].id;
                 }
               }
             }
@@ -178,7 +212,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
                 source={require('../../assets/minus.png')}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={onDelete}>
+            <TouchableOpacity onPress={() => onDelete(lineItem)}>
               <Image
                 style={styles.delete}
                 source={require('../../assets/delete.png')}
@@ -202,68 +236,106 @@ const MyCart = ({route, navigation}: myCartProps) => {
         cartCount={3}
       />
       <View style={styles.centeredView}>
-        <ScrollView style={styles.cartProductsScroll}>
-          {cart.included &&
-            cart.included.map(item => (
-              <Item
-                name={item.id}
-                title={item.attributes.name}
-                total={item.attributes.total}
-                color={item.attributes.options_text}
-                discount={item.attributes.display_additional_tax_total}
-                currency={item.attributes.currency}
-                imagePath={'asdfadsas'}
-                itemCount={item.attributes.quantity}
-              />
-            ))}
-          <View style={[styles.productCardSum, cardStyles]}>
-            <Text style={styles.priceDetails}>Price details</Text>
-            <View style={styles.priceItemsElements}>
-              <Text style={styles.priceDetailsItem}>
-                Price ({cart?.data?.attributes.item_count} item)
-              </Text>
-              <Text style={styles.priceDetailsNumber}>
-                {cart?.data?.attributes.display_pre_tax_total}
-              </Text>
+        {cart && cart.data.attributes.item_count !== 0 && (
+          <>
+            <ScrollView
+              contentContainerStyle={styles.cartProductsScroll}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }>
+              {cart.included &&
+                cart.included.map((item, index) => (
+                  <Item
+                    key={index}
+                    name={item.id}
+                    title={item.attributes.name}
+                    total={item.attributes.total}
+                    color={item.attributes.options_text}
+                    discount={item.attributes.display_additional_tax_total}
+                    currency={item.attributes.currency}
+                    imagePath={'asdfadsas'}
+                    itemCount={item.attributes.quantity}
+                  />
+                ))}
+              <View style={[styles.productCardSum, cardStyles]}>
+                <Text style={styles.priceDetails}>Price details</Text>
+                <View style={styles.priceItemsElements}>
+                  <Text style={styles.priceDetailsItem}>
+                    Price ({cart?.data?.attributes.item_count} item)
+                  </Text>
+                  <Text style={styles.priceDetailsNumber}>
+                    {cart?.data?.attributes.display_pre_tax_total}
+                  </Text>
+                </View>
+                <View style={styles.priceItemsElements}>
+                  <Text style={styles.priceDetailsItem}>Delivery</Text>
+                  <Text style={styles.priceDetailsNumber}>
+                    {cart?.data?.attributes.display_additional_tax_total}
+                  </Text>
+                </View>
+                <View style={styles.priceItemsElements}>
+                  <Text style={styles.priceDetailsItem}>Discount</Text>
+                  <Text style={styles.priceDetailsNumber}>
+                    {cart?.data?.attributes.display_promo_total}
+                  </Text>
+                </View>
+                <View style={styles.priceItemsElements}>
+                  <Text style={styles.priceDetailsItem}>Tax (2%)</Text>
+                  <Text style={styles.priceDetailsNumber}>
+                    {cart?.data?.attributes.display_tax_total}
+                  </Text>
+                </View>
+                <View style={styles.splitLine} />
+                <View style={styles.priceItemsElements}>
+                  <Text style={[styles.priceDetailsItem, styles.amount]}>
+                    Amount Payable
+                  </Text>
+                  <Text style={[styles.priceDetailsNumber, styles.amount]}>
+                    {cart?.data?.attributes.display_pre_tax_total}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.secureElements}>
+                <Image
+                  style={styles.secureImage}
+                  source={require('../../assets/shield.png')}
+                />
+                <Text style={styles.secureText}>
+                  Safe and Secure Payments 100% Authentic Products
+                </Text>
+              </View>
+            </ScrollView>
+            <ProcessToPaymentButton navigation={navigation} />
+          </>
+        )}
+        {cart && cart.data.attributes.item_count === 0 && (
+          <View style={styles.emptyCenteredView}>
+            <View>
+              <View style={styles.imageProfile}>
+                <View style={styles.imageView}>
+                  <Image source={require('../../assets/good.png')} />
+                </View>
+              </View>
             </View>
-            <View style={styles.priceItemsElements}>
-              <Text style={styles.priceDetailsItem}>Delivery</Text>
-              <Text style={styles.priceDetailsNumber}>
-                {cart?.data?.attributes.display_additional_tax_total}
-              </Text>
+            <View>
+              <Text style={styles.modalText}>Your Cart is Empty!</Text>
             </View>
-            <View style={styles.priceItemsElements}>
-              <Text style={styles.priceDetailsItem}>Discount</Text>
-              <Text style={styles.priceDetailsNumber}>
-                {cart?.data?.attributes.display_promo_total}
-              </Text>
-            </View>
-            <View style={styles.priceItemsElements}>
-              <Text style={styles.priceDetailsItem}>Tax (2%)</Text>
-              <Text style={styles.priceDetailsNumber}>
-                {cart?.data?.attributes.display_tax_total}
-              </Text>
-            </View>
-            <View style={styles.splitLine} />
-            <View style={styles.priceItemsElements}>
-              <Text style={[styles.priceDetailsItem, styles.amount]}>
-                Amount Payable
-              </Text>
-              <Text style={[styles.priceDetailsNumber, styles.amount]}>
-                {cart?.data?.attributes.display_pre_tax_total}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.secureElements}>
-            <Image
-              style={styles.secureImage}
-              source={require('../../assets/shield.png')}
-            />
-            <Text style={styles.secureText}>
-              Safe and Secure Payments 100% Authentic Products
+            <Text style={styles.modalDescription}>
+              Add product in your cart now
             </Text>
+            <View>
+              <Button
+                buttonStyle={shadowStyles}
+                containerStyle={{
+                  marginTop: 10,
+                  width: 300,
+                }}
+                onPress={() => navigation.navigate('Main')}
+                title="SHOP NOW"
+              />
+            </View>
           </View>
-        </ScrollView>
+        )}
       </View>
     </View>
   );
