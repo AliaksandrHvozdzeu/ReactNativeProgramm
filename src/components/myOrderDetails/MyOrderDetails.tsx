@@ -49,7 +49,9 @@ const MyOrderDetails = ({route, navigation}: myOrderDetailsProps) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(['Excessive number of pending callbacks: 501.']);
-    LogBox.ignoreLogs(['Each child in a list should have a unique "key" prop.']);
+    LogBox.ignoreLogs([
+      'Each child in a list should have a unique "key" prop.',
+    ]);
   });
 
   const scrollStyle = Platform.select({
