@@ -71,26 +71,26 @@ const App = () => {
       let userToken;
       try {
         userToken = await SecureStore.getItemAsync('secure_token');
-        // const response = await fetch(
-        //   'https://demo.spreecommerce.org/spree_oauth/token',
-        //   {
-        //     method: 'POST',
-        //     headers: {
-        //       Accept: 'application/json',
-        //       'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //       grant_type: 'refresh_token',
-        //       refresh_token: userToken,
-        //     }),
-        //   },
-        // );
-        // const content = await response.json();
-        // if (content.error) {
-        //   console.log(content.error);
-        // } else {
-        //   userToken = content.access_token;
-        // }
+        const response = await fetch(
+          'https://demo.spreecommerce.org/spree_oauth/token',
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              grant_type: 'refresh_token',
+              refresh_token: userToken,
+            }),
+          },
+        );
+        const content = await response.json();
+        if (content.error) {
+          console.log(content.error);
+        } else {
+          userToken = content.access_token;
+        }
       } catch (e) {
         console.log(e);
       }
