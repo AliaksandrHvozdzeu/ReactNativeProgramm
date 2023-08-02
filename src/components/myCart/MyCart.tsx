@@ -14,6 +14,7 @@ import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
 import {Button, Icon} from 'react-native-elements';
 import ProcessToPaymentButton from '../processToPaymentButton';
+import { getProductList, getXSpreeToken } from "../../api/ProductsApi";
 
 type myCartProps = {
   route: any;
@@ -133,17 +134,9 @@ const MyCart = ({route, navigation}: myCartProps) => {
   };
 
   const setProductCount = (lineItem: number, itemCount: number) => {
-    fetch('https://demo.spreecommerce.org/api/v2/storefront/cart', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/vnd.api+json',
-        Authorization: 'Bearer ' + token,
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        setXSpreeToken(data.data.attributes.token);
-      });
+    getXSpreeToken(token).then(json => {
+      setXSpreeToken(json.data.attributes.token);
+    });
 
     fetch(
       'https://demo.spreecommerce.org/api/v2/storefront/cart/set_quantity',

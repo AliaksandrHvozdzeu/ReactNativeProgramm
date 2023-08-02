@@ -29,6 +29,15 @@ export const getCartsData = (token: string) =>
     },
   ).then(response => response.json());
 
+export const getXSpreeToken = (token: string) =>
+  fetch('https://demo.spreecommerce.org/api/v2/storefront/cart', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/vnd.api+json',
+      Authorization: 'Bearer ' + token,
+    },
+  }).then(response => response.json());
+
 export const getUserData = (token: string, login: string) =>
   fetch(
     `https://demo.spreecommerce.org/api/v2/storefront/account?user=${login}`,
