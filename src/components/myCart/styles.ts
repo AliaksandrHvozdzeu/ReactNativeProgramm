@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
   productCard: {
     flex: 1,
     backgroundColor: COLORS.neutral_0,
-    marginTop: 30,
+    marginTop: 15,
     borderRadius: 5,
     marginLeft: 5,
     marginRight: 5,

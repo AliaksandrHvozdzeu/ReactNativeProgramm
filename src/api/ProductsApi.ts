@@ -17,6 +17,18 @@ export const getProductById = (productSlug: string) =>
     response.json(),
   );
 
+export const getCartsData = (token: string) =>
+  fetch(
+    'https://demo.spreecommerce.org/api/v2/storefront/cart?include=line_items,variants,variants.images,billing_address,shipping_address,user,payments,shipments,promotions',
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/vnd.api+json',
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  ).then(response => response.json());
+
 export const getUserData = (token: string, login: string) =>
   fetch(
     `https://demo.spreecommerce.org/api/v2/storefront/account?user=${login}`,

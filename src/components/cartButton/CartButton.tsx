@@ -1,17 +1,15 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 import * as SecureStore from 'expo-secure-store';
-import MyCart from "../myCart";
 
 type cartButtonProps = {
-  count: number;
   navigation: any;
 };
 
-const CartButton = ({navigation, count}: cartButtonProps) => {
+const CartButton = ({navigation}: cartButtonProps) => {
   return (
     <View style={styles.icon}>
       <Button
@@ -39,15 +37,10 @@ const CartButton = ({navigation, count}: cartButtonProps) => {
           if (!token) {
             navigation.navigate('MyCartLogin');
           } else {
-            count > 0
-              ? navigation.navigate('MyCart')
-              : navigation.navigate('MyCartEmpty');
+            navigation.navigate('MyCart');
           }
         }}
       />
-      <View style={styles.budgetView}>
-        <Text style={styles.budget}>{count}</Text>
-      </View>
     </View>
   );
 };

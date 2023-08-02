@@ -27,6 +27,7 @@ import MyOrderMap from './src/components/myOrderMap';
 import {LogBox, StatusBar} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import MyCart from './src/components/myCart';
+import ItemRemovedFromCartModal from "./src/components/itemRemovedFromCartModal";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -336,6 +337,10 @@ const App = () => {
                 <Stack.Screen
                   name="LoginToContinueModal"
                   component={LoginToContinueModal}
+                />
+                <Stack.Screen
+                  name="ItemRemovedFromCartModal"
+                  component={ItemRemovedFromCartModal}
                 />
               </Stack.Group>
             </>

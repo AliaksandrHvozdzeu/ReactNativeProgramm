@@ -14,7 +14,6 @@ type barTextProps = {
   isCard: boolean;
   style: any;
   navigation: any;
-  cartCount: number;
 };
 
 const Bar = ({
@@ -24,7 +23,6 @@ const Bar = ({
   isCard,
   style,
   navigation,
-  cartCount,
 }: barTextProps) => {
   return (
     <View style={[styles.layout, style]}>
@@ -33,7 +31,7 @@ const Bar = ({
         {!isSearch && <MenuButton navigation={navigation} />}
         <BarText text={text} />
         {isLike && <LikeButton navigation={navigation} />}
-        {isCard && <CartButton navigation={navigation} count={cartCount} />}
+        {isCard && <CartButton navigation={navigation} />}
       </View>
     </View>
   );

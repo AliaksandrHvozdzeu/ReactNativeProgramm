@@ -111,6 +111,14 @@ const MyCart = ({route, navigation}: myCartProps) => {
       .then(response => response.json())
       .then(data => {
         if (!data.error) {
+          navigation.navigate('ItemRemovedFromCartModal', {
+            isRemoved: true,
+          });
+          loadCarts();
+        } else {
+          navigation.navigate('ItemRemovedFromCartModal', {
+            isRemoved: false,
+          });
           loadCarts();
         }
       });
@@ -141,20 +149,18 @@ const MyCart = ({route, navigation}: myCartProps) => {
     name,
     title,
     color,
-    imagePath,
     total,
     discount,
     currency,
     itemCount,
   }: cartType) => {
-    if (title && color && imagePath && total && discount && currency) {
+    if (title && color && total && discount && currency) {
       let imageUri;
-      let lineItem;
+      let lineItem: number;
       for (let i = 0; i < cart.included.length; i++) {
         if (
           title &&
           color &&
-          imagePath &&
           total &&
           discount &&
           currency &&
@@ -231,9 +237,8 @@ const MyCart = ({route, navigation}: myCartProps) => {
         isSearch={true}
         isLike={false}
         style={shadowStyles}
-        isCard={true}
+        isCard={false}
         navigation={navigation}
-        cartCount={3}
       />
       <View style={styles.centeredView}>
         {cart && cart.data.attributes.item_count !== 0 && (
@@ -253,7 +258,6 @@ const MyCart = ({route, navigation}: myCartProps) => {
                     color={item.attributes.options_text}
                     discount={item.attributes.display_additional_tax_total}
                     currency={item.attributes.currency}
-                    imagePath={'asdfadsas'}
                     itemCount={item.attributes.quantity}
                   />
                 ))}
