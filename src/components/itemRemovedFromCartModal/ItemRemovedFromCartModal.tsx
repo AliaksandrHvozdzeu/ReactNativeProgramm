@@ -84,7 +84,7 @@ const ItemRemovedFromCartModal = ({
                   marginTop: 10,
                   width: 125,
                 }}
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate('MyCart')}
                 title="OK"
               />
             </View>

@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexShrink: 0,
     position: 'absolute',
-    right: -10,
+    right: 0,
     top: 34,
   },
   cart: {

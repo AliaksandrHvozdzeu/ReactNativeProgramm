@@ -237,7 +237,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
         isSearch={true}
         isLike={false}
         style={shadowStyles}
-        isCard={false}
+        isCard={true}
         navigation={navigation}
       />
       <View style={styles.centeredView}>
