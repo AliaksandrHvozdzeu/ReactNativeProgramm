@@ -1,10 +1,8 @@
 import React from 'react';
-import {Image, Platform, Text, TextInput, View} from 'react-native';
+import {Image, Platform, Text, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import {Button} from 'react-native-elements';
-import Bar from '../bar';
-import LogIn from '../logIn';
 
 type orderConfirmationProps = {
   navigation: any;

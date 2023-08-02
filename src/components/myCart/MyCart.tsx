@@ -11,7 +11,7 @@ import {
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
-import {Button} from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 import ProcessToPaymentButton from '../processToPaymentButton';
 
 type myCartProps = {
@@ -20,34 +20,20 @@ type myCartProps = {
 };
 
 const MyCart = ({route, navigation}: myCartProps) => {
-  const [count, setCount] = useState(0);
   const [cart, setCart] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
 
   const {token} = route.params;
 
-  const loadCarts = () => {
-    fetch(
-      'https://demo.spreecommerce.org/api/v2/storefront/cart?include=line_items,variants,variants.images,billing_address,shipping_address,user,payments,shipments,promotions',
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/vnd.api+json',
-          Authorization: 'Bearer ' + token,
-        },
-      },
-    )
-      .then(response => response.json())
-      .then(data => {
-        setCart(data);
-      });
+  type cartType = {
+    name: string;
+    title: string;
+    color: string;
+    total: string;
+    discount: string;
+    currency: string;
+    itemCount: number;
   };
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    loadCarts();
-    setRefreshing(false);
-  }, []);
 
   useEffect(() => {
     loadCarts();
@@ -96,6 +82,29 @@ const MyCart = ({route, navigation}: myCartProps) => {
     },
   });
 
+  const loadCarts = () => {
+    fetch(
+      'https://demo.spreecommerce.org/api/v2/storefront/cart?include=line_items,variants,variants.images,billing_address,shipping_address,user,payments,shipments,promotions',
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/vnd.api+json',
+          Authorization: 'Bearer ' + token,
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(data => {
+        setCart(data);
+      });
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    loadCarts();
+    setRefreshing(false);
+  }, []);
+
   const onDelete = (lineItem: number) => {
     fetch(
       `https://demo.spreecommerce.org/api/v2/storefront/cart/remove_line_item/${lineItem}?token=` +
@@ -124,25 +133,54 @@ const MyCart = ({route, navigation}: myCartProps) => {
       });
   };
 
-  const onPlus = () => {
-    setCount(count + 1);
+  console.log(token);
+
+  const setProductCount = (lineItem: number, itemCount: number) => {
+    fetch(
+      'https://demo.spreecommerce.org/api/v2/storefront/cart/set_quantity',
+      {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/vnd.api+json',
+          'Content-Type': 'application/vnd.api+json',
+          'X-Spree-Order-Token': 'tXAvour8FCOjmVAl-u4wSw1690791457740',
+        },
+        body: JSON.stringify({
+          line_item_id: lineItem,
+          quantity: itemCount,
+        }),
+      },
+    )
+      .then(response => response.json())
+      .then(data => {
+        loadCarts();
+      });
   };
 
-  const onMinus = () => {
-    if (count !== 0) {
-      setCount(count - 1);
+  const onPlus = (lineItem: number, itemCount: number) => {
+    itemCount += 1;
+    setProductCount(lineItem, itemCount);
+  };
+
+  const onMinus = (lineItem: number, itemCount: number) => {
+    itemCount -= 1;
+    setProductCount(lineItem, itemCount);
+  };
+
+  const getColor = (value: string) => {
+    const myArray = value.split(',');
+    return myArray[0];
+  };
+
+  const getSize = (value: string) => {
+    const myArray = value.split(',');
+    return myArray[1].replace(' ', '');
+  };
+  const getExtraColor = (value: string) => {
+    const myArray = value.split(',');
+    if (myArray.length > 2) {
+      return myArray[2].replace('and', '').replace('  ', '');
     }
-  };
-
-  type cartType = {
-    name: string;
-    title: string;
-    color: string;
-    imagePath: string;
-    total: string;
-    discount: string;
-    currency: string;
-    itemCount: number;
   };
 
   const Item = ({
@@ -155,8 +193,9 @@ const MyCart = ({route, navigation}: myCartProps) => {
     itemCount,
   }: cartType) => {
     if (title && color && total && discount && currency) {
-      let imageUri;
+      let imageUri: string;
       let lineItem: number;
+      let quantity: number;
       for (let i = 0; i < cart.included.length; i++) {
         if (
           title &&
@@ -167,6 +206,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
           cart.included[i].id === name
         ) {
           const variantId = cart.included[i].relationships.variant.data.id;
+          quantity = cart.included[i].attributes.quantity;
           for (let j = 0; j < cart.included.length; j++) {
             if (
               cart.included[j].id === variantId &&
@@ -197,7 +237,11 @@ const MyCart = ({route, navigation}: myCartProps) => {
           </View>
           <View style={[styles.productInfoBar, productDetailsStyles]}>
             <Text style={styles.productName}>{title}</Text>
-            <Text style={styles.productDescription}>{color}</Text>
+            <Text style={styles.productDescription}>{getColor(color)}</Text>
+            <Text style={styles.productDescription}>{getSize(color)}</Text>
+            <Text style={styles.productDescription}>
+              {getExtraColor(color)}
+            </Text>
             <View style={styles.coastBar}>
               <Text style={styles.price}>
                 {total} {discount} {currency}
@@ -205,23 +249,28 @@ const MyCart = ({route, navigation}: myCartProps) => {
             </View>
           </View>
           <View style={styles.buttons}>
-            <TouchableOpacity onPress={onPlus}>
+            <TouchableOpacity onPress={() => onPlus(lineItem, quantity)}>
               <Image
                 style={styles.plusButton}
                 source={require('../../assets/plus.png')}
               />
             </TouchableOpacity>
             <Text style={styles.count}>{itemCount}</Text>
-            <TouchableOpacity onPress={onMinus}>
+            <TouchableOpacity onPress={() => onMinus(lineItem, quantity)}>
               <Image
                 style={styles.minusButton}
                 source={require('../../assets/minus.png')}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => onDelete(lineItem)}>
-              <Image
+            <TouchableOpacity
+              onPress={() => onDelete(lineItem)}
+              style={styles.deleteButton}>
+              <Icon
                 style={styles.delete}
-                source={require('../../assets/delete.png')}
+                type="antdesign"
+                name="delete"
+                size={20}
+                color={COLORS.neutral_500}
               />
             </TouchableOpacity>
           </View>
@@ -254,7 +303,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
                     key={index}
                     name={item.id}
                     title={item.attributes.name}
-                    total={item.attributes.total}
+                    total={item.attributes.display_total}
                     color={item.attributes.options_text}
                     discount={item.attributes.display_additional_tax_total}
                     currency={item.attributes.currency}

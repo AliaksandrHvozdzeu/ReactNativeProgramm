@@ -15,7 +15,6 @@ class StringUtils extends Component {
   static replaceTags(stringValue: string) {
     return stringValue.replace(/<\/?[^>]+(>|$)/g, '');
   }
-
 }
 
 export default StringUtils;

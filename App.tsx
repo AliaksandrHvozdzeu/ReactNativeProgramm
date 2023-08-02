@@ -27,7 +27,7 @@ import MyOrderMap from './src/components/myOrderMap';
 import {LogBox, StatusBar} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import MyCart from './src/components/myCart';
-import ItemRemovedFromCartModal from "./src/components/itemRemovedFromCartModal";
+import ItemRemovedFromCartModal from './src/components/itemRemovedFromCartModal';
 
 const App = () => {
   const Stack = createNativeStackNavigator();

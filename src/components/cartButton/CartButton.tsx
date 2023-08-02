@@ -14,21 +14,23 @@ const CartButton = ({navigation}: cartButtonProps) => {
 
   useEffect(() => {
     const loadCount = async () => {
-      let userToken = await SecureStore.getItemAsync('secure_token');
-      fetch(
-        'https://demo.spreecommerce.org/api/v2/storefront/cart?include=line_items,variants,variants.images,billing_address,shipping_address,user,payments,shipments,promotions',
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/vnd.api+json',
-            Authorization: 'Bearer ' + userToken,
-          },
-        },
-      )
-        .then(response => response.json())
-        .then(data => {
-          setCount(data.data.attributes.item_count);
-        });
+      // let userToken = await SecureStore.getItemAsync('secure_token');
+      // fetch(
+      //   'https://demo.spreecommerce.org/api/v2/storefront/cart?include=line_items,variants,variants.images,billing_address,shipping_address,user,payments,shipments,promotions',
+      //   {
+      //     method: 'GET',
+      //     headers: {
+      //       Accept: 'application/vnd.api+json',
+      //       Authorization: 'Bearer ' + userToken,
+      //     },
+      //   },
+      // )
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     if (data) {
+      //       setCount(data.data.attributes.item_count);
+      //     }
+      //   });
     };
     setInterval(loadCount, 1000);
   }, []);
@@ -64,9 +66,11 @@ const CartButton = ({navigation}: cartButtonProps) => {
           }
         }}
       />
-      <View style={styles.budgetView}>
-        <Text style={styles.budget}>{count}</Text>
-      </View>
+      {count > 0 && (
+        <View style={styles.budgetView}>
+          <Text style={styles.budget}>{count}</Text>
+        </View>
+      )}
     </View>
   );
 };

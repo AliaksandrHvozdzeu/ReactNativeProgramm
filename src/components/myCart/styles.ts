@@ -7,6 +7,12 @@ export const styles = StyleSheet.create({
     height: 'auto',
     alignItems: 'center',
   },
+  icon: {
+    width: 20,
+    height: 20,
+    flexShrink: 0,
+    right: -90,
+  },
   emptyCenteredView: {
     flex: 1,
     marginTop: -60,
@@ -273,7 +279,12 @@ export const styles = StyleSheet.create({
     width: 20,
     height: 20,
     flexShrink: 0,
-    right: -90,
+    alignItems: 'flex-end',
+  },
+  deleteButton: {
+    position: 'absolute',
+    bottom: 10,
+    right: 20,
   },
   plusButton: {
     width: 20,
