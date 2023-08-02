@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Image,
   Platform,
   RefreshControl,
@@ -22,6 +23,8 @@ type myCartProps = {
 const MyCart = ({route, navigation}: myCartProps) => {
   const [cart, setCart] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
+  const [xSpreeToken, setXSpreeToken] = useState('');
+  const [notification, setNotification] = useState(false);
 
   const {token} = route.params;
 
@@ -45,17 +48,13 @@ const MyCart = ({route, navigation}: myCartProps) => {
       shadowOffset: {width: 0, height: 2},
       shadowOpacity: 2,
       shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
       borderRadius: 3,
-      zIndex: 1,
     },
     android: {
       shadowColor: COLORS.neutral_700,
       shadowRadius: 4,
       elevation: 10,
-      backgroundColor: COLORS.blue_500,
       borderRadius: 3,
-      zIndex: 1,
     },
   });
 
@@ -133,9 +132,19 @@ const MyCart = ({route, navigation}: myCartProps) => {
       });
   };
 
-  console.log(token);
-
   const setProductCount = (lineItem: number, itemCount: number) => {
+    fetch('https://demo.spreecommerce.org/api/v2/storefront/cart', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/vnd.api+json',
+        Authorization: 'Bearer ' + token,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        setXSpreeToken(data.data.attributes.token);
+      });
+
     fetch(
       'https://demo.spreecommerce.org/api/v2/storefront/cart/set_quantity',
       {
@@ -143,7 +152,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
         headers: {
           Accept: 'application/vnd.api+json',
           'Content-Type': 'application/vnd.api+json',
-          'X-Spree-Order-Token': 'tXAvour8FCOjmVAl-u4wSw1690791457740',
+          'X-Spree-Order-Token': xSpreeToken,
         },
         body: JSON.stringify({
           line_item_id: lineItem,
@@ -153,6 +162,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
     )
       .then(response => response.json())
       .then(data => {
+        setNotification(true);
         loadCarts();
       });
   };
@@ -181,6 +191,25 @@ const MyCart = ({route, navigation}: myCartProps) => {
     if (myArray.length > 2) {
       return myArray[2].replace('and', '').replace('  ', '');
     }
+  };
+
+  const Notification = () => {
+    const closeInfo = () => {
+      setNotification(false);
+    };
+    setTimeout(closeInfo, 2500);
+    return (
+      <>
+        {notification && (
+          <View style={[styles.notificationPanel, shadowStyles]}>
+            <Text style={styles.informationHeader}>Information</Text>
+            <Text style={styles.informationBody}>
+              The quantity of the product has been changed.
+            </Text>
+          </View>
+        )}
+      </>
+    );
   };
 
   const Item = ({
@@ -286,110 +315,124 @@ const MyCart = ({route, navigation}: myCartProps) => {
         isSearch={true}
         isLike={false}
         style={shadowStyles}
-        isCard={true}
+        isCard={false}
         navigation={navigation}
       />
-      <View style={styles.centeredView}>
-        {cart && cart.data.attributes.item_count !== 0 && (
-          <>
-            <ScrollView
-              contentContainerStyle={styles.cartProductsScroll}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }>
-              {cart.included &&
-                cart.included.map((item, index) => (
-                  <Item
-                    key={index}
-                    name={item.id}
-                    title={item.attributes.name}
-                    total={item.attributes.display_total}
-                    color={item.attributes.options_text}
-                    discount={item.attributes.display_additional_tax_total}
-                    currency={item.attributes.currency}
-                    itemCount={item.attributes.quantity}
-                  />
-                ))}
-              <View style={[styles.productCardSum, cardStyles]}>
-                <Text style={styles.priceDetails}>Price details</Text>
-                <View style={styles.priceItemsElements}>
-                  <Text style={styles.priceDetailsItem}>
-                    Price ({cart?.data?.attributes.item_count} item)
-                  </Text>
-                  <Text style={styles.priceDetailsNumber}>
-                    {cart?.data?.attributes.display_pre_tax_total}
-                  </Text>
-                </View>
-                <View style={styles.priceItemsElements}>
-                  <Text style={styles.priceDetailsItem}>Delivery</Text>
-                  <Text style={styles.priceDetailsNumber}>
-                    {cart?.data?.attributes.display_additional_tax_total}
-                  </Text>
-                </View>
-                <View style={styles.priceItemsElements}>
-                  <Text style={styles.priceDetailsItem}>Discount</Text>
-                  <Text style={styles.priceDetailsNumber}>
-                    {cart?.data?.attributes.display_promo_total}
-                  </Text>
-                </View>
-                <View style={styles.priceItemsElements}>
-                  <Text style={styles.priceDetailsItem}>Tax (2%)</Text>
-                  <Text style={styles.priceDetailsNumber}>
-                    {cart?.data?.attributes.display_tax_total}
-                  </Text>
-                </View>
-                <View style={styles.splitLine} />
-                <View style={styles.priceItemsElements}>
-                  <Text style={[styles.priceDetailsItem, styles.amount]}>
-                    Amount Payable
-                  </Text>
-                  <Text style={[styles.priceDetailsNumber, styles.amount]}>
-                    {cart?.data?.attributes.display_pre_tax_total}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.secureElements}>
-                <Image
-                  style={styles.secureImage}
-                  source={require('../../assets/shield.png')}
-                />
-                <Text style={styles.secureText}>
-                  Safe and Secure Payments 100% Authentic Products
-                </Text>
-              </View>
-            </ScrollView>
-            <ProcessToPaymentButton navigation={navigation} />
-          </>
-        )}
-        {cart && cart.data.attributes.item_count === 0 && (
-          <View style={styles.emptyCenteredView}>
-            <View>
-              <View style={styles.imageProfile}>
-                <View style={styles.imageView}>
-                  <Image source={require('../../assets/good.png')} />
-                </View>
-              </View>
-            </View>
-            <View>
-              <Text style={styles.modalText}>Your Cart is Empty!</Text>
-            </View>
-            <Text style={styles.modalDescription}>
-              Add product in your cart now
-            </Text>
-            <View>
-              <Button
-                buttonStyle={shadowStyles}
-                containerStyle={{
-                  marginTop: 10,
-                  width: 300,
-                }}
-                onPress={() => navigation.navigate('Main')}
-                title="SHOP NOW"
-              />
-            </View>
+      <Notification />
+      {!cart && (
+        <View style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
+          <ActivityIndicator size="large" color={COLORS.blue_500} />
+          <View>
+            <Text style={styles.loadingData}>Loading orders...</Text>
           </View>
-        )}
-      </View>
+        </View>
+      )}
+      {cart && (
+        <View style={styles.centeredView}>
+          {cart && cart.data.attributes.item_count !== 0 && (
+            <>
+              <ScrollView
+                contentContainerStyle={styles.cartProductsScroll}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }>
+                {cart.included &&
+                  cart.included.map((item, index) => (
+                    <Item
+                      key={index}
+                      name={item.id}
+                      title={item.attributes.name}
+                      total={item.attributes.display_total}
+                      color={item.attributes.options_text}
+                      discount={item.attributes.display_additional_tax_total}
+                      currency={item.attributes.currency}
+                      itemCount={item.attributes.quantity}
+                    />
+                  ))}
+                <View style={[styles.productCardSum, cardStyles]}>
+                  <Text style={styles.priceDetails}>Price details</Text>
+                  <View style={styles.priceItemsElements}>
+                    <Text style={styles.priceDetailsItem}>
+                      Price ({cart?.data?.attributes.item_count} item)
+                    </Text>
+                    <Text style={styles.priceDetailsNumber}>
+                      {cart?.data?.attributes.display_pre_tax_total}
+                    </Text>
+                  </View>
+                  <View style={styles.priceItemsElements}>
+                    <Text style={styles.priceDetailsItem}>Delivery</Text>
+                    <Text style={styles.priceDetailsNumber}>
+                      {cart?.data?.attributes.display_additional_tax_total}
+                    </Text>
+                  </View>
+                  <View style={styles.priceItemsElements}>
+                    <Text style={styles.priceDetailsItem}>Discount</Text>
+                    <Text style={styles.priceDetailsNumber}>
+                      {cart?.data?.attributes.display_promo_total}
+                    </Text>
+                  </View>
+                  <View style={styles.priceItemsElements}>
+                    <Text style={styles.priceDetailsItem}>Tax (2%)</Text>
+                    <Text style={styles.priceDetailsNumber}>
+                      {cart?.data?.attributes.display_tax_total}
+                    </Text>
+                  </View>
+                  <View style={styles.splitLine} />
+                  <View style={styles.priceItemsElements}>
+                    <Text style={[styles.priceDetailsItem, styles.amount]}>
+                      Amount Payable
+                    </Text>
+                    <Text style={[styles.priceDetailsNumber, styles.amount]}>
+                      {cart?.data?.attributes.display_pre_tax_total}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.secureElements}>
+                  <Image
+                    style={styles.secureImage}
+                    source={require('../../assets/shield.png')}
+                  />
+                  <Text style={styles.secureText}>
+                    Safe and Secure Payments 100% Authentic Products
+                  </Text>
+                </View>
+              </ScrollView>
+              <ProcessToPaymentButton navigation={navigation} />
+            </>
+          )}
+          {cart && cart.data.attributes.item_count === 0 && (
+            <View style={styles.emptyCenteredView}>
+              <View>
+                <View style={styles.imageProfile}>
+                  <View style={styles.imageView}>
+                    <Image source={require('../../assets/good.png')} />
+                  </View>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.modalText}>Your Cart is Empty!</Text>
+              </View>
+              <Text style={styles.modalDescription}>
+                Add product in your cart now
+              </Text>
+              <View>
+                <Button
+                  buttonStyle={shadowStyles}
+                  containerStyle={{
+                    marginTop: 10,
+                    width: 300,
+                  }}
+                  onPress={() => navigation.navigate('Main')}
+                  title="SHOP NOW"
+                />
+              </View>
+            </View>
+          )}
+        </View>
+      )}
     </View>
   );
 };
