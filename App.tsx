@@ -68,6 +68,10 @@ const App = () => {
       'Non-serializable values were found in the navigation state',
     ]);
     StatusBar.setHidden(true);
+
+
+
+
     const bootstrapAsync = async () => {
       let userToken;
       try {
@@ -221,6 +225,7 @@ const App = () => {
               <Stack.Screen
                 name="ProductDetails"
                 component={ProductDetails}
+                initialParams={{token: state.userToken}}
                 options={{headerShown: false}}
               />
               <Stack.Screen
@@ -266,6 +271,7 @@ const App = () => {
                 <Stack.Screen
                   name="ProductDetails"
                   component={ProductDetails}
+                  initialParams={{token: state.userToken}}
                   options={{headerShown: false}}
                 />
                 <Stack.Screen

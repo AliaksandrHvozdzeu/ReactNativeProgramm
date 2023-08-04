@@ -60,7 +60,7 @@ const OrderConfirmation = ({navigation}: orderConfirmationProps) => {
               marginTop: 10,
               width: 300,
             }}
-            onPress={() => navigation.navigate('Main')}
+            onPress={() => navigation.navigate('Root')}
             title="CONTINUE SHOPPING"
           />
         </View>

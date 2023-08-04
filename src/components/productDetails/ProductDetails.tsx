@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import {Platform, View} from 'react-native';
 import {styles} from './styles';
 import Bar from '../bar';
@@ -12,9 +12,40 @@ type productDetailsProps = {
 };
 
 const ProductDetails = ({route, navigation}: productDetailsProps) => {
-  //const [product, setProduct] = useState({});
 
-  const {slug, images, included} = route.params;
+  const [buttonColors, setButtonColors] = useState([]);
+
+  const {slug, images, included, token, productColors, productIncluded} =
+    route.params;
+
+  useEffect(() => {
+    let buttonColorsArray = [];
+    for (let i = 0; i < productIncluded.length; i++) {
+      let color = productIncluded[i].attributes.options_text
+        .split(',')[0]
+        .replace('Color: ', '');
+
+      const attributeName = productColors[0].name;
+      if (attributeName === 'color') {
+        const colorArray = productColors[0].option_values;
+        if (colorArray) {
+          for (let j = 0; j < colorArray.length; j++) {
+            const colorName = colorArray[j].name;
+            if (color === colorName) {
+              const item = {
+                id: colorArray[j].id,
+                colorName: colorArray[j].name,
+                color: colorArray[j].presentation,
+              };
+              buttonColorsArray.push(item);
+            }
+          }
+        }
+      }
+    }
+    setButtonColors(buttonColorsArray);
+  }, []);
+
 
   const shadowStyles = Platform.select({
     ios: {
@@ -52,6 +83,8 @@ const ProductDetails = ({route, navigation}: productDetailsProps) => {
           description={STRING_UTILS.replaceTags(slug.attributes.description)}
           included={included}
           images={images}
+          token={token}
+          buttonColors={buttonColors}
         />
       )}
     </View>

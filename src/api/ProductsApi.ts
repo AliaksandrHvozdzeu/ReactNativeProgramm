@@ -12,10 +12,17 @@ export const getProductListByTag = (productSlug: string) =>
     response.json(),
   );
 
-export const getProductById = (productSlug: string) =>
-  fetch(`${API_URL_SLUG}/${productSlug}?include=images`).then(response =>
-    response.json(),
-  );
+export const getProductListByTagWithFullIncludes = (productSlug: string) =>
+  fetch(
+    `${API_URL_SLUG}/${productSlug}?include=variants`,
+  ).then(response => response.json());
+
+export const getProductById = (productId: string) =>
+  fetch(
+    'https://demo.spreecommerce.org/api/v2/storefront/products/' +
+      productId +
+      '?include=default_variant%2Cvariants%2Coption_types%2Cproduct_properties%2Ctaxons%2Cimages%2Cprimary_variant',
+  ).then(response => response.json());
 
 export const getCartsData = (token: string) =>
   fetch(

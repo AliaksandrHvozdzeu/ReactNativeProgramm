@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
-import {getProductListByTag} from '../../api/ProductsApi';
+import { getProductList, getProductListByTag, getProductListByTagWithFullIncludes } from "../../api/ProductsApi";
 
 type ItemProps = {
   title: string;
@@ -42,11 +42,21 @@ const ProductListCard = ({
   included,
 }: ItemProps) => {
   const [productBySlagData, setProductBySlagData] = useState({});
+  const [productColors, setProductColors] = useState([]);
+  const [productIncluded, setProductIncluded] = useState([]);
+
   useEffect(() => {
     getProductListByTag(slug).then(json => {
       setProductBySlagData(json.data);
     });
+    getProductListByTagWithFullIncludes(slug).then(json => {
+      setProductIncluded(json.included);
+    });
+    getProductList().then(json => {
+      setProductColors(json.meta.filters.option_types);
+    });
   }, []);
+
   return (
     <TouchableOpacity
       onPress={() =>
@@ -54,6 +64,8 @@ const ProductListCard = ({
           slug: productBySlagData,
           images: images,
           included: included,
+          productColors: productColors,
+          productIncluded: productIncluded,
         })
       }>
       <View style={[styles.item, cardStyles]}>

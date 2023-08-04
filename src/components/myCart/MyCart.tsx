@@ -14,7 +14,7 @@ import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
 import {Button, Icon} from 'react-native-elements';
 import ProcessToPaymentButton from '../processToPaymentButton';
-import { getProductList, getXSpreeToken } from "../../api/ProductsApi";
+import {getXSpreeToken} from '../../api/ProductsApi';
 
 type myCartProps = {
   route: any;
@@ -316,7 +316,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
         <View style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
           <ActivityIndicator size="large" color={COLORS.blue_500} />
           <View>
-            <Text style={styles.loadingData}>Loading orders...</Text>
+            <Text style={styles.loadingData}>Loading...</Text>
           </View>
         </View>
       )}
@@ -393,7 +393,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
                   </Text>
                 </View>
               </ScrollView>
-              <ProcessToPaymentButton navigation={navigation} />
+              <ProcessToPaymentButton navigation={navigation} token={token} />
             </>
           )}
           {cart && cart.data.attributes.item_count === 0 && (

@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Dimensions, Platform, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 import {styles} from './styles';
+import {getXSpreeToken} from '../../api/ProductsApi';
 
 type processToPaymentButtonProps = {
+  token: string;
   navigation: any;
 };
 
-const ProcessToPaymentButton = ({navigation}: processToPaymentButtonProps) => {
+const ProcessToPaymentButton = ({
+  token,
+  navigation,
+}: processToPaymentButtonProps) => {
+  const [xSpreeToken, setXSpreeToken] = useState('');
+
   const ADD_TO_CART_BUTTON_POSITION_IOS =
     Dimensions.get('screen').height -
     Math.floor(Dimensions.get('screen').height / 100) * 110;
@@ -45,6 +52,13 @@ const ProcessToPaymentButton = ({navigation}: processToPaymentButtonProps) => {
     },
   });
 
+  const onProceedToPayment = () => {
+    getXSpreeToken(token).then(json => {
+      setXSpreeToken(json.data.attributes.token);
+    });
+    console.log(xSpreeToken);
+  };
+
   return (
     <View style={[styles.buttonViewStyle, addToCarButtonStyle]}>
       <Button
@@ -66,7 +80,8 @@ const ProcessToPaymentButton = ({navigation}: processToPaymentButtonProps) => {
           textTransform: 'uppercase',
           textAlign: 'center',
         }}
-        onPress={() => navigation.navigate('OrderConfirmation')}
+        // onPress={() => navigation.navigate('OrderConfirmation')}
+        onPress={() => onProceedToPayment()}
       />
     </View>
   );
