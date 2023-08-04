@@ -17,6 +17,28 @@ export const styles = StyleSheet.create({
     gap: 5,
     backgroundColor: COLORS.neutral_100,
   },
+  loadingData: {
+    display: 'flex',
+    marginLeft: 10,
+    fontFamily: 'Roboto',
+    fontSize: 15,
+    left: 5,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    borderColor: COLORS.neutral_500,
+  },
+  onLoadDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 600,
+    verticalAlign: 'middle',
+  },
+  onLoadDataHorizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
   searchBarLayout: {
     display: 'flex',
     width: 'auto',

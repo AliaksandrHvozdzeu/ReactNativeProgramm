@@ -9,7 +9,7 @@ type addProductProps = {
   navigation: any;
   id: string;
   token: string;
-  selectColor: string;
+  selectColor: {};
 };
 
 const AddToCartButton = ({
@@ -57,82 +57,69 @@ const AddToCartButton = ({
   });
 
   const addToCart = (productId: string) => {
-    getXSpreeToken(token).then(json => {
-      setXSpreeToken(json.data.attributes.token);
-    });
+    if (!token) {
+      navigation.navigate('LogIn');
+    } else {
+      if (!selectColor.id) {
+        navigation.navigate('ChooseColorModal');
+      } else {
+        getXSpreeToken(token).then(json => {
+          setXSpreeToken(json.data.attributes.token);
+        });
 
-    fetch('https://demo.spreecommerce.org/api/v2/storefront/cart/add_item', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-      body: JSON.stringify({
-        variant_id: productId,
-        quantity: 1,
-        public_metadata: {
-          first_item_order: true,
-        },
-        private_metadata: {
-          recommended_by_us: false,
-        },
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        navigation.navigate('AddProductModal');
-      });
+        fetch(
+          'https://demo.spreecommerce.org/api/v2/storefront/cart/add_item',
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+              variant_id: productId,
+              quantity: 1,
+              options: {},
+              public_metadata: {
+                first_item_order: true,
+              },
+              private_metadata: {
+                recommended_by_us: false,
+              },
+            }),
+          },
+        )
+          .then(response => response.json())
+          .then(data => {
+            navigation.navigate('AddProductModal');
+          });
+      }
+    }
   };
 
   return (
     <View style={[styles.buttonViewStyle, addToCarButtonStyle]}>
-      {selectColor && (
-        <Button
-          title="ADD TO CART"
-          buttonStyle={shadowStyles}
-          containerStyle={{
-            width: '100%',
-            marginHorizontal: 50,
-            marginVertical: 10,
-            paddingLeft: 20,
-            paddingRight: 20,
-          }}
-          titleStyle={{
-            fontSize: 15,
-            fontFamily: 'Roboto',
-            fontStyle: 'normal',
-            fontWeight: '500',
-            letterSpacing: 1.25,
-            textTransform: 'uppercase',
-            textAlign: 'center',
-          }}
-          onPress={() => addToCart(id)}
-        />
-      )}
-      {!selectColor && (
-        <Button
-          title="ADD TO CART"
-          disabled={true}
-          buttonStyle={shadowStyles}
-          containerStyle={{
-            width: '100%',
-            marginHorizontal: 50,
-            marginVertical: 10,
-            paddingLeft: 20,
-            paddingRight: 20,
-          }}
-          titleStyle={{
-            fontSize: 15,
-            fontFamily: 'Roboto',
-            fontStyle: 'normal',
-            fontWeight: '500',
-            letterSpacing: 1.25,
-            textTransform: 'uppercase',
-            textAlign: 'center',
-          }}
-        />
-      )}
+      <Button
+        title="ADD TO CART"
+        buttonStyle={shadowStyles}
+        containerStyle={{
+          width: '100%',
+          marginHorizontal: 50,
+          marginVertical: 10,
+          paddingLeft: 20,
+          paddingRight: 20,
+        }}
+        titleStyle={{
+          fontSize: 15,
+          fontFamily: 'Roboto',
+          fontStyle: 'normal',
+          fontWeight: '500',
+          letterSpacing: 1.25,
+          textTransform: 'uppercase',
+          textAlign: 'center',
+        }}
+        onPress={() => addToCart(id)}
+      />
     </View>
   );
 };

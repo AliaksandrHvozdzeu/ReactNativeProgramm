@@ -32,7 +32,7 @@ const ProductDetailsData = ({
   token,
   buttonColors,
 }: productDetailsDataProps) => {
-  const [selectColor, setSelectColor] = useState('');
+  const [selectColor, setSelectColor] = useState({});
 
   const getButtonColor = (color: string) => {
     return {
@@ -90,14 +90,18 @@ const ProductDetailsData = ({
               <View style={styles.buttonGroups}>
                 {buttonColors &&
                   buttonColors.map((button, index) => (
-                    <View style={styles.buttonView}>
+                    <View style={styles.buttonView} key={index}>
                       <Button
-                        key={index}
                         title={getButtonColorTitle(button.colorName)}
                         style={styles.selectColorButton}
                         buttonStyle={getButtonColor(button.color)}
                         titleStyle={getColorButtonTitleStyle(button.colorName)}
-                        onPress={() => setSelectColor('blue')}
+                        onPress={() =>
+                          setSelectColor({
+                            id: button.id,
+                            size: 1,
+                          })
+                        }
                       />
                     </View>
                   ))}

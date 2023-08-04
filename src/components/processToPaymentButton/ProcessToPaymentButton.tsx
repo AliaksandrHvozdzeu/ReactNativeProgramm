@@ -79,7 +79,6 @@ const ProcessToPaymentButton = ({
           textTransform: 'uppercase',
           textAlign: 'center',
         }}
-        // onPress={() => navigation.navigate('OrderConfirmation')}
         onPress={() => onProceedToPayment()}
       />
     </View>

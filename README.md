@@ -24,3 +24,19 @@
 9. Tested on iPhone and Android emulators;
 
 NOTE: I need to work more on styles in RN
+
+# HW #3
+1. Implemented transition between "Main Screen" and "Product details Screen" via Stack navigation
+2. Implemented Drawer navigation
+3. Added Stack of Models for:
+   4. Product added
+   5. Login to continue
+   6. Choose color
+7. Implemented flows with "Authentication flow" for "My Cart Screen".
+8. Finished the rest for "My Cart"
+
+NOTE: need to complete:
+1. Checkout
+2. Fix color buttons
+3. Add optional (color, site) when adding product to card.
+4. Move all fetch to one file

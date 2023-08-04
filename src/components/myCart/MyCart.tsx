@@ -82,6 +82,8 @@ const MyCart = ({route, navigation}: myCartProps) => {
     },
   });
 
+  console.log(token);
+
   const loadCarts = () => {
     fetch(
       'https://demo.spreecommerce.org/api/v2/storefront/cart?include=line_items,variants,variants.images,billing_address,shipping_address,user,payments,shipments,promotions',
@@ -171,11 +173,17 @@ const MyCart = ({route, navigation}: myCartProps) => {
   };
 
   const getColor = (value: string) => {
+    if (!value) {
+      return 'Color: N/A';
+    }
     const myArray = value.split(',');
     return myArray[0];
   };
 
   const getSize = (value: string) => {
+    if (!value) {
+      return 'Size: N/A';
+    }
     const myArray = value.split(',');
     return myArray[1].replace(' ', '');
   };
@@ -214,7 +222,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
     currency,
     itemCount,
   }: cartType) => {
-    if (title && color && total && discount && currency) {
+    if (title && total && discount && currency) {
       let imageUri: string;
       let lineItem: number;
       let quantity: number;

@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  Text,
+  View,
+} from 'react-native';
 import {styles} from './styles';
 import ProductListCard from '../productListCard';
 import SearchBar from '../searchBar';
@@ -8,6 +14,7 @@ import STRING_UTILS from '../../utils/StringUtils';
 import {getProductList} from '../../api/ProductsApi';
 import Bar from '../bar';
 import {getIncludedImageById} from '../../api/ImageApi';
+import {COLORS} from '../../utils/colors';
 
 type productListProps = {
   navigation: any;
@@ -57,68 +64,90 @@ const ProductList = ({navigation}: productListProps) => {
   };
 
   const searchFlatList = () => {
-    return (
-      <FlatList
-        data={filteredDataSource.length === 0 ? data : filteredDataSource}
-        numColumns={2}
-        onRefresh={onRefresh}
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-        }
-        refreshing={isRefreshing}
-        renderItem={({item}) => (
-          <ProductListCard
-            title={STRING_UTILS.shortTitle(item.attributes.name)}
-            src={getIncludedImageById(
-              item.relationships.images.data[0].id,
-              included,
-            )}
-            price={item.attributes.display_price}
-            currency={item.attributes.currency}
-            navigation={navigation}
-            slug={item.attributes.slug}
-            images={item.relationships.images.data}
-            included={included}
-          />
-        )}
-        keyExtractor={item => item.id}
-      />
-    );
+    if (!filteredDataSource) {
+      return (
+        <View style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
+          <ActivityIndicator size="large" color={COLORS.blue_500} />
+          <View>
+            <Text style={styles.loadingData}>Loading...</Text>
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <FlatList
+          data={filteredDataSource.length === 0 ? data : filteredDataSource}
+          numColumns={2}
+          onRefresh={onRefresh}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
+          refreshing={isRefreshing}
+          renderItem={({ item }) => (
+            <ProductListCard
+              title={STRING_UTILS.shortTitle(item.attributes.name)}
+              src={getIncludedImageById(
+                item.relationships.images.data[0].id,
+                included,
+              )}
+              price={item.attributes.display_price}
+              currency={item.attributes.currency}
+              navigation={navigation}
+              slug={item.attributes.slug}
+              images={item.relationships.images.data}
+              included={included}
+            />
+          )}
+          keyExtractor={item => item.id}
+        />
+      );
+    }
   };
 
   const searchResultFlatList = () => {
-    return (
-      <FlatList
-        data={filteredDataSource.length === 0 ? data : filteredDataSource}
-        numColumns={1}
-        onRefresh={onRefresh}
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-        }
-        style={styles.flatStyle}
-        refreshing={isRefreshing}
-        renderItem={({item}) => (
-          <ProductSearchListCard
-            title={STRING_UTILS.shortTitle(item.attributes.name)}
-            src={getIncludedImageById(
-              item.relationships.images.data[0].id,
-              included,
-            )}
-            price={item.attributes.display_price}
-            currency={item.attributes.currency}
-            description={STRING_UTILS.shortDescription(
-              item.attributes.description,
-            )}
-            navigation={navigation}
-            isWishList={false}
-            slug={item.attributes.slug}
-            images={item.relationships.images.data}
-            included={included}
-          />
-        )}
-        keyExtractor={item => item.id}
-      />
-    );
+    if (!filteredDataSource) {
+      return (
+        <View style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
+          <ActivityIndicator size="large" color={COLORS.blue_500} />
+          <View>
+            <Text style={styles.loadingData}>Loading...</Text>
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <FlatList
+          data={filteredDataSource.length === 0 ? data : filteredDataSource}
+          numColumns={1}
+          onRefresh={onRefresh}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
+          style={styles.flatStyle}
+          refreshing={isRefreshing}
+          renderItem={({item}) => (
+            <ProductSearchListCard
+              title={STRING_UTILS.shortTitle(item.attributes.name)}
+              src={getIncludedImageById(
+                item.relationships.images.data[0].id,
+                included,
+              )}
+              price={item.attributes.display_price}
+              currency={item.attributes.currency}
+              description={STRING_UTILS.shortDescription(
+                item.attributes.description,
+              )}
+              navigation={navigation}
+              isWishList={false}
+              slug={item.attributes.slug}
+              images={item.relationships.images.data}
+              included={included}
+            />
+          )}
+          keyExtractor={item => item.id}
+        />
+      );
+    }
   };
 
   return (
