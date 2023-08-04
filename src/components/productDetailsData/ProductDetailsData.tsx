@@ -59,8 +59,6 @@ const ProductDetailsData = ({
         };
   };
 
-  console.log(token);
-
   return (
     <View style={styles.productDetailsDataLayout}>
       <ScrollView>

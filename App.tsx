@@ -92,7 +92,7 @@ const App = () => {
         );
         const content = await response.json();
         if (content.error) {
-          console.log(content.error);
+
         } else {
           userToken = content.access_token;
         }

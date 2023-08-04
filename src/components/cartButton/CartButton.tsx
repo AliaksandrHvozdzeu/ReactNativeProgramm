@@ -58,7 +58,6 @@ const CartButton = ({navigation}: cartButtonProps) => {
         }}
         onPress={async () => {
           const token = await SecureStore.getItemAsync('secure_token');
-          console.log(token);
           if (!token) {
             navigation.navigate('MyCartLogin');
           } else {

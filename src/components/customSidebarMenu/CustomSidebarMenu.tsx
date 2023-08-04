@@ -95,8 +95,7 @@ const CustomSidebarMenu = () => {
           style={styles.drawItem}
           onPress={async () => {
             const token = await SecureStore.getItemAsync('secure_token');
-            console.log(token);
-            if (!token) {
+              if (!token) {
               navigation.navigate('MyOrderLogin');
             } else {
               navigation.navigate('MyOrders');

@@ -56,7 +56,6 @@ const ProcessToPaymentButton = ({
     getXSpreeToken(token).then(json => {
       setXSpreeToken(json.data.attributes.token);
     });
-    console.log(xSpreeToken);
   };
 
   return (
