@@ -83,7 +83,7 @@ const ProductList = ({navigation}: productListProps) => {
             <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
           }
           refreshing={isRefreshing}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <ProductListCard
               title={STRING_UTILS.shortTitle(item.attributes.name)}
               src={getIncludedImageById(
@@ -134,14 +134,11 @@ const ProductList = ({navigation}: productListProps) => {
               )}
               price={item.attributes.display_price}
               currency={item.attributes.currency}
-              description={STRING_UTILS.shortDescription(
-                item.attributes.description,
-              )}
               navigation={navigation}
-              isWishList={false}
               slug={item.attributes.slug}
               images={item.relationships.images.data}
               included={included}
+              description={STRING_UTILS.shortDescription(item.attributes.description)}
             />
           )}
           keyExtractor={item => item.id}
