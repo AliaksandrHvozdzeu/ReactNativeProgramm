@@ -1,13 +1,32 @@
 import React from 'react';
-import {SafeAreaView, Text, Linking, View} from 'react-native';
+import {SafeAreaView, Text, Linking, View, Alert} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {styles} from './styles';
-import {Icon} from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+import Share, {ShareOptions} from 'react-native-share';
+import {COLORS} from '../../utils/colors';
 
 const CustomSidebarMenu = () => {
   const navigation = useNavigation();
+
+  const onShare = async () => {
+    try {
+      Share.shareSingle({
+        backgroundImage:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9rt4KhJGVSIihCxFHnP66WJNMjuZFLz_C-FFxBsEorKy0t8HF1i_OHfGuDnsQp9RcTk8&usqp=CAU',
+        stickerImage:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png',
+        backgroundBottomColor: COLORS.neutral_0,
+        backgroundTopColor: COLORS.blue_300,
+        attributionURL: 'http://my.app.com',
+        social: Share.Social.INSTAGRAM_STORIES,
+      });
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -95,7 +114,7 @@ const CustomSidebarMenu = () => {
           style={styles.drawItem}
           onPress={async () => {
             const token = await SecureStore.getItemAsync('secure_token');
-              if (!token) {
+            if (!token) {
               navigation.navigate('MyOrderLogin');
             } else {
               navigation.navigate('MyOrders');
@@ -149,7 +168,7 @@ const CustomSidebarMenu = () => {
             )}
             labelStyle={styles.menuItem}
             style={styles.drawItem}
-            onPress={() => Linking.openURL('')}
+            onPress={() => onShare()}
           />
         </View>
       </DrawerContentScrollView>

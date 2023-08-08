@@ -10,14 +10,14 @@ type logInProps = {
 };
 
 const LogIn = ({route, navigation}: logInProps) => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [username, setUsername] = React.useState('hvozdzeu.aliaksandr@gmail.com');
+  const [password, setPassword] = React.useState('250486al');
 
   const {authContext} = route.params;
 
   const setAuthData = () => {
     authContext.signIn({username, password});
-    navigation.navigate('Root');
+    navigation.navigate('Root'); //98572
   };
 
   const shadowStyles = Platform.select({

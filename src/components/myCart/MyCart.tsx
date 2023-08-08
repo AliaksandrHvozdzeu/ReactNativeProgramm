@@ -82,8 +82,6 @@ const MyCart = ({route, navigation}: myCartProps) => {
     },
   });
 
-  console.log(token);
-
   const loadCarts = () => {
     fetch(
       'https://demo.spreecommerce.org/api/v2/storefront/cart?include=line_items,variants,variants.images,billing_address,shipping_address,user,payments,shipments,promotions',
@@ -330,7 +328,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
       )}
       {cart && (
         <View style={styles.centeredView}>
-          {cart && cart.data.attributes.item_count !== 0 && (
+          {cart.data && cart.data.attributes.item_count !== 0 && (
             <>
               <ScrollView
                 contentContainerStyle={styles.cartProductsScroll}
@@ -404,7 +402,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
               <ProcessToPaymentButton navigation={navigation} token={token} />
             </>
           )}
-          {cart && cart.data.attributes.item_count === 0 && (
+          {cart.data && cart.data.attributes.item_count === 0 && (
             <View style={styles.emptyCenteredView}>
               <View>
                 <View style={styles.imageProfile}>

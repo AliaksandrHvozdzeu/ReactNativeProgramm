@@ -10,6 +10,9 @@ export const styles = StyleSheet.create({
   firstBlock: {
     marginTop: 0,
   },
+  ccordsStyle: {
+    display: 'none',
+  },
   text: {
     color: COLORS.blue_300,
     textAlign: 'center',
