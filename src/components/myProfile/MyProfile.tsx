@@ -168,6 +168,8 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
       .then(response => response.json())
       .then(data => {
         console.log(JSON.stringify(data));
+        //reload My Profile Screen
+        navigation.navigate('MyProfile');
       });
     setEdit(false);
   };
