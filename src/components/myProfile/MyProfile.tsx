@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Image,
+  ActivityIndicator,
   Platform,
   Text,
   TextInput,
@@ -13,6 +13,7 @@ import {Button} from 'react-native-elements';
 import Bar from '../bar';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Avatar} from 'react-native-elements';
 
 type myProfileProps = {
   route: any;
@@ -63,20 +64,62 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
       const content = await response.json();
       setUserData(content.included);
     };
-
-    const getUserLogo = async () => {
-      try {
-        let uri: string = await AsyncStorage.getItem('userLogo');
-        setUserLogoUri(uri);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
+    AsyncStorage.getItem('userLogo').then(value => {
+      setUserLogoUri(value);
+    });
     getUserData();
-    getUserLogo();
-    console.log(userLogoUri);
   }, []);
+
+  const onChoosePhoto = () => {
+    let options = {
+      includeBase64: true,
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        console.log(response.assets[0].uri);
+        storeUserLogo(response.assets[0].uri);
+        setUserLogoUri(response.assets[0].uri);
+      }
+    });
+  };
+
+  const storeUserLogo = async (value: string) => {
+    try {
+      await AsyncStorage.setItem('userLogo', value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserLogoItem = (title: string) => {
+    return (
+      <TouchableOpacity onPress={() => onChoosePhoto()}>
+        <View style={styles.imageProfile}>
+          <View style={styles.imageView}>
+            <Avatar
+              size="large"
+              title={title}
+              containerStyle={{width: 120, height: 120}}
+              avatarStyle={{borderRadius: 100}}
+              rounded
+              activeOpacity={0.7}
+              source={{
+                uri: userLogoUri,
+              }}
+            />
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   const onChangeFullName = (value: string) => {
     setFullName(value);
@@ -145,33 +188,6 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
     }
   };
 
-  const onChoosePhoto = () => {
-    let options = {
-      includeBase64: true,
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    launchImageLibrary(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.errorCode) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        storeUserLogo(response.assets[0].uri);
-      }
-    });
-  };
-
-  const storeUserLogo = async (value: string) => {
-    try {
-      await AsyncStorage.setItem('userLogo', JSON.stringify(value));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <View style={styles.centeredView}>
       <Bar
@@ -183,6 +199,15 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
         navigation={navigation}
       />
       <View style={styles.centeredView}>
+        {!userData && (
+          <View
+            style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
+            <ActivityIndicator size="large" color={COLORS.blue_500} />
+            <View>
+              <Text style={styles.loadingData}>Loading...</Text>
+            </View>
+          </View>
+        )}
         {userData && (
           <View>
             <View style={styles.firstBlock}>
@@ -194,13 +219,9 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
                 onChangeText={value => onChangeFullName(value)}
               />
             </View>
-            <TouchableOpacity onPress={() => onChoosePhoto()}>
-              <View style={styles.imageProfile}>
-                <View style={styles.imageView}>
-                  <Image source={userLogoUri} style={styles.image} />
-                </View>
-              </View>
-            </TouchableOpacity>
+            {getUserLogoItem(
+              `${userData[0].attributes?.firstname} ${userData[0].attributes?.lastname}`,
+            )}
             <View>
               <Text style={styles.inputName}>Mobile Number</Text>
               <TextInput
