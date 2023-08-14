@@ -48,3 +48,4 @@ NOTE: need to complete:
 4. Product search completed using API request param. Filtered by product name.
 5. Shipping address on the map is completed.  Google MAP API key was created and reused for Android and IOS.
    Also, reused Geocode for getting coordinates by shipping address. Also added functions for zooming maps.
+   Google MAP API key moved to .env file.
