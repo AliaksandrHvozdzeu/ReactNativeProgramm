@@ -11,7 +11,7 @@ import ProductListCard from '../productListCard';
 import SearchBar from '../searchBar';
 import ProductSearchListCard from '../productSearchListCard';
 import STRING_UTILS from '../../utils/StringUtils';
-import {getProductList} from '../../api/ProductsApi';
+import {getFilteredProductList, getProductList} from '../../api/ProductsApi';
 import Bar from '../bar';
 import {getIncludedImageById} from '../../api/ImageApi';
 import {COLORS} from '../../utils/colors';
@@ -22,7 +22,6 @@ type productListProps = {
 
 const ProductList = ({navigation}: productListProps) => {
   const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [data, setData] = useState([]);
   const [included, setIncluded] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -44,27 +43,18 @@ const ProductList = ({navigation}: productListProps) => {
     setIsRefreshing(false);
   };
 
-  const searchFilterFunction = (text: string) => {
-    if (text) {
-      const newData = data.filter(function (item: {title: string}) {
-        const itemData = item.attributes.name
-          ? item.attributes.name.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
+  const searchFunction = (value: string) => {
+    setSearch(value);
+    if (search) {
+      getFilteredProductList(search).then(json => {
+        setIncluded(json.included);
+        setData(json.data);
       });
-      // @ts-ignore
-      setFilteredDataSource(newData);
-      setSearch(text);
-    } else {
-      // @ts-ignore
-      setFilteredDataSource(data);
-      setSearch(text);
     }
   };
 
-  const searchFlatList = () => {
-    if (!filteredDataSource) {
+  const flatList = () => {
+    if (!data) {
       return (
         <View style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
           <ActivityIndicator size="large" color={COLORS.blue_500} />
@@ -76,7 +66,7 @@ const ProductList = ({navigation}: productListProps) => {
     } else {
       return (
         <FlatList
-          data={filteredDataSource.length === 0 ? data : filteredDataSource}
+          data={data}
           numColumns={2}
           onRefresh={onRefresh}
           refreshControl={
@@ -105,7 +95,7 @@ const ProductList = ({navigation}: productListProps) => {
   };
 
   const searchResultFlatList = () => {
-    if (!filteredDataSource) {
+    if (!data) {
       return (
         <View style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
           <ActivityIndicator size="large" color={COLORS.blue_500} />
@@ -117,7 +107,7 @@ const ProductList = ({navigation}: productListProps) => {
     } else {
       return (
         <FlatList
-          data={filteredDataSource.length === 0 ? data : filteredDataSource}
+          data={data}
           numColumns={1}
           onRefresh={onRefresh}
           refreshControl={
@@ -138,7 +128,9 @@ const ProductList = ({navigation}: productListProps) => {
               slug={item.attributes.slug}
               images={item.relationships.images.data}
               included={included}
-              description={STRING_UTILS.shortDescription(item.attributes.description)}
+              description={STRING_UTILS.shortDescription(
+                item.attributes.description,
+              )}
             />
           )}
           keyExtractor={item => item.id}
@@ -169,10 +161,10 @@ const ProductList = ({navigation}: productListProps) => {
           navigation={navigation}
         />
       )}
-      <SearchBar searchFilterFunction={searchFilterFunction} search={search} />
+      <SearchBar searchFilterFunction={searchFunction} search={search} />
       <View style={styles.layout}>
         {search.length > 0 && searchResultFlatList()}
-        {search.length <= 0 && searchFlatList()}
+        {search.length <= 0 && flatList()}
       </View>
     </View>
   );

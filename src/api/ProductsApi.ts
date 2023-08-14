@@ -7,6 +7,9 @@ const API_URL_SLUG =
 export const getProductList = () =>
   fetch(API_URL).then(response => response.json());
 
+export const getFilteredProductList = (value: string) =>
+  fetch(`${API_URL}&filter[name]=${value}`).then(response => response.json());
+
 export const getProductListByTag = (productSlug: string) =>
   fetch(`${API_URL_SLUG}/${productSlug}?include=images`).then(response =>
     response.json(),
