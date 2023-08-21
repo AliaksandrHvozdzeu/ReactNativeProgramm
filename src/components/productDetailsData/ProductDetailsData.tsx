@@ -1,20 +1,20 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
 import AddToCartButton from '../addToCartButton';
 import Carousel from '../carousel';
 import {getImageById} from '../../api/ImageApi';
-import {COLORS} from '../../utils/colors';
+import ColorsUtils from '../../utils/ColorsUtils';
+import {useNavigation} from '@react-navigation/native';
 
-type productDetailsDataProps = {
+type ProductDetailsDataProps = {
   id: string;
   name: string;
   display_price: string;
   currency: string;
   description: string;
   token: string;
-  navigation: any;
   included: {};
   images: {};
   buttonColors: [];
@@ -26,39 +26,13 @@ const ProductDetailsData = ({
   display_price,
   currency,
   description,
-  navigation,
   included,
   images,
   token,
   buttonColors,
-}: productDetailsDataProps) => {
+}: ProductDetailsDataProps) => {
   const [selectColor, setSelectColor] = useState({});
-
-  const getButtonColor = (color: string) => {
-    return {
-      backgroundColor: color,
-      borderRadius: 0,
-      flex: 1,
-      height: 30,
-      width: 60,
-    };
-  };
-
-  const getButtonColorTitle = (title: string) => {
-    return title.replace('_', ' ');
-  };
-
-  const getColorButtonTitleStyle = (colorName: string) => {
-    return colorName === 'white'
-      ? {
-          color: COLORS.neutral_1000,
-          fontSize: 10,
-        }
-      : {
-          fontSize: 10,
-        };
-  };
-
+  const navigation = useNavigation();
   return (
     <View style={styles.productDetailsDataLayout}>
       <ScrollView>
@@ -92,10 +66,14 @@ const ProductDetailsData = ({
                   buttonColors.map((button, index) => (
                     <View style={styles.buttonView} key={index}>
                       <Button
-                        title={getButtonColorTitle(button.colorName)}
+                        title={ColorsUtils.getButtonColorTitle(
+                          button.colorName,
+                        )}
                         style={styles.selectColorButton}
-                        buttonStyle={getButtonColor(button.color)}
-                        titleStyle={getColorButtonTitleStyle(button.colorName)}
+                        buttonStyle={ColorsUtils.getButtonColor(button.color)}
+                        titleStyle={ColorsUtils.getColorButtonTitleStyle(
+                          button.colorName,
+                        )}
                         onPress={() =>
                           setSelectColor({
                             id: button.id,

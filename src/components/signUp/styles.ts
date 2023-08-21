@@ -8,6 +8,29 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  label: {
+    marginBottom: 60
+  },
+  ios: {
+    shadowColor: COLORS.neutral_700,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+    borderRadius: 3,
+    zIndex: 1,
+  },
+  android: {
+    shadowColor: COLORS.neutral_700,
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+    borderRadius: 3,
+    zIndex: 1,
+  },
+  containerStyle: {
+    marginTop: 10,
+    width: 300,
+  },
   text: {
     color: COLORS.blue_300,
     textAlign: 'center',

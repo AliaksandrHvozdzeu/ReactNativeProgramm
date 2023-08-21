@@ -1,46 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
-import {COLORS} from '../../utils/colors';
 import {
   getProductList,
   getProductListByTag,
   getProductListByTagWithFullIncludes,
 } from '../../api/ProductsApi';
+import {useNavigation} from '@react-navigation/native';
 
 type ItemProps = {
   title: string;
   src: string;
   price: string;
   currency: string;
-  navigation: any;
   slug: string;
   images: {};
   included: {};
 };
-
-const cardStyles = Platform.select({
-  ios: {
-    shadowColor: COLORS.neutral_500,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 2,
-    shadowRadius: 4,
-    width: 162,
-  },
-  android: {
-    shadowColor: COLORS.neutral_500,
-    shadowRadius: 4,
-    elevation: 10,
-    width: 172,
-  },
-});
 
 const ProductListCard = ({
   title,
   src,
   price,
   currency,
-  navigation,
   slug,
   images,
   included,
@@ -48,6 +30,7 @@ const ProductListCard = ({
   const [productBySlagData, setProductBySlagData] = useState({});
   const [productColors, setProductColors] = useState([]);
   const [productIncluded, setProductIncluded] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     getProductListByTag(slug).then(json => {
@@ -72,7 +55,14 @@ const ProductListCard = ({
           productIncluded: productIncluded,
         })
       }>
-      <View style={[styles.item, cardStyles]}>
+      <View
+        style={[
+          styles.item,
+          Platform.select({
+            ios: styles.ios,
+            android: styles.android,
+          }),
+        ]}>
         <View>
           <Image style={styles.image} source={{uri: src}} />
         </View>

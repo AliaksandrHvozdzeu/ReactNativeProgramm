@@ -10,8 +10,24 @@ export const styles = StyleSheet.create({
   firstBlock: {
     marginTop: 0,
   },
+  scrollStyleIos: {
+    height: 120,
+  },
+  scrollStyleAndroid: {
+    height: 250,
+  },
   ccordsStyle: {
     display: 'none',
+  },
+  ios: {
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+  },
+  android: {
+    shadowColor: COLORS.neutral_500,
+    shadowRadius: 4,
   },
   text: {
     color: COLORS.blue_300,

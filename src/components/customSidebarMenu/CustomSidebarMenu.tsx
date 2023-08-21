@@ -2,10 +2,10 @@ import React from 'react';
 import {SafeAreaView, Text, Linking, View, Alert} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {styles} from './styles';
-import {Button, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
-import Share, {ShareOptions} from 'react-native-share';
+import Share from 'react-native-share';
 import {COLORS} from '../../utils/colors';
 
 const CustomSidebarMenu = () => {

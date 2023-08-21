@@ -9,6 +9,25 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  ios: {
+    shadowColor: COLORS.neutral_700,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+  },
+  dotStyle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 0,
+    backgroundColor: COLORS.neutral_700,
+  },
+  android: {
+    shadowColor: COLORS.neutral_700,
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+  },
   image: {
     flex: 1,
     height: 300,

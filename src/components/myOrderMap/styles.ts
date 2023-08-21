@@ -7,6 +7,16 @@ export const styles = StyleSheet.create({
     height: 'auto',
     alignItems: 'center',
   },
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    height: 'auto',
+    width: 'auto',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
   mapPlusButton: {
     width: 50,
     height: 50,

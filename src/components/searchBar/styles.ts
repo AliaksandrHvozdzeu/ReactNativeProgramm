@@ -13,6 +13,22 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.neutral_100,
     zIndex: 1,
   },
+  ios: {
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+  },
+  android: {
+    shadowColor: COLORS.neutral_500,
+    shadowRadius: 4,
+  },
+  inputStylesIos: {
+    top: 7,
+  },
+  inputStylesAndroid: {
+    top: -7,
+  },
   inputBar: {
     display: 'flex',
     width: 335,

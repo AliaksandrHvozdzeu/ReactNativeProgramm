@@ -1,19 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Platform, View} from 'react-native';
+import {View} from 'react-native';
 import {styles} from './styles';
 import Bar from '../bar';
-import {COLORS} from '../../utils/colors';
 import STRING_UTILS from '../../utils/StringUtils';
 import ProductDetailsData from '../productDetailsData/ProductDetailsData';
+import {useNavigation} from '@react-navigation/native';
 
-type productDetailsProps = {
-  route: string;
-  navigation: any;
-};
+type ProductDetailsProps = {};
 
-const ProductDetails = ({route, navigation}: productDetailsProps) => {
+const ProductDetails = ({route}: ProductDetailsProps) => {
   const [buttonColors, setButtonColors] = useState([]);
-
+  const navigation = useNavigation();
   const {slug, images, included, token, productColors, productIncluded} =
     route.params;
 
@@ -23,7 +20,6 @@ const ProductDetails = ({route, navigation}: productDetailsProps) => {
       let color = productIncluded[i].attributes.options_text
         .split(',')[0]
         .replace('Color: ', '');
-
       const attributeName = productColors[0].name;
       if (attributeName === 'color') {
         const colorArray = productColors[0].option_values;
@@ -45,29 +41,12 @@ const ProductDetails = ({route, navigation}: productDetailsProps) => {
     setButtonColors(buttonColorsArray);
   }, []);
 
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-    },
-  });
-
   return (
     <View style={styles.layout}>
       <Bar
         text="Product details"
         isSearch={true}
         isLike={true}
-        style={shadowStyles}
         isCard={true}
         navigation={navigation}
       />

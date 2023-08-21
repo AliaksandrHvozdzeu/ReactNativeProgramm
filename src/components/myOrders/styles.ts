@@ -7,6 +7,16 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  ios: {
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+  },
+  android: {
+    shadowColor: COLORS.neutral_500,
+    shadowRadius: 4,
+  },
   centeredViewScroll: {
     flex: 1,
     marginTop: 20,

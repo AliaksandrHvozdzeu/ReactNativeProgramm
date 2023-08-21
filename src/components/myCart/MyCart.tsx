@@ -6,81 +6,32 @@ import {
   RefreshControl,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
-import {Button, Icon} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import ProcessToPaymentButton from '../processToPaymentButton';
 import {getXSpreeToken} from '../../api/ProductsApi';
+import MyCartItem from './MyCartItem';
+import {useNavigation} from '@react-navigation/native';
 
-type myCartProps = {
-  route: any;
-  navigation: any;
-};
+type MyCartProps = {};
 
-const MyCart = ({route, navigation}: myCartProps) => {
+const MyCart = ({route}: MyCartProps) => {
   const [cart, setCart] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
   const [xSpreeToken, setXSpreeToken] = useState('');
   const [notification, setNotification] = useState(false);
-
   const {token} = route.params;
-
-  type cartType = {
-    name: string;
-    title: string;
-    color: string;
-    total: string;
-    discount: string;
-    currency: string;
-    itemCount: number;
-  };
+  const navigation = useNavigation();
+  const SHIELD_PNG_PATH: string = '../../assets/shield.png';
+  const GOOD_PNG_PATH: string = '../../assets/good.png';
 
   useEffect(() => {
     loadCarts();
   }, []);
-
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      borderRadius: 3,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      borderRadius: 3,
-    },
-  });
-
-  const cardStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_500,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-    },
-    android: {
-      shadowColor: COLORS.neutral_500,
-      shadowRadius: 4,
-      elevation: 10,
-    },
-  });
-
-  const productDetailsStyles = Platform.select({
-    ios: {
-      left: 110,
-    },
-    android: {
-      left: 120,
-    },
-  });
 
   const loadCarts = () => {
     fetch(
@@ -170,28 +121,6 @@ const MyCart = ({route, navigation}: myCartProps) => {
     setProductCount(lineItem, itemCount);
   };
 
-  const getColor = (value: string) => {
-    if (!value) {
-      return 'Color: N/A';
-    }
-    const myArray = value.split(',');
-    return myArray[0];
-  };
-
-  const getSize = (value: string) => {
-    if (!value) {
-      return 'Size: N/A';
-    }
-    const myArray = value.split(',');
-    return myArray[1].replace(' ', '');
-  };
-  const getExtraColor = (value: string) => {
-    const myArray = value.split(',');
-    if (myArray.length > 2) {
-      return myArray[2].replace('and', '').replace('  ', '');
-    }
-  };
-
   const Notification = () => {
     const closeInfo = () => {
       setNotification(false);
@@ -200,7 +129,14 @@ const MyCart = ({route, navigation}: myCartProps) => {
     return (
       <>
         {notification && (
-          <View style={[styles.notificationPanel, shadowStyles]}>
+          <View
+            style={[
+              styles.notificationPanel,
+              Platform.select({
+                ios: styles.ios,
+                android: styles.android,
+              }),
+            ]}>
             <Text style={styles.informationHeader}>Information</Text>
             <Text style={styles.informationBody}>
               The quantity of the product has been changed.
@@ -211,109 +147,12 @@ const MyCart = ({route, navigation}: myCartProps) => {
     );
   };
 
-  const Item = ({
-    name,
-    title,
-    color,
-    total,
-    discount,
-    currency,
-    itemCount,
-  }: cartType) => {
-    if (title && total && discount && currency) {
-      let imageUri: string;
-      let lineItem: number;
-      let quantity: number;
-      for (let i = 0; i < cart.included.length; i++) {
-        if (
-          title &&
-          color &&
-          total &&
-          discount &&
-          currency &&
-          cart.included[i].id === name
-        ) {
-          const variantId = cart.included[i].relationships.variant.data.id;
-          quantity = cart.included[i].attributes.quantity;
-          for (let j = 0; j < cart.included.length; j++) {
-            if (
-              cart.included[j].id === variantId &&
-              cart.included[j].type === 'variant'
-            ) {
-              const imageId = cart.included[j].relationships.images.data[0].id;
-              for (let k = 0; k < cart.included.length; k++) {
-                if (
-                  cart.included[k].id === imageId &&
-                  cart.included[k].type === 'image'
-                ) {
-                  imageUri = cart.included[k].attributes.original_url;
-                  lineItem = cart.data.relationships.line_items.data[i].id;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      return (
-        <View style={[styles.productCard, cardStyles]}>
-          <View>
-            <Image
-              style={styles.image}
-              source={{uri: `https://demo.spreecommerce.org/${imageUri}`}}
-            />
-          </View>
-          <View style={[styles.productInfoBar, productDetailsStyles]}>
-            <Text style={styles.productName}>{title}</Text>
-            <Text style={styles.productDescription}>{getColor(color)}</Text>
-            <Text style={styles.productDescription}>{getSize(color)}</Text>
-            <Text style={styles.productDescription}>
-              {getExtraColor(color)}
-            </Text>
-            <View style={styles.coastBar}>
-              <Text style={styles.price}>
-                {total} {discount} {currency}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.buttons}>
-            <TouchableOpacity onPress={() => onPlus(lineItem, quantity)}>
-              <Image
-                style={styles.plusButton}
-                source={require('../../assets/plus.png')}
-              />
-            </TouchableOpacity>
-            <Text style={styles.count}>{itemCount}</Text>
-            <TouchableOpacity onPress={() => onMinus(lineItem, quantity)}>
-              <Image
-                style={styles.minusButton}
-                source={require('../../assets/minus.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => onDelete(lineItem)}
-              style={styles.deleteButton}>
-              <Icon
-                style={styles.delete}
-                type="antdesign"
-                name="delete"
-                size={20}
-                color={COLORS.neutral_500}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-    }
-  };
-
   return (
     <View style={styles.centeredView}>
       <Bar
         text="My Cart"
         isSearch={true}
         isLike={false}
-        style={shadowStyles}
         isCard={false}
         navigation={navigation}
       />
@@ -340,7 +179,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
                 }>
                 {cart.included &&
                   cart.included.map((item, index) => (
-                    <Item
+                    <MyCartItem
                       key={index}
                       name={item.id}
                       title={item.attributes.name}
@@ -349,9 +188,20 @@ const MyCart = ({route, navigation}: myCartProps) => {
                       discount={item.attributes.display_additional_tax_total}
                       currency={item.attributes.currency}
                       itemCount={item.attributes.quantity}
+                      onDelete={onDelete}
+                      onMinus={onMinus}
+                      onPlus={onPlus}
+                      cart={cart}
                     />
                   ))}
-                <View style={[styles.productCardSum, cardStyles]}>
+                <View
+                  style={[
+                    styles.productCardSum,
+                    Platform.select({
+                      iosCardStyles: styles.iosCardStyles,
+                      androidCardStyles: styles.androidCardStyles,
+                    }),
+                  ]}>
                   <Text style={styles.priceDetails}>Price details</Text>
                   <View style={styles.priceItemsElements}>
                     <Text style={styles.priceDetailsItem}>
@@ -392,7 +242,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
                 <View style={styles.secureElements}>
                   <Image
                     style={styles.secureImage}
-                    source={require('../../assets/shield.png')}
+                    source={require(SHIELD_PNG_PATH)}
                   />
                   <Text style={styles.secureText}>
                     Safe and Secure Payments 100% Authentic Products
@@ -407,7 +257,7 @@ const MyCart = ({route, navigation}: myCartProps) => {
               <View>
                 <View style={styles.imageProfile}>
                   <View style={styles.imageView}>
-                    <Image source={require('../../assets/good.png')} />
+                    <Image source={require(GOOD_PNG_PATH)} />
                   </View>
                 </View>
               </View>
@@ -419,11 +269,11 @@ const MyCart = ({route, navigation}: myCartProps) => {
               </Text>
               <View>
                 <Button
-                  buttonStyle={shadowStyles}
-                  containerStyle={{
-                    marginTop: 10,
-                    width: 300,
-                  }}
+                  buttonStyle={Platform.select({
+                    ios: styles.ios,
+                    android: styles.android,
+                  })}
+                  containerStyle={styles.containerStyle}
                   onPress={() => navigation.navigate('Main')}
                   title="SHOP NOW"
                 />

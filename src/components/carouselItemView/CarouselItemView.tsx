@@ -1,44 +1,18 @@
 import React, {useState} from 'react';
 import {Image, Platform, View} from 'react-native';
 import Bar from '../bar';
-import {COLORS} from '../../utils/colors';
 import CarouselView, {Pagination} from 'react-native-snap-carousel';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
 
-type carouselItemViewProps = {
-  navigation: any;
-};
+type CarouselItemViewProps = {};
 
-const CarouselItemView = ({route, navigation}: carouselItemViewProps) => {
+const CarouselItemView = ({route}: CarouselItemViewProps) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = useState(0);
   const {imageData} = route.params;
-
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-    },
-  });
-
-  const carouselItemStyles = Platform.select({
-    ios: {
-      marginTop: 120,
-    },
-    android: {
-      marginTop: 220,
-    },
-  });
+  const navigation = useNavigation();
 
   const onPressRightButton = () => {
     isCarousel.current?.snapToNext?.();
@@ -62,7 +36,6 @@ const CarouselItemView = ({route, navigation}: carouselItemViewProps) => {
         text="Product images"
         isSearch={true}
         isLike={false}
-        style={shadowStyles}
         isCard={false}
         navigation={navigation}
       />
@@ -77,7 +50,18 @@ const CarouselItemView = ({route, navigation}: carouselItemViewProps) => {
             onPress={onPressLeftButton}
           />
         </View>
-        <View style={[styles.carouselItem, carouselItemStyles]}>
+        <View
+          style={[
+            styles.carouselItem,
+            Platform.select({
+              ios: {
+                marginTop: 120,
+              },
+              android: {
+                marginTop: 220,
+              },
+            }),
+          ]}>
           <CarouselView
             layout={'default'}
             ref={isCarousel}
@@ -93,13 +77,7 @@ const CarouselItemView = ({route, navigation}: carouselItemViewProps) => {
             dotsLength={imageData.length}
             activeDotIndex={index}
             carouselRef={isCarousel}
-            dotStyle={{
-              width: 10,
-              height: 10,
-              borderRadius: 5,
-              marginHorizontal: 0,
-              backgroundColor: COLORS.neutral_700,
-            }}
+            dotStyle={styles.dotStyle}
             inactiveDotOpacity={0.4}
             inactiveDotScale={0.6}
             tappableDots={true}

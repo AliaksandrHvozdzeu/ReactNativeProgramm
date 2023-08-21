@@ -1,60 +1,18 @@
-import React, {useState} from 'react';
-import {Dimensions, Platform, View} from 'react-native';
+import React from 'react';
+import {Platform, View} from 'react-native';
 import {Button} from 'react-native-elements';
-import {COLORS} from '../../utils/colors';
 import {styles} from './styles';
-import {getXSpreeToken} from '../../api/ProductsApi';
+import SizeAndPositionUtils from '../../utils/SizeAndPositionUtils';
+import {useNavigation} from '@react-navigation/native';
 
-type addProductProps = {
-  navigation: any;
+type AddProductProps = {
   id: string;
   token: string;
   selectColor: {};
 };
 
-const AddToCartButton = ({
-  navigation,
-  id,
-  token,
-  selectColor,
-}: addProductProps) => {
-  const [xSpreeToken, setXSpreeToken] = useState('');
-
-  const ADD_TO_CART_BUTTON_POSITION_IOS =
-    Dimensions.get('screen').height -
-    Math.floor(Dimensions.get('screen').height / 100) * 85;
-  const ADD_TO_CART_BUTTON_POSITION_ANDROID =
-    Dimensions.get('screen').height -
-    Math.floor(Dimensions.get('screen').height / 100) * 80;
-
-  const addToCarButtonStyle = Platform.select({
-    ios: {
-      bottom: ADD_TO_CART_BUTTON_POSITION_IOS,
-    },
-    android: {
-      bottom: ADD_TO_CART_BUTTON_POSITION_ANDROID,
-    },
-  });
-
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
+const AddToCartButton = ({id, token, selectColor}: AddProductProps) => {
+  const navigation = useNavigation();
 
   const addToCart = (productId: string) => {
     if (!token) {
@@ -63,10 +21,6 @@ const AddToCartButton = ({
       if (!selectColor.id) {
         navigation.navigate('ChooseColorModal');
       } else {
-        getXSpreeToken(token).then(json => {
-          setXSpreeToken(json.data.attributes.token);
-        });
-
         fetch(
           'https://demo.spreecommerce.org/api/v2/storefront/cart/add_item',
           {
@@ -98,26 +52,26 @@ const AddToCartButton = ({
   };
 
   return (
-    <View style={[styles.buttonViewStyle, addToCarButtonStyle]}>
+    <View
+      style={[
+        styles.buttonViewStyle,
+        Platform.select({
+          ios: {
+            bottom: SizeAndPositionUtils.iosButtonPosition(),
+          },
+          android: {
+            bottom: SizeAndPositionUtils.androidButtonPosition(),
+          },
+        }),
+      ]}>
       <Button
         title="ADD TO CART"
-        buttonStyle={shadowStyles}
-        containerStyle={{
-          width: '100%',
-          marginHorizontal: 50,
-          marginVertical: 10,
-          paddingLeft: 20,
-          paddingRight: 20,
-        }}
-        titleStyle={{
-          fontSize: 15,
-          fontFamily: 'Roboto',
-          fontStyle: 'normal',
-          fontWeight: '500',
-          letterSpacing: 1.25,
-          textTransform: 'uppercase',
-          textAlign: 'center',
-        }}
+        buttonStyle={Platform.select({
+          ios: styles.ios,
+          android: styles.android,
+        })}
+        containerStyle={styles.containerStyle}
+        titleStyle={styles.titleStyle}
         onPress={() => addToCart(id)}
       />
     </View>

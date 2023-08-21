@@ -1,60 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  Image,
-  Platform,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, FlatList, Platform, Text, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
-import Moment from 'moment/moment';
+import MyOrderItem from './MyOrderItem';
+import {useNavigation} from '@react-navigation/native';
 
-type myOrdersProps = {
+type MyOrdersProps = {
   route: any;
-  navigation: any;
 };
 
-const MyOrders = ({route, navigation}: myOrdersProps) => {
+const MyOrders = ({route}: MyOrdersProps) => {
   const [orderIncluded, setOrderIncluded] = useState([]);
   const [orders, setOrders] = useState([]);
   const {token} = route.params;
-
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
-
-  const cardStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_500,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-    },
-    android: {
-      shadowColor: COLORS.neutral_500,
-      shadowRadius: 4,
-      elevation: 10,
-    },
-  });
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetch(
@@ -91,66 +51,36 @@ const MyOrders = ({route, navigation}: myOrdersProps) => {
     return orderId;
   };
 
-  const getFormatDate = (date: string) => {
-    Moment.locale('en');
-    return Moment(date).format('DD/MM/YY hh:mm');
-  };
-
-  type orderType = {
-    name: string;
-    title: string;
-    date: string;
-    imagePath: string;
-    total: string;
-    currency: string;
-  };
-
-  const Item = ({name, title, date, imagePath, total, currency}: orderType) => (
-    <View style={styles.priceItemsElements}>
-      {orderIncluded && (
-        <>
-          <Text style={styles.oderDateItem}>{getFormatDate(date)}</Text>
-          <View style={styles.oderItem}>
-            {/*<Text style={styles.oderItemTitle}>{name}</Text>*/}
-            <Text style={styles.oderItemTitle}>{title}</Text>
-            <Text style={styles.oderItemTitle}>
-              {total} {currency}
-            </Text>
-          </View>
-          <View style={styles.orderItem}>
-            <Image
-              style={styles.orderItemImage}
-              source={{uri: `https://demo.spreecommerce.org${imagePath}`}}
-            />
-          </View>
-        </>
-      )}
-    </View>
-  );
-
   return (
     <View style={styles.centeredView}>
       <Bar
         text="My Orders"
         isSearch={true}
         isLike={false}
-        style={shadowStyles}
         isCard={true}
         navigation={navigation}
       />
       <View style={styles.centeredViewScroll}>
-        {orders && (
-          <View style={[styles.orderCard, cardStyles]}>
+        {orders ? (
+          <View
+            style={[
+              styles.orderCard,
+              Platform.select({
+                ios: styles.ios,
+                android: styles.android,
+              }),
+            ]}>
             <FlatList
               data={orders.data}
               renderItem={({item}) => (
-                <Item
+                <MyOrderItem
                   name={getProductName(item.attributes.number)}
                   title={orderIncluded[0]?.attributes?.name}
                   date={item.attributes.created_at}
                   total={orderIncluded[0]?.attributes?.display_total}
                   currency={orderIncluded[0]?.attributes?.currency}
                   imagePath={orderIncluded[2]?.attributes?.original_url}
+                  orderIncluded={orderIncluded}
                 />
               )}
               keyExtractor={item => item.id}
@@ -171,8 +101,7 @@ const MyOrders = ({route, navigation}: myOrdersProps) => {
               </Text>
             </View>
           </View>
-        )}
-        {!orders && (
+        ) : (
           <View
             style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
             <ActivityIndicator size="large" color={COLORS.blue_500} />

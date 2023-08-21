@@ -4,35 +4,29 @@ import CarouselView, {Pagination} from 'react-native-snap-carousel';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {buildImageArray} from '../../api/ImageApi';
-import { COLORS } from "../../utils/colors";
+import {useNavigation} from '@react-navigation/native';
 
-type carouselData = {
-  id: string;
-  data: any;
+type CarouselData = {
   imageWidth: number;
   imageHeight: number;
   imageTopPosition: number;
   leftButtonTopPosition: number;
   rightButtonTopPosition: number;
-  navigation: any;
   included: {};
   images: [];
 };
 const Carousel = ({
-  id,
-  data,
   imageWidth,
   imageHeight,
   imageTopPosition,
   leftButtonTopPosition,
   rightButtonTopPosition,
-  navigation,
   included,
   images,
-}: carouselData) => {
+}: CarouselData) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = useState(0);
-
+  const navigation = useNavigation();
   const getImagesData = () => {
     return buildImageArray(images, included);
   };
@@ -61,9 +55,9 @@ const Carousel = ({
     },
   });
 
-  const CarouselItem = ({item, index}: any) => {
+  const CarouselItem = ({item, indexRow}: any) => {
     return (
-      <View style={styles.container} key={index}>
+      <View style={styles.container} key={indexRow}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('CarouselItemView', {
@@ -108,13 +102,7 @@ const Carousel = ({
           dotsLength={getImagesData.length}
           activeDotIndex={index}
           carouselRef={isCarousel}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            marginHorizontal: 0,
-            backgroundColor: COLORS.neutral_700,
-          }}
+          dotStyle={styles.dotStyle}
           inactiveDotOpacity={0.4}
           inactiveDotScale={0.6}
           tappableDots={true}

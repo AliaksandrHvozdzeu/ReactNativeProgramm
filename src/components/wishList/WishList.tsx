@@ -5,13 +5,13 @@ import Bar from '../bar';
 import ProductSearchListCard from '../productSearchListCard';
 import STRING_UTILS from '../../utils/StringUtils';
 import {getProductList} from '../../api/ProductsApi';
+import ImageUtils from '../../utils/ImageUtils';
+import {useNavigation} from '@react-navigation/native';
 
-type wishListProps = {
-  description: string;
-};
-const WishList = ({navigation}: wishListProps) => {
+const WishList = () => {
   const [data, setData] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     getDataFromApi();
@@ -29,17 +29,12 @@ const WishList = ({navigation}: wishListProps) => {
     setIsRefreshing(false);
   };
 
-  const getImageById = (imageId: string) => {
-    return `https://picsum.photos/id/${imageId}/3670/2462`;
-  };
-
   return (
     <View>
       <Bar
         text="My Wish List"
         isSearch={true}
         isLike={false}
-        style={null}
         isCard={true}
         navigation={navigation}
       />
@@ -55,12 +50,15 @@ const WishList = ({navigation}: wishListProps) => {
           refreshing={isRefreshing}
           renderItem={({item}) => (
             <ProductSearchListCard
-              title={STRING_UTILS.shortTitle(item.attributes.name)}
-              src={getImageById(item.relationships.images.data[0].id)}
+              title={STRING_UTILS.shortString(item.attributes.name, 15)}
+              src={ImageUtils.getImageById(
+                item.relationships.images.data[0].id,
+              )}
               price={item.attributes.display_price}
               currency={item.attributes.currency}
-              description={STRING_UTILS.shortDescription(
+              description={STRING_UTILS.shortString(
                 item.attributes.description,
+                20,
               )}
               navigation={navigation}
               isWishList={true}
