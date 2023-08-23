@@ -40,7 +40,6 @@ const SearchBar = ({searchFilterFunction, search}: inputType) => {
           style={[styles.input, inputStyles]}
           onChangeText={(text: string) => {
             searchFilterFunction(text);
-            console.log(text);
           }}
           value={search}
           placeholder="Search Here"

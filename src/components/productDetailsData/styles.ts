@@ -9,6 +9,9 @@ export const styles = StyleSheet.create({
     height: 1000,
     width: 'auto',
   },
+  buttonView: {
+    marginRight: 5,
+  },
   selectColorButton: {
     display: 'flex',
     flex: 1,
@@ -16,9 +19,9 @@ export const styles = StyleSheet.create({
     height: 30,
     fontSize: 10,
     marginRight: 5,
+    textAlign: 'center',
   },
   buttonStyle: {
-    backgroundColor: COLORS.neutral_100,
     borderRadius: 0,
     flex: 1,
     height: 30,

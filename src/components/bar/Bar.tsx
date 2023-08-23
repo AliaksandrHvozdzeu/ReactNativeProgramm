@@ -13,17 +13,25 @@ type barTextProps = {
   isLike: boolean;
   isCard: boolean;
   style: any;
+  navigation: any;
 };
 
-const Bar = ({text, isSearch, isLike, isCard, style}: barTextProps) => {
+const Bar = ({
+  text,
+  isSearch,
+  isLike,
+  isCard,
+  style,
+  navigation,
+}: barTextProps) => {
   return (
     <View style={[styles.layout, style]}>
       <View style={styles.bar}>
-        {isSearch && <BackButton />}
-        {!isSearch && <MenuButton />}
+        {isSearch && <BackButton navigation={navigation} />}
+        {!isSearch && <MenuButton navigation={navigation} />}
         <BarText text={text} />
-        {isLike && <LikeButton />}
-        {isCard && <CartButton count={10} />}
+        {isLike && <LikeButton navigation={navigation} />}
+        {isCard && <CartButton navigation={navigation} />}
       </View>
     </View>
   );

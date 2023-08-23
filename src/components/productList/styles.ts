@@ -1,7 +1,7 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import {COLORS} from '../../utils/colors';
 
-const SCREEN_HEIGHT = Dimensions.get('screen').height - 150;
+const SCREEN_HEIGHT = Dimensions.get('screen').height - 100;
 
 // 20
 
@@ -16,6 +16,28 @@ export const styles = StyleSheet.create({
     paddingTop: 5,
     gap: 5,
     backgroundColor: COLORS.neutral_100,
+  },
+  loadingData: {
+    display: 'flex',
+    marginLeft: 10,
+    fontFamily: 'Roboto',
+    fontSize: 15,
+    left: 5,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    borderColor: COLORS.neutral_500,
+  },
+  onLoadDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 600,
+    verticalAlign: 'middle',
+  },
+  onLoadDataHorizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
   searchBarLayout: {
     display: 'flex',

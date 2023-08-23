@@ -13,8 +13,6 @@ export const styles = StyleSheet.create({
     left: 15,
   },
   menu: {
-    width: 25,
-    height: 25,
     flexShrink: 0,
     color: COLORS.neutral_100,
   },

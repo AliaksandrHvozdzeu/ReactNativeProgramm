@@ -1,73 +1,86 @@
-import React from 'react';
-import {Platform, ScrollView, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {styles} from './styles';
-import {COLORS} from '../../utils/colors';
 import {Button} from 'react-native-elements';
 import AddToCartButton from '../addToCartButton';
 import Carousel from '../carousel';
+import {getImageById} from '../../api/ImageApi';
+import {COLORS} from '../../utils/colors';
 
 type productDetailsDataProps = {
-  product: {};
+  id: string;
+  name: string;
+  display_price: string;
+  currency: string;
+  description: string;
+  token: string;
+  navigation: any;
+  included: {};
+  images: {};
+  buttonColors: [];
 };
 
-const ProductDetailsData = ({product}: productDetailsDataProps) => {
-  const carouselData = [
-    {
-      id: 0,
-      imageId: 55,
-      imgUrl: 'https://picsum.photos/id/55/200/300',
-    },
-    {
-      id: 1,
-      imageId: 54,
-      imgUrl: 'https://picsum.photos/id/23/200/300',
-    },
-    {
-      id: 2,
-      imageId: 27,
-      imgUrl: 'https://picsum.photos/id/98/200/300',
-    },
-    {
-      id: 3,
-      imageId: 56,
-      imgUrl: 'https://picsum.photos/id/98/200/300',
-    },
-  ];
+const ProductDetailsData = ({
+  id,
+  name,
+  display_price,
+  currency,
+  description,
+  navigation,
+  included,
+  images,
+  token,
+  buttonColors,
+}: productDetailsDataProps) => {
+  const [selectColor, setSelectColor] = useState({});
 
-  const buttonFontStyle = Platform.select({
-    ios: {
-      color: COLORS.neutral_700,
-      fontSize: 13,
-      fontWeight: '400',
-      textAlign: 'center',
-    },
-    android: {
-      color: COLORS.neutral_700,
-      fontSize: 12,
-      fontWeight: '400',
-      textAlign: 'center',
-    },
-  });
+  const getButtonColor = (color: string) => {
+    return {
+      backgroundColor: color,
+      borderRadius: 0,
+      flex: 1,
+      height: 30,
+      width: 60,
+    };
+  };
+
+  const getButtonColorTitle = (title: string) => {
+    return title.replace('_', ' ');
+  };
+
+  const getColorButtonTitleStyle = (colorName: string) => {
+    return colorName === 'white'
+      ? {
+          color: COLORS.neutral_1000,
+          fontSize: 10,
+        }
+      : {
+          fontSize: 10,
+        };
+  };
 
   return (
     <View style={styles.productDetailsDataLayout}>
       <ScrollView>
         <View style={styles.layout}>
           <Carousel
-            data={carouselData}
+            id={id}
+            data={getImageById(id)}
             imageHeight={250}
             imageWidth={250}
             imageTopPosition={30}
             leftButtonTopPosition={100}
             rightButtonTopPosition={100}
+            navigation={navigation}
+            included={included}
+            images={images}
           />
           <View style={styles.productInfoBar}>
             <View style={styles.productSection}>
-              <Text style={styles.productName}>{product.attributes.name}</Text>
+              <Text style={styles.productName}>{name}</Text>
               <View style={styles.coastBar}>
                 <Text style={styles.price}>
-                  {product.attributes.display_price}{' '}
-                  {product.attributes.currency}
+                  {display_price} {currency}
                 </Text>
               </View>
             </View>
@@ -75,25 +88,39 @@ const ProductDetailsData = ({product}: productDetailsDataProps) => {
             <View>
               <Text style={styles.selectColorSection}>Select color</Text>
               <View style={styles.buttonGroups}>
-                <Button
-                  title="Blue"
-                  style={styles.selectColorButton}
-                  buttonStyle={styles.buttonStyle}
-                  titleStyle={buttonFontStyle}
-                />
+                {buttonColors &&
+                  buttonColors.map((button, index) => (
+                    <View style={styles.buttonView} key={index}>
+                      <Button
+                        title={getButtonColorTitle(button.colorName)}
+                        style={styles.selectColorButton}
+                        buttonStyle={getButtonColor(button.color)}
+                        titleStyle={getColorButtonTitleStyle(button.colorName)}
+                        onPress={() =>
+                          setSelectColor({
+                            id: button.id,
+                            size: 1,
+                          })
+                        }
+                      />
+                    </View>
+                  ))}
               </View>
             </View>
             <View style={styles.horizontalLine} />
             <View>
               <Text style={styles.descriptionSection}>Description</Text>
-              <Text style={styles.description}>
-                {product.attributes.description}
-              </Text>
+              <Text style={styles.description}>{description}</Text>
             </View>
           </View>
         </View>
       </ScrollView>
-      <AddToCartButton />
+      <AddToCartButton
+        navigation={navigation}
+        id={id}
+        token={token}
+        selectColor={selectColor}
+      />
     </View>
   );
 };

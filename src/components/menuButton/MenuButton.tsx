@@ -1,16 +1,38 @@
 import React from 'react';
 import {View} from 'react-native';
 import {styles} from './styles';
-import {Icon} from 'react-native-elements';
+import {Button} from 'react-native-elements';
+import {COLORS} from '../../utils/colors';
+import {DrawerActions} from '@react-navigation/native';
 
-const MenuButton = () => {
+type menuButtonProps = {
+  navigation: any;
+};
+
+const MenuButton = ({navigation}: menuButtonProps) => {
   return (
     <View style={styles.iconLeft}>
-      <Icon
+      <Button
         style={styles.menu}
-        type="feather"
-        name="menu"
-        color={styles.menu.color}
+        icon={{
+          name: 'menu',
+          type: 'feather',
+          size: 20,
+          color: 'white',
+        }}
+        iconRight
+        buttonStyle={{
+          backgroundColor: COLORS.blue_500,
+          zIndex: 1,
+          marginTop: 2,
+        }}
+        containerStyle={{
+          height: 40,
+          width: 45,
+          marginHorizontal: 50,
+          marginVertical: 10,
+        }}
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       />
     </View>
   );

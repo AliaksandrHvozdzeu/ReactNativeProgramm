@@ -8,20 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 25,
     marginBottom: 30,
-  },
-  dotBar: {
-    position: 'absolute',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    bottom: -10,
-    fontWeight: '700',
-  },
-  dotNotActive: {
-    color: COLORS.neutral_500,
-  },
-  dotActive: {
-    color: COLORS.blue_500,
+    zIndex: 0,
   },
   carouselLeftButton: {
     position: 'absolute',
@@ -37,11 +24,36 @@ export const styles = StyleSheet.create({
   carouselRightButtonIcon: {
     color: COLORS.neutral_500,
   },
-  dotStyles: {
-    marginRight: -13,
-    marginLeft: -13,
+  container: {
+    backgroundColor: 'white',
+    borderRadius: 15,
+    width: 250,
+    shadowColor: COLORS.neutral_1000,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  fadingContainer: {
-
+  image: {
+    width: 250,
+    height: 250,
+  },
+  header: {
+    color: '#222',
+    fontSize: 28,
+    fontWeight: 'bold',
+    paddingLeft: 20,
+    paddingTop: 20,
+  },
+  body: {
+    color: '#222',
+    fontSize: 18,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 });

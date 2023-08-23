@@ -7,6 +7,7 @@ export const COLORS = {
   neutral_500: '#8F8F8F',
   neutral_300: '#C3C3C3',
   neutral_100: '#F7F7F7',
+  neutral_0: '#FFFFFF',
   accent_orange_300: '#FEB96B',
   accent_orange_500: '#F39649',
   accent_red: '#DD6B55',

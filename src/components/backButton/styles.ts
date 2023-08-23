@@ -9,12 +9,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexShrink: 0,
-    top: 15,
+    top: 12,
     left: 15,
   },
-  menu: {
-    width: 25,
-    height: 25,
+  back: {
+    width: 50,
+    height: 50,
     flexShrink: 0,
     color: COLORS.neutral_100,
   },

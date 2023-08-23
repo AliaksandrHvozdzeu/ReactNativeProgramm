@@ -1,10 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Dimensions, Platform, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
 import {styles} from './styles';
+import {getXSpreeToken} from '../../api/ProductsApi';
 
-const AddToCartButton = () => {
+type addProductProps = {
+  navigation: any;
+  id: string;
+  token: string;
+  selectColor: {};
+};
+
+const AddToCartButton = ({
+  navigation,
+  id,
+  token,
+  selectColor,
+}: addProductProps) => {
+  const [xSpreeToken, setXSpreeToken] = useState('');
+
   const ADD_TO_CART_BUTTON_POSITION_IOS =
     Dimensions.get('screen').height -
     Math.floor(Dimensions.get('screen').height / 100) * 85;
@@ -41,6 +56,47 @@ const AddToCartButton = () => {
     },
   });
 
+  const addToCart = (productId: string) => {
+    if (!token) {
+      navigation.navigate('LogIn');
+    } else {
+      if (!selectColor.id) {
+        navigation.navigate('ChooseColorModal');
+      } else {
+        getXSpreeToken(token).then(json => {
+          setXSpreeToken(json.data.attributes.token);
+        });
+
+        fetch(
+          'https://demo.spreecommerce.org/api/v2/storefront/cart/add_item',
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+              variant_id: productId,
+              quantity: 1,
+              options: {},
+              public_metadata: {
+                first_item_order: true,
+              },
+              private_metadata: {
+                recommended_by_us: false,
+              },
+            }),
+          },
+        )
+          .then(response => response.json())
+          .then(data => {
+            navigation.navigate('AddProductModal');
+          });
+      }
+    }
+  };
+
   return (
     <View style={[styles.buttonViewStyle, addToCarButtonStyle]}>
       <Button
@@ -62,6 +118,7 @@ const AddToCartButton = () => {
           textTransform: 'uppercase',
           textAlign: 'center',
         }}
+        onPress={() => addToCart(id)}
       />
     </View>
   );
