@@ -1,9 +1,11 @@
 import React from 'react';
-import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import ProductAttributes from '../../utils/ProductAttributes';
 import {Icon} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
+import {MINUS_PNG_PATH, PLUS_PNG_PATH} from '../../utils/images';
+import ImageUtils from '../../utils/ImageUtils';
 
 type MyCartItemProp = {
   name: string;
@@ -16,7 +18,7 @@ type MyCartItemProp = {
   onDelete: any;
   onPlus: any;
   onMinus: any;
-  cart: {};
+  cart: object;
 };
 
 const MyCartItem = ({
@@ -32,9 +34,6 @@ const MyCartItem = ({
   onMinus,
   cart,
 }: MyCartItemProp) => {
-  const PLUS_PNG_PATH: string = '../../assets/plus.png';
-  const MINUS_PNG_PATH: string = '../../assets/minus.png';
-
   if (title && total && discount && currency) {
     let imageUri: string;
     let lineItem: number;
@@ -71,28 +70,14 @@ const MyCartItem = ({
     }
 
     return (
-      <View
-        style={[
-          styles.productCard,
-          Platform.select({
-            iosCardStyles: styles.iosCardStyles,
-            androidCardStyles: styles.androidCardStyles,
-          }),
-        ]}>
+      <View style={styles.productCard}>
         <View>
           <Image
             style={styles.image}
-            source={{uri: `https://demo.spreecommerce.org/${imageUri}`}}
+            source={{uri: ImageUtils.getImageFullUrl(imageUri)}}
           />
         </View>
-        <View
-          style={[
-            styles.productInfoBar,
-            Platform.select({
-              iosProductDetailsStyles: styles.iosProductDetailsStyles,
-              androidProductDetailsStyles: styles.androidProductDetailsStyles,
-            }),
-          ]}>
+        <View style={styles.productInfoBar}>
           <Text style={styles.productName}>{title}</Text>
           <Text style={styles.productDescription}>
             {ProductAttributes.getColor(color)}
@@ -111,14 +96,11 @@ const MyCartItem = ({
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity onPress={() => onPlus(lineItem, quantity)}>
-            <Image style={styles.plusButton} source={require(PLUS_PNG_PATH)} />
+            <Image style={styles.plusButton} source={PLUS_PNG_PATH} />
           </TouchableOpacity>
           <Text style={styles.count}>{itemCount}</Text>
           <TouchableOpacity onPress={() => onMinus(lineItem, quantity)}>
-            <Image
-              style={styles.minusButton}
-              source={require(MINUS_PNG_PATH)}
-            />
+            <Image style={styles.minusButton} source={MINUS_PNG_PATH} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => onDelete(lineItem)}

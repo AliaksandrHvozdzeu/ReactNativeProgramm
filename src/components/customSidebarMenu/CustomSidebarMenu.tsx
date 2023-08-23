@@ -29,7 +29,7 @@ const CustomSidebarMenu = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView>
       <Text style={styles.menuLabel}>Ecommerce Store</Text>
       <DrawerContentScrollView>
         <Text style={styles.menuGroupText}>My Account</Text>

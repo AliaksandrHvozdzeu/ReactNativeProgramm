@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {
   getProductList,
@@ -55,14 +55,7 @@ const ProductListCard = ({
           productIncluded: productIncluded,
         })
       }>
-      <View
-        style={[
-          styles.item,
-          Platform.select({
-            ios: styles.ios,
-            android: styles.android,
-          }),
-        ]}>
+      <View style={styles.item}>
         <View>
           <Image style={styles.image} source={{uri: src}} />
         </View>

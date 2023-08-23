@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
-  Platform,
   RefreshControl,
   ScrollView,
   Text,
@@ -15,11 +14,10 @@ import {Button} from 'react-native-elements';
 import ProcessToPaymentButton from '../processToPaymentButton';
 import {getXSpreeToken} from '../../api/ProductsApi';
 import MyCartItem from './MyCartItem';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-type MyCartProps = {};
-
-const MyCart = ({route}: MyCartProps) => {
+const MyCart = () => {
+  const route = useRoute();
   const [cart, setCart] = useState('');
   const [refreshing, setRefreshing] = React.useState(false);
   const [xSpreeToken, setXSpreeToken] = useState('');
@@ -129,14 +127,7 @@ const MyCart = ({route}: MyCartProps) => {
     return (
       <>
         {notification && (
-          <View
-            style={[
-              styles.notificationPanel,
-              Platform.select({
-                ios: styles.ios,
-                android: styles.android,
-              }),
-            ]}>
+          <View style={styles.notificationPanel}>
             <Text style={styles.informationHeader}>Information</Text>
             <Text style={styles.informationBody}>
               The quantity of the product has been changed.
@@ -149,16 +140,10 @@ const MyCart = ({route}: MyCartProps) => {
 
   return (
     <View style={styles.centeredView}>
-      <Bar
-        text="My Cart"
-        isSearch={true}
-        isLike={false}
-        isCard={false}
-        navigation={navigation}
-      />
+      <Bar text="My Cart" isSearch={true} isLike={false} isCard={false} />
       <Notification />
       {!cart && (
-        <View style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
+        <View style={styles.onLoadDataContainer}>
           <ActivityIndicator size="large" color={COLORS.blue_500} />
           <View>
             <Text style={styles.loadingData}>Loading...</Text>
@@ -194,14 +179,7 @@ const MyCart = ({route}: MyCartProps) => {
                       cart={cart}
                     />
                   ))}
-                <View
-                  style={[
-                    styles.productCardSum,
-                    Platform.select({
-                      iosCardStyles: styles.iosCardStyles,
-                      androidCardStyles: styles.androidCardStyles,
-                    }),
-                  ]}>
+                <View style={styles.productCardSum}>
                   <Text style={styles.priceDetails}>Price details</Text>
                   <View style={styles.priceItemsElements}>
                     <Text style={styles.priceDetailsItem}>
@@ -269,10 +247,7 @@ const MyCart = ({route}: MyCartProps) => {
               </Text>
               <View>
                 <Button
-                  buttonStyle={Platform.select({
-                    ios: styles.ios,
-                    android: styles.android,
-                  })}
+                  buttonStyle={styles.ios}
                   containerStyle={styles.containerStyle}
                   onPress={() => navigation.navigate('Main')}
                   title="SHOP NOW"

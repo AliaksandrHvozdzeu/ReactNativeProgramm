@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
 import {styles} from './styles';
 import Bar from '../bar';
@@ -29,41 +29,50 @@ const WishList = () => {
     setIsRefreshing(false);
   };
 
+  const refreshControl = useMemo(() => {
+    return <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />;
+  }, []);
+
+  const renderItem = useCallback(
+    (item: {
+      attributes: {
+        name: string;
+        display_price: string;
+        currency: string;
+        description: string;
+      };
+      relationships: {images: {data: {id: string}[]}};
+    }) => {
+      return (
+        <ProductSearchListCard
+          title={STRING_UTILS.shortString(item.attributes.name, 15)}
+          src={ImageUtils.getImageById(item.relationships.images.data[0].id)}
+          price={item.attributes.display_price}
+          currency={item.attributes.currency}
+          description={STRING_UTILS.shortString(
+            item.attributes.description,
+            20,
+          )}
+          navigation={navigation}
+          isWishList={true}
+        />
+      );
+    },
+    [],
+  );
+
   return (
     <View>
-      <Bar
-        text="My Wish List"
-        isSearch={true}
-        isLike={false}
-        isCard={true}
-        navigation={navigation}
-      />
+      <Bar text="My Wish List" isSearch={true} isLike={false} isCard={true} />
       <View style={styles.layout}>
         <FlatList
           data={data}
           numColumns={1}
           onRefresh={onRefresh}
-          refreshControl={
-            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-          }
+          refreshControl={refreshControl}
           style={styles.flatStyle}
           refreshing={isRefreshing}
-          renderItem={({item}) => (
-            <ProductSearchListCard
-              title={STRING_UTILS.shortString(item.attributes.name, 15)}
-              src={ImageUtils.getImageById(
-                item.relationships.images.data[0].id,
-              )}
-              price={item.attributes.display_price}
-              currency={item.attributes.currency}
-              description={STRING_UTILS.shortString(
-                item.attributes.description,
-                20,
-              )}
-              navigation={navigation}
-              isWishList={true}
-            />
-          )}
+          renderItem={({item}) => renderItem(item)}
           keyExtractor={item => item.id}
         />
       </View>

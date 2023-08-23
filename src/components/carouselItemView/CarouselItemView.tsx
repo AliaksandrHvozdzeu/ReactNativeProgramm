@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
-import {Image, Platform, View} from 'react-native';
+import {Image, View} from 'react-native';
 import Bar from '../bar';
 import CarouselView, {Pagination} from 'react-native-snap-carousel';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 
 type CarouselItemViewProps = {};
 
-const CarouselItemView = ({route}: CarouselItemViewProps) => {
+const CarouselItemView: React.FC<CarouselItemViewProps> = () => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = useState(0);
+  const route = useRoute();
   const {imageData} = route.params;
-  const navigation = useNavigation();
 
   const onPressRightButton = () => {
     isCarousel.current?.snapToNext?.();
@@ -37,10 +37,9 @@ const CarouselItemView = ({route}: CarouselItemViewProps) => {
         isSearch={true}
         isLike={false}
         isCard={false}
-        navigation={navigation}
       />
       <View style={styles.itemsElements}>
-        <View style={[styles.carouselRightButton]}>
+        <View style={styles.carouselRightButton}>
           <Icon
             style={styles.carouselRightButtonIcon}
             type="antdesign"
@@ -50,18 +49,7 @@ const CarouselItemView = ({route}: CarouselItemViewProps) => {
             onPress={onPressLeftButton}
           />
         </View>
-        <View
-          style={[
-            styles.carouselItem,
-            Platform.select({
-              ios: {
-                marginTop: 120,
-              },
-              android: {
-                marginTop: 220,
-              },
-            }),
-          ]}>
+        <View style={styles.carouselItem}>
           <CarouselView
             layout={'default'}
             ref={isCarousel}
@@ -83,7 +71,7 @@ const CarouselItemView = ({route}: CarouselItemViewProps) => {
             tappableDots={true}
           />
         </View>
-        <View style={[styles.carouselLeftButton]}>
+        <View style={styles.carouselLeftButton}>
           <Icon
             style={styles.carouselLeftButtonIcon}
             type="antdesign"

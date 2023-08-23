@@ -57,10 +57,10 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   iosButtonPosition: {
-    bottom: SizeAndPositionUtils.addToCartIOSButtonPosition(),
+    bottom: SizeAndPositionUtils.heightPosition(85),
   },
   androidButtonPosition: {
-    bottom: SizeAndPositionUtils.addToCartAndroidButtonPosition(),
+    bottom: SizeAndPositionUtils.heightPosition(105),
   },
   buttonViewStyle: {
     position: 'absolute',

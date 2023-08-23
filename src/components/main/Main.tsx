@@ -5,10 +5,12 @@ import ProductList from '../productList';
 
 type MainProps = {};
 
-const Main: React.FC<MainProps> = ({navigation}) => (
-  <View style={styles.layout}>
-    <ProductList navigation={navigation} />
-  </View>
-);
+const Main: React.FC<MainProps> = () => {
+  return (
+    <View style={styles.layout}>
+      <ProductList />
+    </View>
+  );
+};
 
 export default Main;

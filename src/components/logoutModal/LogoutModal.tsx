@@ -2,13 +2,13 @@ import React from 'react';
 import {Image, Platform, Text, View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {WARNING_PNG_PATH} from '../../utils/images';
 
 type LogoutModalProps = {};
 
-const WARNING_PNG_PATH: string = '../../assets/warning.png';
-
-const LogoutModal = ({route}: LogoutModalProps) => {
+const LogoutModal: React.FC<LogoutModalProps> = () => {
+  const route = useRoute();
   const {authContext} = route.params;
   const navigation = useNavigation();
 
@@ -16,7 +16,7 @@ const LogoutModal = ({route}: LogoutModalProps) => {
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
         <View>
-          <Image source={require(WARNING_PNG_PATH)} />
+          <Image source={WARNING_PNG_PATH} />
         </View>
         <View>
           <Text style={styles.modalText}>Login To Continue</Text>

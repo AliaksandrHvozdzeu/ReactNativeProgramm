@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     alignItems: 'center',
+    height: 120,
   },
   ios: {
     shadowColor: COLORS.neutral_700,

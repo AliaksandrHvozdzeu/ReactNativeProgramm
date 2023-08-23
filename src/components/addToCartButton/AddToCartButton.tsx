@@ -2,7 +2,6 @@ import React from 'react';
 import {Platform, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {styles} from './styles';
-import SizeAndPositionUtils from '../../utils/SizeAndPositionUtils';
 import {useNavigation} from '@react-navigation/native';
 
 type AddProductProps = {
@@ -52,18 +51,7 @@ const AddToCartButton = ({id, token, selectColor}: AddProductProps) => {
   };
 
   return (
-    <View
-      style={[
-        styles.buttonViewStyle,
-        Platform.select({
-          ios: {
-            bottom: SizeAndPositionUtils.iosButtonPosition(),
-          },
-          android: {
-            bottom: SizeAndPositionUtils.androidButtonPosition(),
-          },
-        }),
-      ]}>
+    <View style={styles.buttonViewStyle}>
       <Button
         title="ADD TO CART"
         buttonStyle={Platform.select({

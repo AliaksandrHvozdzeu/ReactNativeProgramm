@@ -4,22 +4,17 @@ import {styles} from './styles';
 import Bar from '../bar';
 import DateTimeUtils from '../../utils/DateTimeUtils';
 import AddressUtils from '../../utils/AddressUtils';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 type MyOrderDetailsProps = {};
 
-const MyOrderDetails = ({route}: MyOrderDetailsProps) => {
+const MyOrderDetails: React.FC<MyOrderDetailsProps> = () => {
+  const route = useRoute();
   const {orderIncluded, orderNumber, orderDate, orders} = route.params;
   const navigation = useNavigation();
   return (
     <View style={styles.centeredView}>
-      <Bar
-        text="Order Details"
-        isSearch={true}
-        isLike={false}
-        isCard={true}
-        navigation={navigation}
-      />
+      <Bar text="Order Details" isSearch={true} isLike={false} isCard={true} />
       <View style={styles.centeredView}>
         <View style={[styles.productCardSum]}>
           <View style={styles.priceItemsElements}>
@@ -38,14 +33,12 @@ const MyOrderDetails = ({route}: MyOrderDetailsProps) => {
               {orderIncluded[0].attributes.display_total}
             </Text>
           </View>
-
           <View style={styles.priceItemsElements}>
             <Text style={styles.priceDetailsItem}>Promotion</Text>
             <Text style={styles.priceDetailsNumberPromotion}>
               {orderIncluded[8].attributes.display_amount}
             </Text>
           </View>
-
           <View style={styles.priceItemsElements}>
             <Text style={styles.priceDetailsItem}>Payment Mode</Text>
             <Text style={styles.priceDetailsNumber}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, View} from 'react-native';
+import {View} from 'react-native';
 import {styles} from './styles';
 import MenuButton from '../menuButton';
 import CartButton from '../cartButton';
@@ -14,34 +14,13 @@ type BarTextProps = {
   isCard: boolean;
 };
 
-const Bar: React.FC<BarTextProps> = ({
-  text,
-  isSearch,
-  isLike,
-  isCard,
-  navigation,
-}) => (
-  <View
-    style={[
-      styles.layout,
-      Platform.select({
-        ios: styles.ios,
-        android: styles.android,
-      }),
-    ]}>
+const Bar: React.FC<BarTextProps> = ({text, isSearch, isLike, isCard}) => (
+  <View style={styles.layout}>
     <View style={styles.bar}>
-      {isSearch ? (
-        <BackButton navigation={navigation} />
-      ) : (
-        <MenuButton navigation={navigation} />
-      )}
+      {isSearch ? <BackButton /> : <MenuButton />}
       <BarText text={text} />
-      {isLike ? (
-        <LikeButton navigation={navigation} />
-      ) : (
-        <CartButton navigation={navigation} />
-      )}
-      {isCard && <CartButton navigation={navigation} />}
+      {isLike ? <LikeButton /> : <CartButton />}
+      {isCard && <CartButton />}
     </View>
   </View>
 );

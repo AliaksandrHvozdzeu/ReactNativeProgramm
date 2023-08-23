@@ -5,15 +5,15 @@ import {COLORS} from '../../utils/colors';
 import MapView, {Camera, Marker} from 'react-native-maps';
 import Bar from '../bar';
 import {Icon} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 
 type MyOrderMapProps = {};
 
-const MyOrderMap = ({route}: MyOrderMapProps) => {
+const MyOrderMap: React.FC<MyOrderMapProps> = () => {
+  const route = useRoute();
   const DEFAULT_MAP_SIZE: number = 25;
   const map: LegacyRef<MapView> = useRef(null);
   const {address} = route.params;
-  const navigation = useNavigation();
 
   const onMapPlusSize = () => {
     map.current?.getCamera().then((cam: Camera) => {
@@ -44,7 +44,6 @@ const MyOrderMap = ({route}: MyOrderMapProps) => {
         isSearch={true}
         isLike={false}
         isCard={true}
-        navigation={navigation}
       />
       <View style={styles.container}>
         <MapView

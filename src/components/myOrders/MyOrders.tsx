@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, FlatList, Platform, Text, View} from 'react-native';
+import {ActivityIndicator, FlatList, Text, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
@@ -53,23 +53,10 @@ const MyOrders = ({route}: MyOrdersProps) => {
 
   return (
     <View style={styles.centeredView}>
-      <Bar
-        text="My Orders"
-        isSearch={true}
-        isLike={false}
-        isCard={true}
-        navigation={navigation}
-      />
+      <Bar text="My Orders" isSearch={true} isLike={false} isCard={true} />
       <View style={styles.centeredViewScroll}>
         {orders ? (
-          <View
-            style={[
-              styles.orderCard,
-              Platform.select({
-                ios: styles.ios,
-                android: styles.android,
-              }),
-            ]}>
+          <View style={styles.orderCard}>
             <FlatList
               data={orders.data}
               renderItem={({item}) => (
@@ -102,8 +89,7 @@ const MyOrders = ({route}: MyOrdersProps) => {
             </View>
           </View>
         ) : (
-          <View
-            style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
+          <View style={styles.onLoadDataContainer}>
             <ActivityIndicator size="large" color={COLORS.blue_500} />
             <View>
               <Text style={styles.loadingData}>Loading orders...</Text>

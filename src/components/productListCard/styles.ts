@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 2,
     shadowRadius: 4,
     height: 150,
+    width: 162,
   },
   ios: {
     shadowColor: COLORS.neutral_500,

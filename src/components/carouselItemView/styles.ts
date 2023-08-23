@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
     width: 250,
     height: 500,
     alignItems: 'center',
+    marginTop: 120,
   },
   itemsElements: {
     flexDirection: 'row',

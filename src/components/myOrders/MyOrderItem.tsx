@@ -2,9 +2,9 @@ import React from 'react';
 import {styles} from './styles';
 import {Image, Text, View} from 'react-native';
 import DateTimeUtils from '../../utils/DateTimeUtils';
+import ImageUtils from '../../utils/ImageUtils';
 
 type MyOrderItemProp = {
-  name: string;
   title: string;
   date: string;
   imagePath: string;
@@ -14,7 +14,6 @@ type MyOrderItemProp = {
 };
 
 const MyOrderItem: React.FC<MyOrderItemProp> = ({
-  name,
   title,
   date,
   imagePath,
@@ -23,7 +22,7 @@ const MyOrderItem: React.FC<MyOrderItemProp> = ({
   orderIncluded,
 }) => (
   <View style={styles.priceItemsElements}>
-    {orderIncluded && (
+    {orderIncluded ? (
       <>
         <Text style={styles.oderDateItem}>
           {DateTimeUtils.getFormatDate(date)}
@@ -37,9 +36,13 @@ const MyOrderItem: React.FC<MyOrderItemProp> = ({
         <View style={styles.orderItem}>
           <Image
             style={styles.orderItemImage}
-            source={{uri: `https://demo.spreecommerce.org${imagePath}`}}
+            source={{uri: ImageUtils.getImageFullUrl(imagePath)}}
           />
         </View>
+      </>
+    ) : (
+      <>
+        <Text style={styles.priceItemsElements}>Error displaying order</Text>
       </>
     )}
   </View>

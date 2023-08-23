@@ -4,15 +4,16 @@ import {styles} from './styles';
 import Bar from '../bar';
 import STRING_UTILS from '../../utils/StringUtils';
 import ProductDetailsData from '../productDetailsData/ProductDetailsData';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 type ProductDetailsProps = {};
 
-const ProductDetails = ({route}: ProductDetailsProps) => {
-  const [buttonColors, setButtonColors] = useState([]);
-  const navigation = useNavigation();
+const ProductDetails: React.FC<ProductDetailsProps> = () => {
+  const route = useRoute;
   const {slug, images, included, token, productColors, productIncluded} =
     route.params;
+  const [buttonColors, setButtonColors] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     let buttonColorsArray = [];
@@ -43,13 +44,7 @@ const ProductDetails = ({route}: ProductDetailsProps) => {
 
   return (
     <View style={styles.layout}>
-      <Bar
-        text="Product details"
-        isSearch={true}
-        isLike={true}
-        isCard={true}
-        navigation={navigation}
-      />
+      <Bar text="Product details" isSearch={true} isLike={true} isCard={true} />
       {slug && (
         <ProductDetailsData
           id={slug?.id}

@@ -6,14 +6,12 @@ import {getFilteredProductList, getProductList} from '../../api/ProductsApi';
 import Bar from '../bar';
 import ProductListFlatList from './ProductListFlatList';
 import SearchFlatList from './SearchFlatList';
-import {useNavigation} from '@react-navigation/native';
 
 const ProductList = () => {
   const [search, setSearch] = useState('');
   const [data, setData] = useState([]);
   const [included, setIncluded] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const navigation = useNavigation();
 
   useEffect(() => {
     getDataFromApi();
@@ -50,7 +48,6 @@ const ProductList = () => {
           isSearch={false}
           isLike={false}
           isCard={true}
-          navigation={navigation}
         />
       ) : (
         <Bar
@@ -58,7 +55,6 @@ const ProductList = () => {
           isSearch={false}
           isLike={false}
           isCard={true}
-          navigation={navigation}
         />
       )}
       <SearchBar searchFilterFunction={searchFunction} search={search} />
@@ -69,7 +65,6 @@ const ProductList = () => {
             included={included}
             onRefresh={onRefresh}
             isRefreshing={isRefreshing}
-            navigation={navigation}
           />
         ) : (
           <ProductListFlatList
@@ -77,7 +72,6 @@ const ProductList = () => {
             included={included}
             onRefresh={onRefresh}
             isRefreshing={isRefreshing}
-            navigation={navigation}
           />
         )}
       </View>

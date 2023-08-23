@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Keyboard, TextInput, View} from 'react-native';
+import {Keyboard, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 
@@ -12,23 +12,10 @@ const SearchBar: React.FC<InputTypeProps> = ({
   searchFilterFunction,
   search,
 }) => (
-  <View
-    style={[
-      styles.layout,
-      Platform.select({
-        ios: styles.ios,
-        android: styles.android,
-      }),
-    ]}>
+  <View style={styles.layout}>
     <View style={styles.inputBar}>
       <TextInput
-        style={[
-          styles.input,
-          Platform.select({
-            ios: styles.inputStylesIos,
-            android: styles.inputStylesAndroid,
-          }),
-        ]}
+        style={styles.input}
         onChangeText={(text: string) => {
           searchFilterFunction(text);
         }}

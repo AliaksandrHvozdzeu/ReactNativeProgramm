@@ -94,7 +94,6 @@ const ProductDetailsData = ({
         </View>
       </ScrollView>
       <AddToCartButton
-        navigation={navigation}
         id={id}
         token={token}
         selectColor={selectColor}

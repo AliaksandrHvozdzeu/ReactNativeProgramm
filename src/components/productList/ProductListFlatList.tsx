@@ -1,17 +1,10 @@
-import React from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  Text,
-  View,
-} from 'react-native';
-import {styles} from './styles';
-import {COLORS} from '../../utils/colors';
+import React, {useCallback, useMemo} from 'react';
+import {FlatList, RefreshControl} from 'react-native';
 import ProductListCard from '../productListCard';
 import STRING_UTILS from '../../utils/StringUtils';
 import {getIncludedImageById} from '../../api/ImageApi';
 import {useNavigation} from '@react-navigation/native';
+import Loading from '../loading';
 
 type ProductListFlatListProp = {
   data: {};
@@ -26,40 +19,51 @@ const ProductListFlatList = ({
   isRefreshing,
 }: ProductListFlatListProp) => {
   const navigation = useNavigation();
+
+  const renderItem = useCallback(
+    (item: {
+      attributes: {
+        name: string;
+        display_price: string;
+        currency: string;
+        slug: string;
+      };
+      relationships: {images: {data: {id: string}[]}};
+    }) => {
+      return (
+        <ProductListCard
+          title={STRING_UTILS.shortString(item.attributes.name, 15)}
+          src={getIncludedImageById(
+            item.relationships.images.data[0].id,
+            included,
+          )}
+          price={item.attributes.display_price}
+          currency={item.attributes.currency}
+          navigation={navigation}
+          slug={item.attributes.slug}
+          images={item.relationships.images.data}
+          included={included}
+        />
+      );
+    },
+    [],
+  );
+
+  const refreshControl = useMemo(() => {
+    return <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />;
+  }, []);
+
   if (!data) {
-    return (
-      <View style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
-        <ActivityIndicator size="large" color={COLORS.blue_500} />
-        <View>
-          <Text style={styles.loadingData}>Loading...</Text>
-        </View>
-      </View>
-    );
+    return <Loading />;
   } else {
     return (
       <FlatList
         data={data}
         numColumns={2}
         onRefresh={onRefresh}
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-        }
+        refreshControl={refreshControl}
         refreshing={isRefreshing}
-        renderItem={({item}) => (
-          <ProductListCard
-            title={STRING_UTILS.shortString(item.attributes.name, 15)}
-            src={getIncludedImageById(
-              item.relationships.images.data[0].id,
-              included,
-            )}
-            price={item.attributes.display_price}
-            currency={item.attributes.currency}
-            navigation={navigation}
-            slug={item.attributes.slug}
-            images={item.relationships.images.data}
-            included={included}
-          />
-        )}
+        renderItem={({item}) => renderItem(item)}
         keyExtractor={item => item.id}
       />
     );

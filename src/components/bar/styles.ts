@@ -13,6 +13,12 @@ export const styles = StyleSheet.create({
     height: 55,
     alignSelf: 'stretch',
     zIndex: 1000,
+    shadowColor: COLORS.neutral_700,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+    borderRadius: 3,
   },
   ios: {
     shadowColor: COLORS.neutral_700,

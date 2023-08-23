@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     alignItems: 'center',
+    bottom: SizeAndPositionUtils.heightPosition(110),
   },
   containerStyle: {
     width: '100%',
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
     paddingRight: 20,
   },
   buttonPosition: {
-    bottom: SizeAndPositionUtils.ProcessToPaymentButtonPosition(),
+
   },
   titleStyle: {
     fontSize: 15,

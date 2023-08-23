@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Platform, Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 type LogInProps = {};
 
-const LogIn = ({route}: LogInProps) => {
+const LogIn: React.FC<LogInProps> = () => {
+  const route = useRoute();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigation = useNavigation();
@@ -16,6 +17,18 @@ const LogIn = ({route}: LogInProps) => {
     authContext.signIn({username, password});
     navigation.navigate('Root');
   };
+
+  const onForgotPassword = useCallback(() => {
+    navigation.navigate('ForgotPassword');
+  }, []);
+
+  const onSignUp = useCallback(() => {
+    navigation.navigate('SignUp');
+  }, []);
+
+  const onRoot = useCallback(() => {
+    navigation.navigate('Root');
+  }, []);
 
   return (
     <View style={styles.centeredView}>
@@ -41,9 +54,7 @@ const LogIn = ({route}: LogInProps) => {
           />
         </View>
         <View>
-          <Text
-            style={styles.forgotPasswordLink}
-            onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text style={styles.forgotPasswordLink} onPress={onForgotPassword}>
             Forgot Password?
           </Text>
         </View>
@@ -60,7 +71,7 @@ const LogIn = ({route}: LogInProps) => {
         />
       </View>
       <View>
-        <Text style={styles.link} onPress={() => navigation.navigate('SignUp')}>
+        <Text style={styles.link} onPress={onSignUp}>
           New here? Sign Up
         </Text>
       </View>
@@ -72,7 +83,7 @@ const LogIn = ({route}: LogInProps) => {
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.container}
           titleStyle={styles.titleStyle}
-          onPress={() => navigation.navigate('Root')}
+          onPress={onRoot}
         />
       </View>
     </View>

@@ -223,6 +223,10 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     height: 'auto',
     width: 320,
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
   },
   count: {
     width: 30,
@@ -260,6 +264,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     height: 600,
     verticalAlign: 'middle',
+    flexDirection: 'row',
+    padding: 10,
   },
   onLoadDataHorizontal: {
     flexDirection: 'row',

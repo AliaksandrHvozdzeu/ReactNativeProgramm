@@ -14,11 +14,12 @@ import Bar from '../bar';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Avatar} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 type MyProfileProps = {};
 
-const MyProfile = ({route}: MyProfileProps) => {
+const MyProfile: React.FC<MyProfileProps> = () => {
+  const route = useRoute();
   const [userData, setUserData] = useState();
   const {authContext, userName, token} = route.params;
   const [isEdit, setEdit] = useState(false);
