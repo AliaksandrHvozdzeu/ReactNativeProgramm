@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 import {Platform, View} from 'react-native';
 import {styles} from './styles';
 import Bar from '../bar';
@@ -12,7 +12,6 @@ type productDetailsProps = {
 };
 
 const ProductDetails = ({route, navigation}: productDetailsProps) => {
-
   const [buttonColors, setButtonColors] = useState([]);
 
   const {slug, images, included, token, productColors, productIncluded} =
@@ -46,7 +45,6 @@ const ProductDetails = ({route, navigation}: productDetailsProps) => {
     setButtonColors(buttonColorsArray);
   }, []);
 
-
   const shadowStyles = Platform.select({
     ios: {
       shadowColor: COLORS.neutral_700,
@@ -75,12 +73,12 @@ const ProductDetails = ({route, navigation}: productDetailsProps) => {
       />
       {slug && (
         <ProductDetailsData
-          id={slug.id}
+          id={slug?.id}
           navigation={navigation}
-          name={slug.attributes.name}
-          currency={slug.attributes.currency}
-          display_price={slug.attributes.display_price}
-          description={STRING_UTILS.replaceTags(slug.attributes.description)}
+          name={slug?.attributes?.name}
+          currency={slug?.attributes?.currency}
+          display_price={slug?.attributes?.display_price}
+          description={STRING_UTILS.replaceTags(slug?.attributes?.description)}
           included={included}
           images={images}
           token={token}

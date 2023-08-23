@@ -68,10 +68,6 @@ const App = () => {
       'Non-serializable values were found in the navigation state',
     ]);
     StatusBar.setHidden(true);
-
-
-
-
     const bootstrapAsync = async () => {
       let userToken;
       try {

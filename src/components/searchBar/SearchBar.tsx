@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, TextInput, View} from 'react-native';
+import {Platform, Keyboard, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {COLORS} from '../../utils/colors';
@@ -43,6 +43,8 @@ const SearchBar = ({searchFilterFunction, search}: inputType) => {
           }}
           value={search}
           placeholder="Search Here"
+          onSubmitEditing={Keyboard.dismiss}
+          autoFocus={true}
         />
         <View style={styles.searchIcon}>
           <Icon

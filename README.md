@@ -40,3 +40,12 @@ NOTE: need to complete:
 2. Fix color buttons
 3. Add optional (color, site) when adding product to card.
 4. Move all fetch to one file
+
+# HW #4
+1. Share mechanism is done with INSTAGRAM_STORIES as an example
+2. My profile screen completed with all the requirements
+3. Profile picture editing completed. Image URI saved to Async Storage and loading from Async Storage.
+4. Product search completed using API request param. Filtered by product name.
+5. Shipping address on the map is completed.  Google MAP API key was created and reused for Android and IOS.
+   Also, reused Geocode for getting coordinates by shipping address. Also added functions for zooming maps.
+   Google MAP API key moved to .env file.

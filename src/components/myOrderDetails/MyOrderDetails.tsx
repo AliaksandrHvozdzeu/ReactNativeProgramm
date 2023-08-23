@@ -1,9 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, LogBox, Platform, ScrollView, Text, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import Bar from '../bar';
 import Moment from 'moment';
+import Geocode from 'react-geocode';
+import {GOOGLE_MAP_API} from '@env';
 
 type myOrderDetailsProps = {
   route: any;
@@ -12,6 +14,7 @@ type myOrderDetailsProps = {
 
 const MyOrderDetails = ({route, navigation}: myOrderDetailsProps) => {
   const {orderIncluded, orderNumber, orderDate, orders} = route.params;
+  const [coords, setCoords] = useState({});
 
   const shadowStyles = Platform.select({
     ios: {
@@ -63,15 +66,6 @@ const MyOrderDetails = ({route, navigation}: myOrderDetailsProps) => {
     },
   });
 
-  type orderType = {
-    name: string;
-    orderNumber: string;
-    imagePath: string;
-    total: string;
-    currency: string;
-    itemCount: string;
-  };
-
   const getFormatDate = (date: string) => {
     Moment.locale('en');
     return Moment(date).format('DD/MM/YY hh:mm');
@@ -88,31 +82,31 @@ const MyOrderDetails = ({route, navigation}: myOrderDetailsProps) => {
     return full;
   };
 
-  const Item = ({
-    name,
-    orderNumber,
-    imagePath,
-    total,
-    currency,
-    itemCount,
-  }: orderType) => (
-    <View>
-      <View style={[styles.productCard, cardStyles]}>
-        <View style={[styles.productInfoBar]}>
-          <Text style={styles.productName}>{name}</Text>
-          <Text style={styles.productDescription}>Color: Blue</Text>
-          <Text style={styles.productDescription}>Qty: {itemCount}</Text>
-          <Text style={styles.productDescription}>{total}</Text>
-        </View>
-        <View>
-          <Image
-            style={styles.image}
-            source={{uri: `https://demo.spreecommerce.org${imagePath}`}}
-          />
-        </View>
-      </View>
-    </View>
-  );
+  const getBillingCoordinatesByAddress = () => {
+    const zipcode = orderIncluded[4].attributes.zipcode;
+    const city = orderIncluded[4].attributes.city;
+    const address1 = orderIncluded[4].attributes.address1;
+    const address2 = orderIncluded[4].attributes.address2;
+    const full: string = `${zipcode}, ${city}, ${address1}, ${address2}`;
+
+    Geocode.setApiKey(GOOGLE_MAP_API);
+    Geocode.fromAddress(full).then(
+      response => {
+        const {lat, lng} = response.results[0].geometry.location;
+        //console.log(lat, lng);
+        setCoords({
+          latitude: lat,
+          longitude: lng,
+          address: full,
+        });
+      },
+      error => {
+        console.error(error);
+      },
+    );
+    console.log(coords);
+    return coords;
+  };
 
   return (
     <View style={styles.centeredView}>
@@ -160,7 +154,11 @@ const MyOrderDetails = ({route, navigation}: myOrderDetailsProps) => {
             <Text style={styles.priceDetailsItem}>Shipping Address</Text>
             <Text
               style={styles.priceDetailsNumber}
-              onPress={() => navigation.navigate('MyOrderMap')}>
+              onPress={() =>
+                navigation.navigate('MyOrderMap', {
+                  address: getBillingCoordinatesByAddress(),
+                })
+              }>
               {getBillingAddress()}
             </Text>
           </View>
@@ -175,7 +173,7 @@ const MyOrderDetails = ({route, navigation}: myOrderDetailsProps) => {
         <ScrollView style={scrollStyle}>
           {orders &&
             orders.data.map((product, index) => (
-              <View>
+              <View key={index}>
                 <View style={[styles.productCard, cardStyles]}>
                   <View style={[styles.productInfoBar]}>
                     <Text style={styles.productName}>
