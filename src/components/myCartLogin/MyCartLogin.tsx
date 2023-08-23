@@ -1,51 +1,23 @@
 import React from 'react';
-import {Image, Platform, Text, TextInput, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {styles} from './styles';
-import {COLORS} from '../../utils/colors';
 import {Button} from 'react-native-elements';
 import Bar from '../bar';
-import LogIn from "../logIn";
+import {PERSON_PNG_PATH} from '../../utils/images';
+import {useNavigation} from '@react-navigation/native';
 
-type myCartLoginProps = {
-  navigation: any;
-};
+type MyCartLoginProps = {};
 
-const MyCartLogin = ({navigation}: myCartLoginProps) => {
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
-
+const MyCartLogin: React.FC<MyCartLoginProps> = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.centeredView}>
-      <Bar
-        text="My Cart"
-        isSearch={true}
-        isLike={false}
-        style={shadowStyles}
-        isCard={false}
-        navigation={navigation}
-      />
+      <Bar text="My Cart" isSearch={true} isLike={false} isCard={false} />
       <View style={styles.centeredView}>
         <View>
           <View style={styles.imageProfile}>
             <View style={styles.imageView}>
-              <Image source={require('../../assets/person.png')} />
+              <Image source={PERSON_PNG_PATH} />
             </View>
           </View>
         </View>
@@ -57,11 +29,8 @@ const MyCartLogin = ({navigation}: myCartLoginProps) => {
         </Text>
         <View>
           <Button
-            buttonStyle={shadowStyles}
-            containerStyle={{
-              marginTop: 10,
-              width: 300,
-            }}
+            buttonStyle={styles.ios}
+            containerStyle={styles.containerStyle}
             onPress={() => navigation.navigate('LogIn')}
             title="LOGIN NOW"
           />

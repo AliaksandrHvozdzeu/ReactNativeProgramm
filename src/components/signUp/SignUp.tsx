@@ -1,37 +1,25 @@
-import React from 'react';
-import {Platform, Text, TextInput, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {COLORS} from '../../utils/colors';
+import {useNavigation} from '@react-navigation/native';
 
-type signUpProps = {
-  navigation: any;
-};
+type SignUpProps = {};
 
-const SignUp = ({navigation}: signUpProps) => {
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
+const SignUp: React.FC<SignUpProps> = () => {
+  const navigation = useNavigation();
+
+  const goBack = useCallback(() => {
+    navigation.goBack();
+  }, []);
+
+  const onLogIn = useCallback(() => {
+    navigation.navigate('LogIn');
+  }, []);
 
   return (
     <View style={styles.centeredView}>
-      <View style={{marginBottom: 60}}>
+      <View style={styles.label}>
         <Text style={styles.text}>Ecommerce Store</Text>
       </View>
       <View>
@@ -54,17 +42,14 @@ const SignUp = ({navigation}: signUpProps) => {
       </View>
       <View>
         <Button
-          buttonStyle={shadowStyles}
-          containerStyle={{
-            marginTop: 10,
-            width: 300,
-          }}
-          onPress={() => navigation.goBack()}
+          buttonStyle={styles.ios}
+          containerStyle={styles.containerStyle}
+          onPress={goBack}
           title="SIGN UP"
         />
       </View>
       <View>
-        <Text style={styles.link} onPress={() => navigation.navigate('LogIn')}>
+        <Text style={styles.link} onPress={onLogIn}>
           Already have account? Sign in
         </Text>
       </View>

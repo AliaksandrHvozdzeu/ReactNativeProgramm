@@ -7,6 +7,39 @@ export const styles = StyleSheet.create({
     height: 'auto',
     alignItems: 'center',
   },
+  ios: {
+    shadowColor: COLORS.neutral_700,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    borderRadius: 3,
+  },
+  iosCardStyles: {
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+  },
+  iosProductDetailsStyles: {
+    left: 110,
+  },
+  containerStyle: {
+    marginTop: 10,
+    width: 300,
+  },
+  androidProductDetailsStyles: {
+    left: 120,
+  },
+  androidCardStyles: {
+    shadowColor: COLORS.neutral_500,
+    shadowRadius: 4,
+    elevation: 10,
+  },
+  android: {
+    shadowColor: COLORS.neutral_700,
+    shadowRadius: 4,
+    borderRadius: 3,
+  },
   notificationPanel: {
     backgroundColor: COLORS.neutral_100,
     width: '100%',
@@ -14,6 +47,11 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     marginTop: 50,
     zIndex: 500,
+    shadowColor: COLORS.neutral_700,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    borderRadius: 3,
   },
   informationHeader: {
     color: COLORS.neutral_500,
@@ -44,7 +82,7 @@ export const styles = StyleSheet.create({
     width: 20,
     height: 20,
     flexShrink: 0,
-    right: -90,
+    alignItems: 'flex-end',
   },
   onLoadDataContainer: {
     flex: 1,
@@ -52,6 +90,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     height: 600,
     verticalAlign: 'middle',
+    flexDirection: 'row',
+    padding: 10,
   },
   emptyCenteredView: {
     flex: 1,
@@ -154,6 +194,10 @@ export const styles = StyleSheet.create({
     marginRight: 5,
     height: 160,
     width: 320,
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
   },
   productCardSum: {
     flex: 1,
@@ -164,6 +208,10 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     height: 165,
     width: 320,
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
   },
   secureElements: {
     flexDirection: 'row',
@@ -235,7 +283,6 @@ export const styles = StyleSheet.create({
   amount: {
     color: COLORS.neutral_700,
   },
-
   item: {
     display: 'flex',
     margin: 5,
@@ -263,6 +310,7 @@ export const styles = StyleSheet.create({
     display: 'flex',
     position: 'absolute',
     width: 'auto',
+    left: 110,
   },
   productName: {
     fontFamily: 'Roboto',

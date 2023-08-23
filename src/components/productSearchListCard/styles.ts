@@ -17,6 +17,22 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
     height: 120,
   },
+  productDetailsStylesIos: {
+    left: 110,
+  },
+  productDetailsStylesAndroid: {
+    left: 120,
+  },
+  ios: {
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+  },
+  android: {
+    shadowColor: COLORS.neutral_500,
+    shadowRadius: 4,
+  },
   image: {
     marginTop: 10,
     marginBottom: 5,

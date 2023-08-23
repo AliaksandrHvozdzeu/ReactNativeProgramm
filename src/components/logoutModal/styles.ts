@@ -8,6 +8,24 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'transparent',
   },
+  ios: {
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+    borderRadius: 3,
+    zIndex: 1,
+  },
+  containerStyle: {
+    marginTop: 10,
+    width: 120,
+  },
+  android: {
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+    borderRadius: 3,
+    zIndex: 1,
+  },
   modalView: {
     margin: 20,
     backgroundColor: 'white',

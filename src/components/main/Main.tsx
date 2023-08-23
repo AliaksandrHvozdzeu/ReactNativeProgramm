@@ -3,14 +3,12 @@ import {View} from 'react-native';
 import {styles} from './styles';
 import ProductList from '../productList';
 
-type mainProps = {
-  navigation: any;
-};
+type MainProps = {};
 
-const Main = ({navigation}: mainProps) => {
+const Main: React.FC<MainProps> = () => {
   return (
     <View style={styles.layout}>
-      <ProductList navigation={navigation} />
+      <ProductList />
     </View>
   );
 };

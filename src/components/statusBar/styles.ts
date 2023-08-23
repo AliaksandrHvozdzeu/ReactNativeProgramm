@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
   statusBar: {
-    backgroundColor: '#1C1F27',
+    backgroundColor: COLORS.neutral_1000,
     height: 20,
     width: 'auto',
   },

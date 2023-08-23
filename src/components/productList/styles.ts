@@ -33,6 +33,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     height: 600,
     verticalAlign: 'middle',
+    flexDirection: 'row',
+    padding: 10,
   },
   onLoadDataHorizontal: {
     flexDirection: 'row',

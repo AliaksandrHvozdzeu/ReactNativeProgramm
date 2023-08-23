@@ -14,6 +14,22 @@ export const styles = StyleSheet.create({
     right: 0,
     top: 34,
   },
+  icons: {
+    name: 'cart',
+    type: 'material-community',
+    size: 20,
+    color: 'white',
+  },
+  buttonStyle: {
+    position: 'absolute',
+    backgroundColor: COLORS.blue_500,
+  },
+  containerStyle: {
+    height: 40,
+    width: 50,
+    marginHorizontal: 50,
+    marginVertical: 10,
+  },
   cart: {
     flexShrink: 0,
     color: COLORS.neutral_100,

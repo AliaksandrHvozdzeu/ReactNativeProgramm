@@ -1,64 +1,38 @@
-import React from 'react';
-import {Dimensions, Platform, Text, TextInput, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {Platform, Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {COLORS} from '../../utils/colors';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-type logInProps = {
-  route: any;
-  navigation: any;
-};
+type LogInProps = {};
 
-const LogIn = ({route, navigation}: logInProps) => {
-  const [username, setUsername] = React.useState('hvozdzeu.aliaksandr@gmail.com');
-  const [password, setPassword] = React.useState('250486al');
-
+const LogIn: React.FC<LogInProps> = () => {
+  const route = useRoute();
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const navigation = useNavigation();
   const {authContext} = route.params;
 
   const setAuthData = () => {
     authContext.signIn({username, password});
-    navigation.navigate('Root'); //98572
+    navigation.navigate('Root');
   };
 
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
+  const onForgotPassword = useCallback(() => {
+    navigation.navigate('ForgotPassword');
+  }, []);
 
-  const ADD_TO_CART_BUTTON_POSITION_IOS =
-    Dimensions.get('screen').height -
-    Math.floor(Dimensions.get('screen').height / 100) * 105;
-  const ADD_TO_CART_BUTTON_POSITION_ANDROID =
-    Dimensions.get('screen').height -
-    Math.floor(Dimensions.get('screen').height / 100) * 95;
+  const onSignUp = useCallback(() => {
+    navigation.navigate('SignUp');
+  }, []);
 
-  const addToCarButtonStyle = Platform.select({
-    ios: {
-      bottom: ADD_TO_CART_BUTTON_POSITION_IOS,
-    },
-    android: {
-      bottom: ADD_TO_CART_BUTTON_POSITION_ANDROID,
-    },
-  });
+  const onRoot = useCallback(() => {
+    navigation.navigate('Root');
+  }, []);
 
   return (
     <View style={styles.centeredView}>
-      <View style={{marginBottom: 60}}>
+      <View style={styles.label}>
         <Text style={styles.text}>Ecommerce Store</Text>
       </View>
       <View>
@@ -80,55 +54,36 @@ const LogIn = ({route, navigation}: logInProps) => {
           />
         </View>
         <View>
-          <Text
-            style={styles.forgotPasswordLink}
-            onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text style={styles.forgotPasswordLink} onPress={onForgotPassword}>
             Forgot Password?
           </Text>
         </View>
       </View>
       <View>
         <Button
-          buttonStyle={shadowStyles}
-          containerStyle={{
-            marginTop: 10,
-            width: 300,
-          }}
+          buttonStyle={Platform.select({
+            ios: styles.ios,
+            android: styles.android,
+          })}
+          containerStyle={styles.containerStyle}
           onPress={() => setAuthData()}
           title="SIGN IN"
         />
       </View>
       <View>
-        <Text style={styles.link} onPress={() => navigation.navigate('SignUp')}>
+        <Text style={styles.link} onPress={onSignUp}>
           New here? Sign Up
         </Text>
       </View>
-      <View style={[styles.buttonViewStyle, addToCarButtonStyle]}>
+      <View style={[styles.buttonViewStyle, styles.iosButtonPosition]}>
         <Button
           title="SKIP LOGIN"
-          icon={{
-            name: 'arrowright',
-            type: 'antdesign',
-            size: 15,
-            color: 'white',
-          }}
+          icon={styles.icon}
           iconRight
-          buttonStyle={{
-            backgroundColor: COLORS.neutral_500,
-            borderRadius: 3,
-            shadowColor: COLORS.neutral_700,
-            shadowOffset: {width: 0, height: 2},
-            shadowOpacity: 2,
-            shadowRadius: 4,
-          }}
-          containerStyle={{
-            height: 40,
-            width: 300,
-            marginHorizontal: 50,
-            marginVertical: 10,
-          }}
-          titleStyle={{marginHorizontal: 20, color: COLORS.neutral_100}}
-          onPress={() => navigation.navigate('Root')}
+          buttonStyle={styles.buttonStyle}
+          containerStyle={styles.container}
+          titleStyle={styles.titleStyle}
+          onPress={onRoot}
         />
       </View>
     </View>

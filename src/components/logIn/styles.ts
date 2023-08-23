@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../utils/colors';
+import SizeAndPositionUtils from '../../utils/SizeAndPositionUtils';
 
 export const styles = StyleSheet.create({
   centeredView: {
@@ -7,6 +8,59 @@ export const styles = StyleSheet.create({
     height: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  ios: {
+    shadowColor: COLORS.neutral_700,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+    borderRadius: 3,
+    zIndex: 1,
+  },
+  android: {
+    shadowColor: COLORS.neutral_700,
+    shadowRadius: 4,
+    backgroundColor: COLORS.blue_500,
+    borderRadius: 3,
+    zIndex: 1,
+  },
+  label: {
+    marginBottom: 60,
+  },
+  containerStyle: {
+    marginTop: 10,
+    width: 300,
+  },
+  icon: {
+    name: 'arrowright',
+    type: 'antdesign',
+    size: 15,
+    color: 'white',
+  },
+  titleStyle: {
+    marginHorizontal: 20,
+    color: COLORS.neutral_100,
+  },
+  container: {
+    height: 40,
+    width: 300,
+    marginHorizontal: 50,
+    marginVertical: 10,
+  },
+  buttonStyle: {
+    backgroundColor: COLORS.neutral_500,
+    borderRadius: 3,
+    shadowColor: COLORS.neutral_700,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+  },
+  iosButtonPosition: {
+    bottom: SizeAndPositionUtils.heightPosition(85),
+  },
+  androidButtonPosition: {
+    bottom: SizeAndPositionUtils.heightPosition(105),
   },
   buttonViewStyle: {
     position: 'absolute',
