@@ -1,35 +1,26 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {COLORS} from '../../utils/colors';
+import {useNavigation} from '@react-navigation/native';
 
-type backButtonProps = {
-  navigation: any;
-};
-const BackButton = ({navigation}: backButtonProps) => {
+type BackButtonProps = {};
+
+const BackButton: React.FC<BackButtonProps> = () => {
+  const navigation = useNavigation();
+  const onPress = useCallback(() => {
+    navigation.goBack();
+  }, []);
+
   return (
     <View style={styles.iconLeft}>
       <Button
         style={styles.back}
-        icon={{
-          name: 'arrow-back',
-          type: 'ionicons',
-          size: 25,
-          color: 'white',
-        }}
+        icon={styles.icon}
         iconRight
-        buttonStyle={{
-          backgroundColor: COLORS.blue_500,
-          marginTop: 2,
-        }}
-        containerStyle={{
-          height: 40,
-          width: 45,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-        onPress={() => navigation.goBack()}
+        buttonStyle={styles.buttonStyle}
+        containerStyle={styles.containerStyle}
+        onPress={onPress}
       />
     </View>
   );

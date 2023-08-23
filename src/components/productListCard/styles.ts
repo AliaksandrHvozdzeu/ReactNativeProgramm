@@ -15,6 +15,19 @@ export const styles = StyleSheet.create({
     shadowOpacity: 2,
     shadowRadius: 4,
     height: 150,
+    width: 162,
+  },
+  ios: {
+    shadowColor: COLORS.neutral_500,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    width: 162,
+  },
+  android: {
+    shadowColor: COLORS.neutral_500,
+    shadowRadius: 4,
+    width: 172,
   },
   image: {
     marginTop: 5,

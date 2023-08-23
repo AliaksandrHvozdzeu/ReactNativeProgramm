@@ -18,4 +18,20 @@ export const styles = StyleSheet.create({
     flexShrink: 0,
     color: COLORS.neutral_100,
   },
+  buttonStyle: {
+    backgroundColor: COLORS.blue_500,
+    marginTop: 2,
+  },
+  containerStyle: {
+    height: 40,
+    width: 45,
+    marginHorizontal: 50,
+    marginVertical: 10,
+  },
+  icon: {
+    name: 'arrow-back',
+    type: 'ionicons',
+    size: 25,
+    color: 'white',
+  },
 });

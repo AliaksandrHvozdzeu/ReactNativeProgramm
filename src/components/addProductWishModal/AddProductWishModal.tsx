@@ -1,39 +1,22 @@
-import React from 'react';
-import {Image, Platform, Text, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {Image, Text, View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {COLORS} from '../../utils/colors';
+import {SUCCESS_PNG_PATH} from '../../utils/images';
+import {useNavigation} from '@react-navigation/native';
 
-type addProductWishModalProps = {
-  navigation: any;
-};
+type AddProductWishModalProps = {};
 
-const AddProductWishModal = ({navigation}: addProductWishModalProps) => {
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
-
+const AddProductWishModal: React.FC<AddProductWishModalProps> = () => {
+  const navigation = useNavigation();
+  const onPress = useCallback(() => {
+    navigation.goBack();
+  }, []);
   return (
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
         <View>
-          <Image source={require('../../assets/success.png')} />
+          <Image source={SUCCESS_PNG_PATH} />
         </View>
         <View>
           <Text style={styles.modalText}>
@@ -42,12 +25,9 @@ const AddProductWishModal = ({navigation}: addProductWishModalProps) => {
         </View>
         <View>
           <Button
-            buttonStyle={shadowStyles}
-            containerStyle={{
-              marginTop: 10,
-              width: 125,
-            }}
-            onPress={() => navigation.goBack()}
+            buttonStyle={styles.ios}
+            containerStyle={styles.containerStyle}
+            onPress={onPress}
             title="OK"
           />
         </View>

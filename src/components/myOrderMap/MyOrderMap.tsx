@@ -1,53 +1,19 @@
-import React, {LegacyRef, useRef, useState} from 'react';
-import {Platform, StyleSheet, View, Text} from 'react-native';
+import React, {LegacyRef, useRef} from 'react';
+import {Platform, View} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../utils/colors';
 import MapView, {Camera, Marker} from 'react-native-maps';
 import Bar from '../bar';
 import {Icon} from 'react-native-elements';
+import {useRoute} from '@react-navigation/native';
 
-type myOrderMapProps = {
-  route: any;
-  navigation: any;
-};
+type MyOrderMapProps = {};
 
-const MyOrderMap = ({route, navigation}: myOrderMapProps) => {
-  const [mapSize, setMapSize] = useState(25);
+const MyOrderMap: React.FC<MyOrderMapProps> = () => {
+  const route = useRoute();
+  const DEFAULT_MAP_SIZE: number = 25;
   const map: LegacyRef<MapView> = useRef(null);
   const {address} = route.params;
-
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
-
-  const mapViewStyles = StyleSheet.create({
-    container: {
-      ...StyleSheet.absoluteFillObject,
-      height: 'auto',
-      width: 'auto',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-    },
-    map: {
-      ...StyleSheet.absoluteFillObject,
-    },
-  });
 
   const onMapPlusSize = () => {
     map.current?.getCamera().then((cam: Camera) => {
@@ -77,18 +43,16 @@ const MyOrderMap = ({route, navigation}: myOrderMapProps) => {
         text="Shipping address"
         isSearch={true}
         isLike={false}
-        style={shadowStyles}
         isCard={true}
-        navigation={navigation}
       />
-      <View style={mapViewStyles.container}>
+      <View style={styles.container}>
         <MapView
           ref={map}
-          style={mapViewStyles.map}
+          style={styles.map}
           zoomEnabled={true}
           zoomControlEnabled={true}
           zoomTapEnabled={true}
-          maxZoomLevel={mapSize}
+          maxZoomLevel={DEFAULT_MAP_SIZE}
           rotateEnabled={true}
           loadingEnabled={true}
           initialRegion={{

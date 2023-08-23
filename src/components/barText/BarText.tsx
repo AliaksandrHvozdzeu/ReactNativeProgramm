@@ -2,12 +2,12 @@ import React from 'react';
 import {Text} from 'react-native';
 import {styles} from './styles';
 
-type barTextProps = {
+type BarTextProps = {
   text: string;
 };
 
-const BarText = ({text}: barTextProps) => {
-  return <Text style={styles.name}>{text}</Text>;
-};
+const BarText: React.FC<BarTextProps> = ({text}) => (
+  <Text style={styles.name}>{text}</Text>
+);
 
 export default BarText;

@@ -14,13 +14,12 @@ import Bar from '../bar';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Avatar} from 'react-native-elements';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-type myProfileProps = {
-  route: any;
-  navigation: any;
-};
+type MyProfileProps = {};
 
-const MyProfile = ({route, navigation}: myProfileProps) => {
+const MyProfile: React.FC<MyProfileProps> = () => {
+  const route = useRoute();
   const [userData, setUserData] = useState();
   const {authContext, userName, token} = route.params;
   const [isEdit, setEdit] = useState(false);
@@ -30,26 +29,7 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
   const [mobile, setMobile] = useState('');
   const [fullName, setFullName] = useState('');
   const [userLogoUri, setUserLogoUri] = useState('');
-
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
+  const navigation = useNavigation();
 
   useEffect(() => {
     const getUserData = async () => {
@@ -84,7 +64,6 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
       } else if (response.errorCode) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        console.log(response.assets[0].uri);
         storeUserLogo(response.assets[0].uri);
         setUserLogoUri(response.assets[0].uri);
       }
@@ -107,8 +86,8 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
             <Avatar
               size="large"
               title={title}
-              containerStyle={{width: 120, height: 120}}
-              avatarStyle={{borderRadius: 100}}
+              containerStyle={styles.logoContainerStyle}
+              avatarStyle={styles.avatarStyle}
               rounded
               activeOpacity={0.7}
               source={{
@@ -167,8 +146,6 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(JSON.stringify(data));
-        //reload My Profile Screen
         navigation.navigate('MyProfile');
       });
     setEdit(false);
@@ -178,11 +155,11 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
     if (isEdit) {
       return (
         <Button
-          buttonStyle={shadowStyles}
-          containerStyle={{
-            marginTop: 10,
-            width: 300,
-          }}
+          buttonStyle={Platform.select({
+            ios: styles.ios,
+            android: styles.android,
+          })}
+          containerStyle={styles.containerStyle}
           onPress={onUpdate}
           title="UPDATE"
         />
@@ -196,12 +173,11 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
         text="My Profile"
         isSearch={true}
         isLike={false}
-        style={shadowStyles}
         isCard={false}
         navigation={navigation}
       />
       <View style={styles.centeredView}>
-        {!userData && (
+        {!userData ? (
           <View
             style={[styles.onLoadDataContainer, styles.onLoadDataHorizontal]}>
             <ActivityIndicator size="large" color={COLORS.blue_500} />
@@ -209,13 +185,11 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
               <Text style={styles.loadingData}>Loading...</Text>
             </View>
           </View>
-        )}
-        {userData && (
+        ) : (
           <View>
             <View style={styles.firstBlock}>
               <Text style={styles.inputName}>Full Name</Text>
               <TextInput
-                // ref={fullNameRef}
                 style={styles.input}
                 defaultValue={`${userData[0].attributes?.firstname} ${userData[0].attributes?.lastname}`}
                 onChangeText={value => onChangeFullName(value)}
@@ -261,11 +235,11 @@ const MyProfile = ({route, navigation}: myProfileProps) => {
         <View>
           {userData && <UpdateButton />}
           <Button
-            buttonStyle={shadowStyles}
-            containerStyle={{
-              marginTop: 10,
-              width: 300,
-            }}
+            buttonStyle={Platform.select({
+              ios: styles.ios,
+              android: styles.android,
+            })}
+            containerStyle={styles.containerStyle}
             onPress={() =>
               navigation.navigate('LogoutModal', {
                 authContext: authContext,

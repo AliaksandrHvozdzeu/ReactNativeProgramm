@@ -10,6 +10,13 @@ export const styles = StyleSheet.create({
     marginBottom: 30,
     zIndex: 0,
   },
+  dotStyle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 0,
+    backgroundColor: COLORS.neutral_700,
+  },
   carouselLeftButton: {
     position: 'absolute',
     right: 25,

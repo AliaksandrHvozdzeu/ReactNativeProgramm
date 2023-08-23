@@ -1,38 +1,19 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 import CarouselView, {Pagination} from 'react-native-snap-carousel';
 import {styles} from './styles';
 import {Icon} from 'react-native-elements';
 import {buildImageArray} from '../../api/ImageApi';
-import { COLORS } from "../../utils/colors";
+import {useNavigation} from '@react-navigation/native';
 
-type carouselData = {
-  id: string;
-  data: any;
-  imageWidth: number;
-  imageHeight: number;
-  imageTopPosition: number;
-  leftButtonTopPosition: number;
-  rightButtonTopPosition: number;
-  navigation: any;
+type CarouselData = {
   included: {};
   images: [];
 };
-const Carousel = ({
-  id,
-  data,
-  imageWidth,
-  imageHeight,
-  imageTopPosition,
-  leftButtonTopPosition,
-  rightButtonTopPosition,
-  navigation,
-  included,
-  images,
-}: carouselData) => {
+const Carousel = ({included, images}: CarouselData) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = useState(0);
-
+  const navigation = useNavigation();
   const getImagesData = () => {
     return buildImageArray(images, included);
   };
@@ -45,25 +26,9 @@ const Carousel = ({
     isCarousel.current?.snapToPrev?.();
   };
 
-  const carouselImageStyle = StyleSheet.create({
-    image: {
-      width: imageWidth,
-      height: imageHeight,
-    },
-    carouselImage: {
-      marginTop: imageTopPosition,
-    },
-    leftButtonTopPosition: {
-      top: leftButtonTopPosition,
-    },
-    rightButtonTopPosition: {
-      top: rightButtonTopPosition,
-    },
-  });
-
-  const CarouselItem = ({item, index}: any) => {
+  const CarouselItem = ({item, indexRow}: any) => {
     return (
-      <View style={styles.container} key={index}>
+      <View style={styles.container} key={indexRow}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('CarouselItemView', {
@@ -77,12 +42,8 @@ const Carousel = ({
   };
 
   return (
-    <View style={[styles.carouselImage, carouselImageStyle.carouselImage]}>
-      <View
-        style={[
-          styles.carouselLeftButton,
-          carouselImageStyle.leftButtonTopPosition,
-        ]}>
+    <View style={styles.carouselImage}>
+      <View style={styles.carouselLeftButton}>
         <Icon
           style={styles.carouselLeftButtonIcon}
           type="antdesign"
@@ -108,23 +69,13 @@ const Carousel = ({
           dotsLength={getImagesData.length}
           activeDotIndex={index}
           carouselRef={isCarousel}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            marginHorizontal: 0,
-            backgroundColor: COLORS.neutral_700,
-          }}
+          dotStyle={styles.dotStyle}
           inactiveDotOpacity={0.4}
           inactiveDotScale={0.6}
           tappableDots={true}
         />
       </View>
-      <View
-        style={[
-          styles.carouselRightButton,
-          carouselImageStyle.rightButtonTopPosition,
-        ]}>
+      <View style={styles.carouselRightButton}>
         <Icon
           style={styles.carouselRightButtonIcon}
           type="antdesign"

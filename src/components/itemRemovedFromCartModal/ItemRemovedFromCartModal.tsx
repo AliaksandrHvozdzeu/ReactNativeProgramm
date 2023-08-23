@@ -1,47 +1,31 @@
-import React from 'react';
-import {Image, Platform, Text, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {Image, Text, View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {COLORS} from '../../utils/colors';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {ERROR_PNG_PATH, SUCCESS_PNG_PATH} from '../../utils/images';
 
-type itemRemovedFromCartModalProps = {
-  route: any;
-  navigation: any;
-};
+type ItemRemovedFromCartModalProps = {};
 
-const ItemRemovedFromCartModal = ({
-  route,
-  navigation,
-}: itemRemovedFromCartModalProps) => {
+const ItemRemovedFromCartModal: React.FC<
+  ItemRemovedFromCartModalProps
+> = () => {
+  const route = useRoute();
   const {isRemoved} = route.params;
-
-  const shadowStyles = Platform.select({
-    ios: {
-      shadowColor: COLORS.neutral_700,
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 2,
-      shadowRadius: 4,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-    android: {
-      shadowColor: COLORS.neutral_700,
-      shadowRadius: 4,
-      elevation: 10,
-      backgroundColor: COLORS.blue_500,
-      borderRadius: 3,
-      zIndex: 1,
-    },
-  });
-
+  const navigation = useNavigation();
+  const onPress = useCallback(() => {
+    navigation.goBack();
+  }, []);
+  const onMyCart = useCallback(() => {
+    navigation.navigate('MyCart');
+  }, []);
   return (
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        {isRemoved && (
+        {isRemoved ? (
           <>
             <View>
-              <Image source={require('../../assets/success.png')} />
+              <Image source={SUCCESS_PNG_PATH} />
             </View>
             <View>
               <Text style={styles.modalText}>Your Cart Status</Text>
@@ -53,21 +37,17 @@ const ItemRemovedFromCartModal = ({
             </View>
             <View>
               <Button
-                buttonStyle={shadowStyles}
-                containerStyle={{
-                  marginTop: 10,
-                  width: 125,
-                }}
-                onPress={() => navigation.goBack()}
+                buttonStyle={styles.ios}
+                containerStyle={styles.containerStyle}
+                onPress={onPress}
                 title="OK"
               />
             </View>
           </>
-        )}
-        {!isRemoved && (
+        ) : (
           <>
             <View>
-              <Image source={require('../../assets/error.png')} />
+              <Image source={ERROR_PNG_PATH} />
             </View>
             <View>
               <Text style={styles.modalText}>Your Cart Status</Text>
@@ -79,12 +59,9 @@ const ItemRemovedFromCartModal = ({
             </View>
             <View>
               <Button
-                buttonStyle={shadowStyles}
-                containerStyle={{
-                  marginTop: 10,
-                  width: 125,
-                }}
-                onPress={() => navigation.navigate('MyCart')}
+                buttonStyle={styles.ios}
+                containerStyle={styles.containerStyle}
+                onPress={onMyCart}
                 title="OK"
               />
             </View>
