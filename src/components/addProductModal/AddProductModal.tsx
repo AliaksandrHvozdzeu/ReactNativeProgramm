@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Image, Platform, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
 import {SUCCESS_PNG_PATH} from '../../utils/images';
@@ -24,10 +24,7 @@ const AddProductModal: React.FC<ModalProps> = () => {
         </View>
         <View>
           <Button
-            buttonStyle={Platform.select({
-              ios: styles.ios,
-              android: styles.android,
-            })}
+            buttonStyle={styles.ios}
             containerStyle={styles.containerStyle}
             onPress={onPress}
             title="OK"
