@@ -16,9 +16,9 @@ export const getProductListByTag = (productSlug: string) =>
   );
 
 export const getProductListByTagWithFullIncludes = (productSlug: string) =>
-  fetch(
-    `${API_URL_SLUG}/${productSlug}?include=variants`,
-  ).then(response => response.json());
+  fetch(`${API_URL_SLUG}/${productSlug}?include=variants`).then(response =>
+    response.json(),
+  );
 
 export const getProductById = (productId: string) =>
   fetch(

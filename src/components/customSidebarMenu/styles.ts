@@ -39,9 +39,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginTop: 20,
   },
-  share: {
-
-  },
+  share: {},
   menuIcon: {
     color: COLORS.blue_500,
     size: 20,

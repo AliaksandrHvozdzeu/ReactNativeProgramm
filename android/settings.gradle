@@ -5,13 +5,10 @@ pluginManagement {
         google()
     }
 }
-include ':react-native-share'
-project(':react-native-share').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-share/android')
 
 include(":packages:react-native-codegen:android")
 project(":packages:react-native-codegen:android").projectDir = new File(rootProject.projectDir,
         "../node_modules/react-native/packages/react-native-codegen/android")
-
 includeBuild("../node_modules/react-native/packages/react-native-codegen/android")
 
 rootProject.name = 'ReactNativeProgramm'

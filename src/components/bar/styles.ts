@@ -35,5 +35,5 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.blue_500,
     borderRadius: 3,
     zIndex: 1,
-  }
+  },
 });
