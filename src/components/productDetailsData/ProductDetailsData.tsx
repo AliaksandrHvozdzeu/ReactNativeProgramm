@@ -93,11 +93,7 @@ const ProductDetailsData = ({
           </View>
         </View>
       </ScrollView>
-      <AddToCartButton
-        id={id}
-        token={token}
-        selectColor={selectColor}
-      />
+      <AddToCartButton id={id} token={token} selectColor={selectColor} />
     </View>
   );
 };

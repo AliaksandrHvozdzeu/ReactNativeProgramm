@@ -37,13 +37,28 @@ target 'ReactNativeProgramm' do
   end
   config = use_native_modules!
 
+  target 'ReactNativeProgramm-dev' do
+    inherit! :complete
+    # Pods for dev
+  end
+
+  target 'ReactNativeProgramm-qa' do
+    inherit! :complete
+    # Pods for qa
+  end
+
+  target 'ReactNativeProgramm-prod' do
+    inherit! :complete
+    # Pods for prod
+  end
+
   # Flags change depending on the env values.
   flags = get_default_flags()
 
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
-    :hermes_enabled => flags[:hermes_enabled],
+    :hermes_enabled => false,
     :fabric_enabled => flags[:fabric_enabled],
     # Enables Flipper.
     #

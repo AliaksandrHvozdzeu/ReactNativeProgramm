@@ -16,7 +16,7 @@ const AddProductWishModal: React.FC<AddProductWishModalProps> = () => {
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
         <View>
-          <Image source={SUCCESS_PNG_PATH} />
+          <Image source={SUCCESS_PNG_PATH} alt="success_png_path" />
         </View>
         <View>
           <Text style={styles.modalText}>

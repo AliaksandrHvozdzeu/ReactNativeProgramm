@@ -16,9 +16,7 @@ export const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  buttonPosition: {
-
-  },
+  buttonPosition: {},
   titleStyle: {
     fontSize: 15,
     fontFamily: 'Roboto',

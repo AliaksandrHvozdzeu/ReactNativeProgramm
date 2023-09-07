@@ -140,9 +140,7 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     width: 20,
   },
-  secureBlock: {
-
-  },
+  secureBlock: {},
   secureText: {
     color: COLORS.accent_green,
     width: '70%',

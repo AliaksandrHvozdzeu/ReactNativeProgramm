@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    marginBottom: 60
+    marginBottom: 60,
   },
   ios: {
     shadowColor: COLORS.neutral_700,

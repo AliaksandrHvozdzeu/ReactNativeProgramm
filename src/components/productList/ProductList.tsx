@@ -43,12 +43,7 @@ const ProductList = () => {
   return (
     <View>
       {search.length > 0 ? (
-        <Bar
-          text="Search"
-          isSearch={false}
-          isLike={false}
-          isCard={true}
-        />
+        <Bar text="Search" isSearch={false} isLike={false} isCard={true} />
       ) : (
         <Bar
           text="Ecommerce Store"

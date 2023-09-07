@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddProductWishModal tests Renders the AddProductWishModal correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "borderRadius": 5,
+        "elevation": 5,
+        "margin": 20,
+        "padding": 35,
+        "shadowColor": "#1C1F27",
+        "shadowOffset": {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 4,
+        "zIndex": 0,
+      }
+    }
+  >
+    <View>
+      <Image
+        alt="success_png_path"
+        source="success.png"
+      />
+    </View>
+    <View>
+      <Text
+        style={
+          {
+            "color": "#8F8F8F",
+            "fontFamily": "Roboto",
+            "fontSize": 20,
+            "fontStyle": "normal",
+            "fontWeight": "700",
+            "lineHeight": 25,
+            "marginTop": 10,
+            "textAlign": "center",
+          }
+        }
+      >
+        Product added to your wishlist successfully
+      </Text>
+    </View>
+    <View>
+      <View
+        style={
+          [
+            {
+              "borderRadius": 3,
+              "overflow": "hidden",
+            },
+            {
+              "borderRadius": 3,
+            },
+            {
+              "marginTop": 10,
+              "width": 125,
+            },
+            false,
+          ]
+        }
+      >
+        <View
+          accessibilityRole="button"
+          accessibilityState={
+            {
+              "busy": false,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#008ACE",
+                "borderColor": "#2089dc",
+                "borderRadius": 3,
+                "borderWidth": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 8,
+                "shadowColor": "#4A4A4A",
+                "shadowOffset": {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 2,
+                "shadowRadius": 4,
+                "zIndex": 1,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "white",
+                  "fontSize": 18,
+                  "paddingVertical": 1,
+                  "textAlign": "center",
+                }
+              }
+            >
+              OK
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

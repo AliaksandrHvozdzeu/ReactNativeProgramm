@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LikeButton tests Renders the LikeButton correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "display": "flex",
+      "flexShrink": 0,
+      "height": 25,
+      "justifyContent": "flex-end",
+      "paddingLeft": 0,
+      "position": "absolute",
+      "right": 35,
+      "top": 34,
+      "width": 75,
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "borderRadius": 3,
+          "overflow": "hidden",
+        },
+        {
+          "borderRadius": 3,
+        },
+        {
+          "height": 40,
+          "marginHorizontal": 50,
+          "marginVertical": 10,
+          "width": 50,
+        },
+        false,
+      ]
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": false,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "color": "#F7F7F7",
+          "flexShrink": 0,
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#008ACE",
+            "borderColor": "#2089dc",
+            "borderRadius": 3,
+            "borderWidth": 0,
+            "flexDirection": "row-reverse",
+            "justifyContent": "center",
+            "padding": 8,
+            "position": "absolute",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "marginHorizontal": 5,
+              "overflow": "hidden",
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "transparent",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
