@@ -3,12 +3,9 @@ apply plugin: "com.facebook.react"
 
 apply plugin: "com.android.application"
 project.ext.envConfigFiles = [
-        productiondebug: ".env.production",
-        productionrelease: ".env.production",
-        developmentrelease: ".env.development",
-        developmentdebug: ".env.development",
-        stagingrelease: ".env.staging",
-        stagingdebug: ".env.staging"
+        prod: ".env.prod",
+        qa: ".env.qa",
+        dev: ".env.dev"
 ]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
@@ -113,12 +110,6 @@ android {
             versionCode 1
             versionName "1.0"
             resValue "string", "build_config_package", "com.reactnativeprogramm"
-        }
-        buildTypes {
-            debug {
-                applicationIdSuffix ".debug"
-                signingConfig signingConfigs.debug
-            }
         }
     }
 
