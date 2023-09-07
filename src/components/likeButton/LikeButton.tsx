@@ -2,14 +2,12 @@ import React, {useCallback} from 'react';
 import {View} from 'react-native';
 import {styles} from './styles';
 import {Button} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
 
 type LikeButtonProps = {};
 
 const LikeButton: React.FC<LikeButtonProps> = () => {
-  const navigation = useNavigation();
   const onPress = useCallback(() => {
-    navigation.navigate('AddProductWishModal');
+    //Need to implement logic for adding product to wish list
   }, []);
   return (
     <View style={styles.icon}>

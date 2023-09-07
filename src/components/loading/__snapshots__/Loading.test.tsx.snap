@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loading tests Renders the Loading correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "height": 600,
+      "justifyContent": "center",
+      "padding": 10,
+      "verticalAlign": "middle",
+    }
+  }
+>
+  <ActivityIndicator
+    color="#008ACE"
+    size="large"
+  />
+  <View>
+    <Text
+      style={
+        {
+          "borderColor": "#8F8F8F",
+          "display": "flex",
+          "fontFamily": "Roboto",
+          "fontSize": 15,
+          "fontStyle": "normal",
+          "fontWeight": "700",
+          "left": 5,
+          "marginLeft": 10,
+        }
+      }
+    >
+      Loading...
+    </Text>
+  </View>
+</View>
+`;

@@ -28,6 +28,7 @@ import {LogBox, StatusBar} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import MyCart from './src/components/myCart';
 import ItemRemovedFromCartModal from './src/components/itemRemovedFromCartModal';
+import Constants from 'expo-constants';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -88,7 +89,6 @@ const App = () => {
         );
         const content = await response.json();
         if (content.error) {
-
         } else {
           userToken = content.access_token;
         }
@@ -353,4 +353,9 @@ const App = () => {
   );
 };
 
-export default App;
+let AppEntryPoint = App;
+
+if (Constants.expoConfig.extra.storybookEnabled === 'true') {
+  AppEntryPoint = require('./.storybook').default;
+}
+export default AppEntryPoint;

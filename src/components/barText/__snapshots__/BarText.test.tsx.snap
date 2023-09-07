@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BarText tests Renders the Footer correctly 1`] = `
+<Text
+  style={
+    {
+      "color": "#F7F7F7",
+      "fontFamily": "Roboto",
+      "fontSize": 15,
+      "fontStyle": "normal",
+      "fontWeight": "500",
+      "letterSpacing": 0.15,
+      "lineHeight": 24,
+      "textAlign": "center",
+      "top": -10,
+    }
+  }
+>
+  test
+</Text>
+`;
