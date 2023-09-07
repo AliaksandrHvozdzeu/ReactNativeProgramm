@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { COLORS } from "../src/utils/colors";
 
 export const parameters = {
@@ -13,13 +13,17 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <View
-      style={{
-        flex: 1,
-        backgroundColor: COLORS.neutral_0,
-        padding: 8,
-      }}
+      style={styles.decoratorView}
     >
       <Story />
     </View>
   ),
 ];
+
+export const styles = StyleSheet.create({
+  decoratorView: {
+    flex: 1,
+    backgroundColor: COLORS.neutral_0,
+    padding: 8,
+  }
+});

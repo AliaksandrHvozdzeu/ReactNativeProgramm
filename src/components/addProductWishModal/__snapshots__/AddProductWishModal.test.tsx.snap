@@ -33,7 +33,6 @@ exports[`AddProductWishModal tests Renders the AddProductWishModal correctly 1`]
   >
     <View>
       <Image
-        alt="success_png_path"
         source="success.png"
       />
     </View>

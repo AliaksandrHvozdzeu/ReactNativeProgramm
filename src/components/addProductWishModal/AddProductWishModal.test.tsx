@@ -9,9 +9,7 @@ import {render} from '@testing-library/react-native';
 const mockedNavigate = jest.fn();
 
 jest.mock('@react-navigation/native', () => {
-  const actualNav = jest.requireActual('@react-navigation/native');
   return {
-    actualNav,
     useNavigation: () => ({
       navigate: mockedNavigate,
     }),
@@ -24,11 +22,7 @@ describe('AddProductWishModal tests', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('AddProductWishModal render works correctly', () => {
-    render(<AddProductWishModal />);
-  });
-
-  test('Component AddProductWishModal contains image', () => {
+  test('Component AddProductWishModal contains image success image', () => {
     const wrapper = render(<AddProductWishModal />);
     const testInstance = wrapper.root;
     const textValue = testInstance.findByType(Image);
