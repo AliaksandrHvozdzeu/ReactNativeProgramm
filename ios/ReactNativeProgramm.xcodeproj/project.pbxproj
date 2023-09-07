@@ -95,6 +95,7 @@
 		A9E8903F2AA99F07006ACA01 /* ReactNativeProgramm qa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ReactNativeProgramm qa-Info.plist"; path = "/Users/Aliaksandr_Hvozdzeu/Documents/ReactNativeProgramm/ios/ReactNativeProgramm qa-Info.plist"; sourceTree = "<absolute>"; };
 		A9E890532AA99F1C006ACA01 /* ReactNativeProgramm-prod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReactNativeProgramm-prod.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9E890542AA99F1C006ACA01 /* ReactNativeProgramm prod-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ReactNativeProgramm prod-Info.plist"; path = "/Users/Aliaksandr_Hvozdzeu/Documents/ReactNativeProgramm/ios/ReactNativeProgramm prod-Info.plist"; sourceTree = "<absolute>"; };
+		A9E890562AA9BB34006ACA01 /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "../AppCenter-Config.plist"; sourceTree = "<group>"; };
 		B5F2417B996E82BBE82E40B7 /* Pods-ReactNativeProgramm-ReactNativeProgramm-prod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeProgramm-ReactNativeProgramm-prod.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeProgramm-ReactNativeProgramm-prod/Pods-ReactNativeProgramm-ReactNativeProgramm-prod.debug.xcconfig"; sourceTree = "<group>"; };
 		CA6B910A021377A4BC6B060F /* Pods-ReactNativeProgramm-ReactNativeProgramm-prod.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeProgramm-ReactNativeProgramm-prod.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeProgramm-ReactNativeProgramm-prod/Pods-ReactNativeProgramm-ReactNativeProgramm-prod.release.xcconfig"; sourceTree = "<group>"; };
 		D8EE64953E310535129933FE /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ReactNativeProgramm-ReactNativeProgrammTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
@@ -255,6 +256,7 @@
 				A9E8902A2AA99E8A006ACA01 /* ReactNativeProgramm dev-Info.plist */,
 				A9E8903F2AA99F07006ACA01 /* ReactNativeProgramm qa-Info.plist */,
 				A9E890542AA99F1C006ACA01 /* ReactNativeProgramm prod-Info.plist */,
+				A9E890562AA9BB34006ACA01 /* AppCenter-Config.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
